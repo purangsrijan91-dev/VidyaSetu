@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project VidyaSetu | Unified School Operations & Learning Intelligence</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js for Telemetry -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Typography Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .tab-active { border-bottom: 2px solid #0f766e; color: #0f766e; font-weight: 600; }
+    .tab-inactive { border-bottom: 2px solid transparent; color: #64748b; font-weight: 500; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+
+  <!-- ========================================================= -->
+  <!-- TOP NAVIGATION WITH ROLE SWITCHER                         -->
+  <!-- ========================================================= -->
+  <nav class="border-b border-slate-200 bg-white sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('public')">
+        <span class="bg-teal-700 text-white font-bold text-lg px-2.5 py-1 rounded shadow-sm">VS</span>
+        <div>
+          <span class="font-bold text-xl tracking-tight text-slate-900">VidyaSetu</span>
+          <span class="hidden md:inline-block ml-2 text-[11px] uppercase px-2 py-0.5 bg-teal-50 text-teal-700 border border-teal-200 rounded font-semibold">NDEAR Architecture</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex items-center gap-2 md:gap-8 text-sm">
+        <button id="tabBtn-public" onclick="switchTab('public')" class="tab-active py-5 px-1 flex items-center gap-1.5 transition">
+          <i data-lucide="home" class="w-4 h-4"></i>
+          <span>Overview</span>
+        </button>
+        <button id="tabBtn-school" onclick="switchTab('school')" class="tab-inactive py-5 px-1 flex items-center gap-1.5 transition">
+          <i data-lucide="calendar" class="w-4 h-4"></i>
+          <span>School Operations</span>
+          <span class="hidden md:inline-block text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-semibold">Problem 1</span>
+        </button>
+        <button id="tabBtn-official" onclick="switchTab('official')" class="tab-inactive py-5 px-1 flex items-center gap-1.5 transition">
+          <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+          <span>Official Command</span>
+          <span class="hidden md:inline-block text-[10px] bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-semibold">Problem 4</span>
+        </button>
+      </div>
+
+      <!-- Live Backend Status Indicator -->
+      <div class="hidden sm:flex items-center gap-2">
+        <span id="backendStatusDot" class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+        <span id="backendStatusText" class="text-xs text-slate-500 font-medium">Standalone Mode</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================================= -->
+  <!-- VIEW 1: PUBLIC OVERVIEW (The Pitch & Problem Statement)   -->
+  <!-- ========================================================= -->
+  <main id="view-public" class="flex-1">
+    <section class="py-16 px-6 max-w-5xl mx-auto text-center">
+      <div class="inline-block px-3 py-1 mb-4 text-xs font-semibold uppercase tracking-wider text-teal-700 bg-teal-50 border border-teal-200 rounded-full">
+        Solving Administrative Duty Disruption Across 14.6L Schools
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6 leading-tight">
+        Eliminating Lost Instructional Hours in Indian Classrooms.
+      </h1>
+      <p class="text-base md:text-lg text-slate-600 max-w-3xl mx-auto mb-8 leading-relaxed">
+        A WhatsApp-first AI middleware that parses District Magistrate deputation orders (elections, BLO, census), dynamically solves substitution without schedule clashes, and equips replacement teachers with instant NIPUN Bharat learning cards.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <button onclick="switchTab('school')" class="bg-teal-700 hover:bg-teal-800 text-white font-medium px-6 py-3 rounded-lg shadow-sm flex items-center gap-2 transition">
+          <i data-lucide="play-circle" class="w-4 h-4"></i>
+          <span>Launch School Console</span>
+        </button>
+        <button onclick="switchTab('official')" class="bg-white border border-slate-300 text-slate-700 font-medium px-6 py-3 rounded-lg hover:bg-slate-100 flex items-center gap-2 transition">
+          <i data-lucide="activity" class="w-4 h-4"></i>
+          <span>Explore BEO Telemetry</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Problem Fact Cards -->
+    <section class="py-12 bg-white border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="p-6 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-2xl font-bold text-rose-600 mb-1">1.00+ Lakh</div>
+            <div class="text-sm font-semibold text-slate-800 mb-1">Single-Teacher Schools (UDISE+)</div>
+            <p class="text-xs text-slate-600 leading-relaxed">When a sole educator is assigned non-academic BLO or census duty, the school's teaching halts entirely.</p>
+          </div>
+          <div class="p-6 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-2xl font-bold text-amber-600 mb-1">>65% Multigrade</div>
+            <div class="text-sm font-semibold text-slate-800 mb-1">Rural Primary Classrooms (ASER)</div>
+            <p class="text-xs text-slate-600 leading-relaxed">Teachers manage 2–3 grades simultaneously. Substitutions devolve into unguided babysitting without quick lesson guides.</p>
+          </div>
+          <div class="p-6 rounded-xl bg-slate-50 border border-slate-200">
+            <div class="text-2xl font-bold text-teal-700 mb-1">₹1.50 / Month</div>
+            <div class="text-sm font-semibold text-slate-800 mb-1">Per-Student Frugal Run Cost</div>
+            <p class="text-xs text-slate-600 leading-relaxed">Delivered over WhatsApp, Bhashini Indic voice AI, and quantized Small Language Models with zero app fatigue.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive ILI Estimator -->
+    <section class="py-14 max-w-4xl mx-auto px-6">
+      <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
+        <h2 class="text-xl font-bold text-slate-900 mb-2">Instruction Loss Index (ILI) Block Calculator</h2>
+        <p class="text-xs text-slate-600 mb-6">Estimate weekly classroom loss in your cluster and calculate how many hours VidyaSetu recovers.</p>
+
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Schools in Block</label>
+            <input id="inputSchools" type="number" value="75" class="w-full border border-slate-300 rounded-lg p-2 text-xs" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Teachers on Duty</label>
+            <input id="inputAbsent" type="number" value="18" class="w-full border border-slate-300 rounded-lg p-2 text-xs" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Periods / Day</label>
+            <input id="inputPeriods" type="number" value="6" class="w-full border border-slate-300 rounded-lg p-2 text-xs" />
+          </div>
+          <div>
+            <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1">Idle Rate (%)</label>
+            <input id="inputIdleRate" type="number" value="80" class="w-full border border-slate-300 rounded-lg p-2 text-xs" />
+          </div>
+        </div>
+
+        <button onclick="calculateILI()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-2.5 rounded-lg text-xs transition">
+          Calculate Weekly Block Impact
+        </button>
+
+        <div class="mt-6 pt-6 border-t border-slate-200 grid sm:grid-cols-2 gap-4 text-center">
+          <div class="p-4 bg-rose-50 border border-rose-200 rounded-xl">
+            <div class="text-[11px] font-bold text-rose-700 uppercase">Lost Instruction (Weekly)</div>
+            <div id="statLostHours" class="text-2xl font-bold text-rose-800 mt-1">432 Hours</div>
+          </div>
+          <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+            <div class="text-[11px] font-bold text-emerald-700 uppercase">Recovered via VidyaSetu</div>
+            <div id="statRecovered" class="text-2xl font-bold text-emerald-800 mt-1">367 Hours (85%)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- VIEW 2: SCHOOL OPERATIONS CONSOLE (Problem 1 Engine)      -->
+  <!-- ========================================================= -->
+  <main id="view-school" class="flex-1 hidden max-w-7xl mx-auto w-full px-6 py-8">
+    
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+      <i data-lucide="alert-circle" class="w-5 h-5 text-amber-700 mt-0.5 flex-shrink-0"></i>
+      <div>
+        <h2 class="text-sm font-bold text-amber-900">Classroom Continuity Console (Problem 1)</h2>
+        <p class="text-xs text-amber-800 mt-0.5">Ingests administrative orders, computes optimal class reallocation, and delivers verified NIPUN Bharat learning activity cards to replacement teachers.</p>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      
+      <!-- Ingestion Form -->
+      <div class="lg:col-span-1 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+          <i data-lucide="file-text" class="w-4 h-4 text-teal-700"></i>
+          <span>1. Deputation Order Ingestion</span>
+        </h3>
+        
+        <div class="mb-4">
+          <label class="block text-[11px] font-semibold text-slate-700 uppercase mb-1.5">Administrative Circular OCR</label>
+          <div class="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center hover:bg-slate-50 cursor-pointer transition" onclick="triggerSimulatedOCR()">
+            <i data-lucide="upload-cloud" class="w-6 h-6 text-slate-400 mx-auto mb-1"></i>
+            <span class="text-xs text-slate-600 block">Click to parse sample DM Election Order</span>
+            <span class="text-[10px] text-teal-700 font-semibold block mt-1">Gemma / LayoutLMv3 Extraction</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-semibold text-slate-700 uppercase mb-1">Deployed Teacher</label>
+            <input id="formTeacherName" type="text" value="श्री रमेश कुमार (Math)" class="w-full border border-slate-300 rounded-lg p-2 text-xs" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 uppercase mb-1">Administrative Duty</label>
+            <input id="formDutyType" type="text" value="BLO Electoral Roll Revision" class="w-full border border-slate-300 rounded-lg p-2 text-xs" />
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 uppercase mb-1">Target Vacant Period</label>
+            <select id="formPeriodSelect" class="w-full border border-slate-300 rounded-lg p-2 text-xs">
+              <option value="3">Period 3 (Class 4 - Mathematics)</option>
+              <option value="4">Period 4 (Class 5 - Mathematics)</option>
+              <option value="2">Period 2 (Class 3 - Hindi)</option>
+            </select>
+          </div>
+          <button onclick="executeAllocation()" class="w-full bg-teal-700 hover:bg-teal-800 text-white font-semibold py-2.5 rounded-lg text-xs transition flex items-center justify-center gap-1.5 mt-4">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+            <span>Run Constraint Solver (OR-Tools)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Substitution Output & WhatsApp Card Dispatch -->
+      <div class="lg:col-span-2 space-y-6">
+        
+        <!-- Live Table -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+              <span>2. Period Allocation Status</span>
+            </h3>
+            <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">Constraint Validation: Passed</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 bg-slate-50 text-slate-600">
+                  <th class="py-2.5 px-3">Period</th>
+                  <th class="py-2.5 px-3">Grade & Subject</th>
+                  <th class="py-2.5 px-3">Absent Teacher</th>
+                  <th class="py-2.5 px-3">Assigned Substitute</th>
+                  <th class="py-2.5 px-3">Roster Status</th>
+                </tr>
+              </thead>
+              <tbody id="allocationTableBody">
+                <tr class="border-b border-slate-100">
+                  <td class="py-3 px-3 font-semibold text-slate-800">Period 3</td>
+                  <td class="py-3 px-3">Class 4 (Mathematics)</td>
+                  <td class="py-3 px-3 text-rose-600 font-medium">श्री रमेश कुमार (BLO)</td>
+                  <td class="py-3 px-3 font-semibold text-teal-700" id="subTeacherNameCell">श्रीमती सुनीता शर्मा</td>
+                  <td class="py-3 px-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-medium">Active Coverage</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dispatched WhatsApp Lesson Card -->
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="message-square" class="w-4 h-4 text-teal-700"></i>
+              <span>3. Dispatched WhatsApp Micro-Activity Card</span>
+            </h3>
+            <span class="text-[11px] text-teal-700 bg-teal-50 border border-teal-200 px-2 py-0.5 rounded font-semibold">Sent to Replacement Staff</span>
+          </div>
+
+          <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-xs space-y-2.5">
+            <div class="flex items-center justify-between border-b border-emerald-200 pb-2">
+              <span id="cardGreeting" class="font-bold text-emerald-900">नमस्ते श्रीमती सुनीता शर्मा जी! आज पीरियड 3 में कक्षा 4 (गणित) का प्रभार लें।</span>
+              <span class="text-[10px] bg-emerald-200 text-emerald-900 px-1.5 py-0.5 rounded font-semibold">NIPUN Bharat FLN</span>
+            </div>
+            <div>
+              <span class="font-semibold text-emerald-900 uppercase tracking-wide text-[10px] block">🎯 आज का मुख्य लर्निंग आउटकम (Target Competency)</span>
+              <span id="cardTopic" class="text-slate-800 font-medium">"भिन्न (Fractions) की प्रारंभिक पहचान - 1/2 और 1/4 की समझ"</span>
+            </div>
+            <div>
+              <span class="font-semibold text-emerald-900 uppercase tracking-wide text-[10px] block">💡 10-मिनट उपचारात्मक गतिविधि (Zero-Cost Activity)</span>
+              <span id="cardActivity" class="text-slate-700 leading-relaxed">कागज को मोड़कर 2 और 4 बराबर भागों में बांटें। बच्चों से कहें कि वे 1 हिस्से में पेंसिल से रंग भरकर भिन्न का निरूपण करें।</span>
+            </div>
+            <div class="pt-2 flex items-center justify-between border-t border-emerald-200">
+              <span id="cardMaterials" class="text-slate-500 text-[11px]">सामग्री: पुराने अखबार या कॉपियों के पन्ने</span>
+              <span class="text-teal-800 font-semibold cursor-pointer hover:underline" onclick="alert('Simulated PDF Download: 1-Page Micro-Worksheet')">Download 1-Page Slate PDF →</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- VIEW 3: OFFICIAL COMMAND DASHBOARD (Problem 4 & 5)        -->
+  <!-- ========================================================= -->
+  <main id="view-official" class="flex-1 hidden max-w-7xl mx-auto w-full px-6 py-8">
+    
+    <div class="bg-rose-50 border border-rose-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+      <i data-lucide="shield-alert" class="w-5 h-5 text-rose-700 mt-0.5 flex-shrink-0"></i>
+      <div>
+        <h2 class="text-sm font-bold text-rose-900">District & Block Command View (Problem 4 & 5)</h2>
+        <p class="text-xs text-rose-800 mt-0.5">Aggregates classroom-level telemetry into the Instruction Loss Index (ILI) and auto-routes Cluster Resource Persons (CRPs) to vulnerable schools.</p>
+      </div>
+    </div>
+
+    <!-- Metric Ribbon -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <span class="text-xs font-semibold text-slate-500 uppercase">Monitored Schools</span>
+        <div class="text-2xl font-bold text-slate-900 mt-1">450 Schools</div>
+        <span class="text-[11px] text-slate-500">Block Palwal & Sohna</span>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <span class="text-xs font-semibold text-rose-600 uppercase">Deputed Teachers (BLO)</span>
+        <div class="text-2xl font-bold text-rose-700 mt-1">78 Teachers</div>
+        <span class="text-[11px] text-rose-600 font-medium">17.3% staff deployed</span>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <span class="text-xs font-semibold text-slate-500 uppercase">Weekly Hours Protected</span>
+        <div class="text-2xl font-bold text-slate-900 mt-1">384 Hours</div>
+        <span class="text-[11px] text-emerald-600 font-medium">82% instructional continuity</span>
+      </div>
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <span class="text-xs font-semibold text-teal-700 uppercase">Block ILI Score</span>
+        <div class="text-2xl font-bold text-teal-800 mt-1">4.2%</div>
+        <span class="text-[11px] text-emerald-600 font-medium">Reduced from 24.1% baseline</span>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      
+      <!-- Telemetry Chart -->
+      <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">Instruction Loss Index (ILI) Weekly Trend</h3>
+            <p class="text-xs text-slate-500">Comparing unmitigated deputation loss vs. VidyaSetu automated coverage</p>
+          </div>
+          <span class="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded font-medium">Live Telemetry</span>
+        </div>
+        <div class="h-64">
+          <canvas id="iliTrendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Priority Mentor Routing (Problem 5) -->
+      <div class="lg:col-span-1 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="navigation" class="w-4 h-4 text-teal-700"></i>
+              <span>Auto-Routed Mentor Visits</span>
+            </h3>
+            <span class="text-[10px] bg-rose-100 text-rose-800 px-2 py-0.5 rounded font-semibold">Priority Triage</span>
+          </div>
+          <p class="text-xs text-slate-600 mb-4">Directs Cluster Resource Persons (CRPs) based on actual classroom loss rather than random inspection:</p>
+
+          <div class="space-y-3">
+            <div class="p-3 bg-rose-50 border border-rose-200 rounded-lg text-xs">
+              <div class="flex justify-between font-bold text-rose-900">
+                <span>GPS Hathin (UDISE: 06210)</span>
+                <span>Critical</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-1">Both primary educators deployed on BLO duty. High multigrade strain.</p>
+              <span class="text-[10px] font-semibold text-rose-800 block mt-1.5">Action: Mobile Cluster Mentor assigned for 11:30 AM</span>
+            </div>
+
+            <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs">
+              <div class="flex justify-between font-bold text-amber-900">
+                <span>GSSS Mandkola (UDISE: 06214)</span>
+                <span>Pacing Lag</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-1">Class 3 Mathematics lagging 2.5 weeks behind state SCERT schedule.</p>
+              <span class="text-[10px] font-semibold text-amber-800 block mt-1.5">Action: FLN Demonstration Lesson Scheduled</span>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="alert('Itineraries dispatched to 14 Cluster Resource Persons (CRPs) via SMS/WhatsApp.')" class="mt-6 w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold py-2.5 rounded-lg transition flex items-center justify-center gap-1.5">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          <span>Dispatch Mentor Itineraries via SMS</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- FOOTER                                                    -->
+  <!-- ========================================================= -->
+  <footer class="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span>Project VidyaSetu • Built for National Educational AI & Governance Pilots.</span>
+      <div class="flex gap-4">
+        <a href="javascript:void(0)" onclick="switchTab('public')" class="hover:text-slate-800">Public Overview</a>
+        <a href="javascript:void(0)" onclick="switchTab('school')" class="hover:text-slate-800">School Operations</a>
+        <a href="javascript:void(0)" onclick="switchTab('official')" class="hover:text-slate-800">Official Dashboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================= -->
+  <!-- CLIENT-SIDE JAVASCRIPT LOGIC                              -->
+  <!-- ========================================================= -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Check if local FastAPI backend is active
+    const BACKEND_API_URL = "http://127.0.0.1:8000";
+    let isBackendConnected = false;
+
+    async function checkBackendHealth() {
+      try {
+        const response = await fetch(`${BACKEND_API_URL}/`, { method: "GET" });
+        if (response.ok) {
+          isBackendConnected = true;
+          document.getElementById('backendStatusDot').className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
+          document.getElementById('backendStatusText').innerText = "Live AI Backend Active";
+        }
+      } catch (err) {
+        // Stays in standalone fallback simulation
+        document.getElementById('backendStatusDot').className = "w-2.5 h-2.5 rounded-full bg-amber-400";
+        document.getElementById('backendStatusText').innerText = "Standalone Simulation";
+      }
+    }
+    checkBackendHealth();
+
+    // Tab Navigation Switcher
+    function switchTab(tabKey) {
+      const views = ['public', 'school', 'official'];
+      views.forEach(view => {
+        const el = document.getElementById(`view-${view}`);
+        const btn = document.getElementById(`tabBtn-${view}`);
+        if (view === tabKey) {
+          el.classList.remove('hidden');
+          btn.className = "tab-active py-5 px-1 flex items-center gap-1.5 transition";
+        } else {
+          el.classList.add('hidden');
+          btn.className = "tab-inactive py-5 px-1 flex items-center gap-1.5 transition";
+        }
+      });
+      lucide.createIcons();
+
+      if (tabKey === 'official' && !window.iliChartInstance) {
+        initChart();
+      }
+    }
+
+    // ILI Math Calculator
+    function calculateILI() {
+      const schools = parseFloat(document.getElementById('inputSchools').value) || 0;
+      const absent = parseFloat(document.getElementById('inputAbsent').value) || 0;
+      const periods = parseFloat(document.getElementById('inputPeriods').value) || 0;
+      const idleRate = (parseFloat(document.getElementById('inputIdleRate').value) || 0) / 100;
+
+      const dailyPeriodsLost = absent * periods;
+      const weeklyHoursLost = Math.round(dailyPeriodsLost * 5 * idleRate);
+      const recoveredHours = Math.round(weeklyHoursLost * 0.85);
+
+      document.getElementById('statLostHours').innerText = `${weeklyHoursLost} Hours`;
+      document.getElementById('statRecovered').innerText = `${recoveredHours} Hours (85%)`;
+    }
+
+    // Simulated OCR Ingestion
+    function triggerSimulatedOCR() {
+      document.getElementById('formTeacherName').value = "श्री राजेश वर्मा (Hindi)";
+      document.getElementById('formDutyType').value = "Census Master Trainer Deputation";
+      document.getElementById('formPeriodSelect').value = "2";
+      alert("Surya OCR / Document Vision Complete:\nExtracted: श्री राजेश वर्मा\nDuty: Census Master Trainer\nVacated Period: Period 2 (Class 3 Hindi)");
+    }
+
+    // Substitution Constraint Execution
+    async function executeAllocation() {
+      const period = document.getElementById('formPeriodSelect').value;
+      const teacher = document.getElementById('formTeacherName').value;
+
+      if (isBackendConnected) {
+        try {
+          const res = await fetch(`${BACKEND_API_URL}/api/solve?period=${period}`);
+          const data = await res.json();
+          if (data.success && data.allocations.length > 0) {
+            const alloc = data.allocations[0];
+            updateAllocationUI(alloc.period, alloc.grade, alloc.subject, teacher, alloc.substitute_name, alloc.nipun_card);
+            return;
+          }
+        } catch (e) {
+          console.warn("Backend call failed, using client fallback", e);
+        }
+      }
+
+      // Standalone Fallback Simulation
+      const mockCards = {
+        "3": {
+          periodText: "Period 3",
+          classSubject: "Class 4 (Mathematics)",
+          substitute: "श्रीमती सुनीता शर्मा",
+          topic: "भिन्न (Fractions) की प्रारंभिक पहचान - 1/2 और 1/4 की समझ",
+          activity: "कागज को मोड़कर 2 और 4 बराबर भागों में बांटें। बच्चों से कहें कि वे 1 हिस्से में पेंसिल से रंग भरकर भिन्न बताएं।",
+          materials: "पुराने अखबार या कॉपियों के पन्ने"
+        },
+        "4": {
+          periodText: "Period 4",
+          classSubject: "Class 5 (Mathematics)",
+          substitute: "सुश्री पूजा गुप्ता",
+          topic: "ऐकिक नियम (Unitary Method) की समझ",
+          activity: "कंकड़ या इमली के बीजों का उपयोग करें: 'यदि 4 बीजों का मूल्य 8 रुपये है, तो 1 बीज का कितना होगा?'",
+          materials: "कंकड़ या इमली के बीज"
+        },
+        "2": {
+          periodText: "Period 2",
+          classSubject: "Class 3 (Hindi)",
+          substitute: "सुश्री पूजा गुप्ता",
+          topic: "संयुक्त अक्षर की पहचान (क् + ख, त् + त)",
+          activity: "श्यामपट्ट पर 5 संयुक्त अक्षर वाले शब्द लिखें। बच्चों से कहें कि संयुक्त अक्षर आते ही 2 बार ताली बजाएं।",
+          materials: "ब्लैकबोर्ड और चाक"
+        }
+      };
+
+      const selected = mockCards[period] || mockCards["3"];
+      updateAllocationUI(selected.periodText, selected.classSubject, "", teacher, selected.substitute, {
+        topic: selected.topic,
+        activity: selected.activity,
+        materials: selected.materials
+      });
+    }
+
+    function updateAllocationUI(period, grade, subject, teacher, substitute, card) {
+      const tbody = document.getElementById('allocationTableBody');
+      tbody.innerHTML = `
+        <tr class="border-b border-slate-100">
+          <td class="py-3 px-3 font-semibold text-slate-800">${period}</td>
+          <td class="py-3 px-3">${grade}${subject ? '(' + subject + ')' : ''}</td>
+          <td class="py-3 px-3 text-rose-600 font-medium">${teacher}</td>
+          <td class="py-3 px-3 font-semibold text-teal-700">${substitute}</td>
+          <td class="py-3 px-3"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-medium">Reassigned</span></td>
+        </tr>
+      `;
+
+      document.getElementById('cardGreeting').innerText = `नमस्ते ${substitute} जी! आज ${period} में ${grade} का प्रभार लें।`;
+      document.getElementById('cardTopic').innerText = `"${card.topic}"`;
+      document.getElementById('cardActivity').innerText = card.activity;
+      document.getElementById('cardMaterials').innerText = `सामग्री: ${card.materials}`;
+
+      alert("Constraint Optimization Complete:\nReplacement teacher assigned without timetable clashes. NIPUN activity card prepared for WhatsApp.");
+    }
+
+    // Initialize Chart.js
+    function initChart() {
+      const ctx = document.getElementById('iliTrendChart').getContext('2d');
+      window.iliChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+          datasets: [
+            {
+              label: 'Unmanaged Deputation Loss (Without AI)',
+              data: [23.5, 24.8, 26.2, 24.0, 25.1, 24.1],
+              borderColor: '#e11d48',
+              backgroundColor: 'rgba(225, 29, 72, 0.05)',
+              tension: 0.3,
+              fill: true
+            },
+            {
+              label: 'Protected Instruction (VidyaSetu Active)',
+              data: [19.0, 13.2, 8.4, 5.8, 4.8, 4.2],
+              borderColor: '#0f766e',
+              backgroundColor: 'rgba(15, 118, 110, 0.08)',
+              tension: 0.3,
+              fill: true
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom' }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: { display: true, text: 'Instruction Loss Index (%)' }
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
