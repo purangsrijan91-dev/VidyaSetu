@@ -586,3 +586,16 @@
     // Check if local FastAPI backend is active
 </body>
 </html>
+async function checkBackendHealth() {
+      try {
+        const response = await fetch(`${BACKEND_API_URL.replace(/\/$/, '')}/`, { method: "GET" });
+        if (response.ok) {
+          isBackendConnected = true;
+          document.getElementById('backendStatusDot').className = "w-2.5 h-2.5 rounded-full bg-emerald-500";
+          document.getElementById('backendStatusText').innerText = "Live AI Backend Active";
+        }
+      } catch (err) {
+        document.getElementById('backendStatusDot').className = "w-2.5 h-2.5 rounded-full bg-amber-400";
+        document.getElementById('backendStatusText').innerText = "Standalone Simulation";
+      }
+    }
