@@ -1,30 +1,31 @@
-// VidyaSetu Service Worker - Offline-First Cache Engine for Zero-Connectivity Classrooms
-const CACHE_NAME = 'vidyasetu-cache-v1';
-const ASSETS_TO_CACHE = [
+// VidyaSetu Service Worker - Zero-Connectivity Offline Engine
+const CACHE_NAME = 'vidyasetu-v2';
+const CORE_ASSETS = [
   './',
   './index.html',
   './css/styles.css',
-  './manifest.json'
+  './manifest.json',
+  './assets/icon.svg'
 ];
 
-// 1. Install Event: Pre-cache static assets
+// 1. Install Event: Pre-cache all core HTML, CSS, manifest, and icons
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[VidyaSetu SW] Pre-caching static assets for offline classroom use');
-      return cache.addAll(ASSETS_TO_CACHE);
+      console.log('[VidyaSetu SW] Pre-caching core assets for zero-connectivity classrooms');
+      return cache.addAll(CORE_ASSETS);
     }).then(() => self.skipWaiting())
   );
 });
 
-// 2. Activate Event: Clean up outdated caches and take immediate control
+// 2. Activate Event: Invalidate obsolete caches and claim clients immediately
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
-            console.log('[VidyaSetu SW] Purging obsolete cache:', cache);
+            console.log('[VidyaSetu SW] Deleting outdated cache:', cache);
             return caches.delete(cache);
           }
         })
@@ -33,33 +34,32 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. Fetch Event: Cache-First strategy with network fallback
+// 3. Fetch Event: Cache-First for instant launching in zero-connectivity environments
 self.addEventListener('fetch', (event) => {
-  // Only handle GET requests
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
+    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
       if (cachedResponse) {
-        // Return immediately from local cache
+        // Return instantly from local cache (0ms network wait)
         return cachedResponse;
       }
 
-      // If not in cache, fetch from network and dynamically cache
+      // Fetch from network, clone and store in cache
       return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+        if (!networkResponse || networkResponse.status !== 200) {
           return networkResponse;
         }
 
-        const responseToCache = networkResponse.clone();
+        const responseClone = networkResponse.clone();
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache);
+          cache.put(event.request, responseClone);
         });
 
         return networkResponse;
       }).catch(() => {
-        // Offline fallback for HTML navigation requests
-        if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
+        // Fallback to cached index.html for navigation requests
+        if (event.request.headers.get('accept')?.includes('text/html')) {
           return caches.match('./index.html');
         }
       });

@@ -5,6 +5,8 @@
 html, body {
   touch-action: manipulation;
   scroll-behavior: smooth;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #060B18;
 }
 
 :focus-visible {
@@ -17,10 +19,17 @@ html, body {
   user-select: none;
 }
 
+/* 60fps Hardware Accelerated Scrolling on Budget Android Go */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #060B18;
@@ -33,23 +42,31 @@ html, body {
   background: #F59E0B;
 }
 
-/* Infinite Marquee Animation */
+/* Infinite Marquee Animation with GPU Acceleration */
 .ticker-wrapper {
   display: flex;
   width: max-content;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .ticker-content {
   display: flex;
   white-space: nowrap;
   animation: marquee 28s linear infinite;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .ticker-content:hover {
   animation-play-state: paused;
 }
 
-/* Voice Visualizer Waveforms */
+/* Voice Visualizer Waveforms with will-change */
+.wave-bar {
+  will-change: height;
+  transform: translateZ(0);
+}
 .wave-bar:nth-child(1) { animation-delay: 0.1s; }
 .wave-bar:nth-child(2) { animation-delay: 0.3s; }
 .wave-bar:nth-child(3) { animation-delay: 0.5s; }
