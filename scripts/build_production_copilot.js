@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+const fs = require('fs');
+
+const htmlContent = `<!DOCTYPE html>
 <html lang="en" class="h-full bg-slate-50">
 <head>
   <meta charset="UTF-8" />
@@ -871,7 +873,7 @@
         if (srAnnouncer) srAnnouncer.textContent = text;
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
-          const cleanText = text.replace(/(\d+)\s*[-–—]\s*(\d+)/g, '$1 to $2');
+          const cleanText = text.replace(/(\\d+)\\s*[-–—]\\s*(\\d+)/g, '$1 to $2');
           const utterance = new SpeechSynthesisUtterance(cleanText);
           utterance.rate = 0.9;
           utterance.pitch = 1.0;
@@ -1345,7 +1347,7 @@
         trainFeedbackBox.style.display = 'block';
         if (v1 === puzzle.a1 && v2 === puzzle.a2) {
           trainFeedbackBox.style.color = '#A7F3D0';
-          trainFeedbackBox.textContent = '🎉 Excellent! Train completed accurately: [ ' + puzzle.display.replace(/\?/g, (m, offset) => (offset < 15 ? puzzle.a1 : puzzle.a2)) + ' ]';
+          trainFeedbackBox.textContent = '🎉 Excellent! Train completed accurately: [ ' + puzzle.display.replace(/\\?/g, (m, offset) => (offset < 15 ? puzzle.a1 : puzzle.a2)) + ' ]';
           speakVernacular("Excellent! Number train completed accurately.");
         } else {
           trainFeedbackBox.style.color = '#FECACA';
@@ -1679,3 +1681,7 @@
   </script>
 </body>
 </html>
+`;
+
+fs.writeFileSync('index.html', htmlContent, 'utf8');
+console.log('Successfully written production-grade single-file index.html!');
