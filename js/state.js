@@ -1,11 +1,21 @@
 /**
- * VidyaSetu - Decoupled Reactive State Store
- * Isolates application state from DOM mutations and imperativeness.
+ * VidyaSetu - Decoupled Reactive Pedagogy State Store & FSM
+ * Implements 15-Minute Multi-Grade Finite State Machine, Diagnostic Queue, and Input Sanitizer.
  */
 'use strict';
 
 const StateStore = (() => {
   const subscribers = new Set();
+
+  // Formal 15-Minute Multi-Grade FSM States
+  const FSM_STATES = {
+    STANDBY: 'STANDBY',
+    PHASE_1_DIRECT_G1: 'PHASE_1_DIRECT_G1',         // Teacher with Grade 1; Grade 2/3 peer-slate activity
+    ROTATION_TRANSITION: 'ROTATION_TRANSITION',     // Bell chime, switch guidance, audio prompt
+    PHASE_2_DIRECT_G2_3: 'PHASE_2_DIRECT_G2_3',     // Teacher with Grade 2/3; Grade 1 independent slate activity
+    DIAGNOSTIC_REMEDIATION: 'DIAGNOSTIC_REMEDIATION',// 2-min oral catchup evaluation
+    PAUSED: 'PAUSED'
+  };
 
   const state = {
     schoolMode: 'rural', // 'rural' | 'urban'
@@ -13,14 +23,17 @@ const StateStore = (() => {
     gradeFocus: 1, // 1 = Grade 1 Direct, 2 = Grade 2/3 Direct
     timerRunning: false,
     secondsRemaining: 900,
+    startTime: null,
     targetEndTime: null,
     totalCycleSeconds: 900,
+    fsmState: FSM_STATES.STANDBY,
     nipunScore: 68,
     edgeApiKey: '',
     speechAvailable: false,
     speechNotice: '',
     selectedDialect: 'awadhi_bhojpuri',
-    remediationPendingCount: 0
+    remediationPendingCount: 0,
+    diagnosticQueue: []
   };
 
   // Safe localStorage read on boot
@@ -51,7 +64,6 @@ const StateStore = (() => {
 
   function subscribe(listener) {
     subscribers.add(listener);
-    // Immediately emit current state on subscription
     try {
       listener(getState());
     } catch (e) {
@@ -71,13 +83,69 @@ const StateStore = (() => {
     });
   }
 
+  // 15-Minute Multi-Grade FSM State Transitions
+  function transitionFSM(action, payload = {}) {
+    const prevFsm = state.fsmState;
+    let nextFsm = prevFsm;
+
+    switch (action) {
+      case 'START_CYCLE':
+        nextFsm = state.gradeFocus === 1 ? FSM_STATES.PHASE_1_DIRECT_G1 : FSM_STATES.PHASE_2_DIRECT_G2_3;
+        break;
+      case 'PAUSE_CYCLE':
+        nextFsm = FSM_STATES.PAUSED;
+        break;
+      case 'RESUME_CYCLE':
+        nextFsm = state.gradeFocus === 1 ? FSM_STATES.PHASE_1_DIRECT_G1 : FSM_STATES.PHASE_2_DIRECT_G2_3;
+        break;
+      case 'TRIGGER_ROTATION':
+        nextFsm = FSM_STATES.ROTATION_TRANSITION;
+        break;
+      case 'COMPLETE_ROTATION':
+        nextFsm = state.gradeFocus === 1 ? FSM_STATES.PHASE_1_DIRECT_G1 : FSM_STATES.PHASE_2_DIRECT_G2_3;
+        break;
+      case 'OPEN_DIAGNOSTIC':
+        nextFsm = FSM_STATES.DIAGNOSTIC_REMEDIATION;
+        break;
+      case 'CLOSE_DIAGNOSTIC':
+        nextFsm = state.timerRunning ? (state.gradeFocus === 1 ? FSM_STATES.PHASE_1_DIRECT_G1 : FSM_STATES.PHASE_2_DIRECT_G2_3) : FSM_STATES.STANDBY;
+        break;
+      default:
+        console.warn('[StateStore] Unknown FSM action:', action);
+    }
+
+    if (nextFsm !== prevFsm) {
+      setState({ fsmState: nextFsm, ...payload });
+    }
+  }
+
+  // Input Sanitization Helper (Security Layer)
+  function sanitizeInput(str, maxLength = 60) {
+    if (typeof str !== 'string') return '';
+    return str
+      .normalize('NFC')
+      .replace(/[<>&"'`]/g, '') // Strip HTML tag and attribute delimiters
+      .replace(/[\x00-\x1F\x7F]/g, '') // Strip control characters
+      .trim()
+      .substring(0, maxLength);
+  }
+
   return {
     getState,
     setState,
-    subscribe
+    subscribe,
+    transitionFSM,
+    sanitizeInput,
+    FSM_STATES
   };
 })();
 
+if (typeof window !== 'undefined') {
+  window.StateStore = StateStore;
+}
+if (typeof globalThis !== 'undefined') {
+  globalThis.StateStore = StateStore;
+}
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { StateStore };
 }

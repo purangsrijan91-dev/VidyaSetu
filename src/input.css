@@ -19,6 +19,11 @@ html, body {
   user-select: none;
 }
 
+/* WCAG AAA 64px Touch Geometry for Rural Primary Teachers */
+.min-h-touch {
+  min-height: 64px;
+}
+
 /* 60fps Hardware Accelerated Scrolling on Budget Android Go */
 .gpu-accelerated {
   transform: translateZ(0);

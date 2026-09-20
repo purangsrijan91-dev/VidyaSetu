@@ -208,10 +208,18 @@ Return ONLY a valid JSON object:
 
   return {
     generateAnalogy,
-    getKnowledgeBankSize
+    getKnowledgeBankSize,
+    DialectAnalogyTable: syllabusKnowledgeBank,
+    DialectVillageArchetypes: dialectVillageArchetypes
   };
 })();
 
+if (typeof window !== 'undefined') {
+  window.GenerativeRAG = GenerativeRAG;
+}
+if (typeof globalThis !== 'undefined') {
+  globalThis.GenerativeRAG = GenerativeRAG;
+}
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { GenerativeRAG };
 }

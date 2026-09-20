@@ -193,9 +193,62 @@ const StorageVault = (() => {
     }
   }
 
+  // Diagnostic Queue Subsystem (FIFO Queue persisted in Encrypted Vault)
+  async function enqueueDiagnosticStudent(student) {
+    try {
+      const records = await getStudentRecords();
+      const entry = {
+        ...student,
+        id: 'diag_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+        queuedAt: Date.now(),
+        status: 'pending'
+      };
+      records.push(entry);
+      const encrypted = await encryptData(JSON.stringify(records));
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(VAULT_KEY_PREFIX, encrypted);
+      }
+      StateStore.setState({ 
+        remediationPendingCount: records.filter(r => !r.isProficient || r.status === 'pending').length,
+        diagnosticQueue: records.filter(r => r.status === 'pending')
+      });
+      return entry;
+    } catch (e) {
+      console.warn('[StorageVault] Enqueue diagnostic failed:', e);
+      return null;
+    }
+  }
+
+  async function dequeueDiagnosticStudent() {
+    try {
+      const records = await getStudentRecords();
+      const pendingIdx = records.findIndex(r => r.status === 'pending');
+      if (pendingIdx === -1) return null;
+      const item = records[pendingIdx];
+      item.status = 'in_progress';
+      const encrypted = await encryptData(JSON.stringify(records));
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(VAULT_KEY_PREFIX, encrypted);
+      }
+      StateStore.setState({ diagnosticQueue: records.filter(r => r.status === 'pending') });
+      return item;
+    } catch (e) {
+      console.warn('[StorageVault] Dequeue diagnostic failed:', e);
+      return null;
+    }
+  }
+
+  async function getDiagnosticQueue() {
+    const records = await getStudentRecords();
+    return records.filter(r => r.status === 'pending' || !r.isProficient);
+  }
+
   return {
     saveStudentRecord,
     getStudentRecords,
+    enqueueDiagnosticStudent,
+    dequeueDiagnosticStudent,
+    getDiagnosticQueue,
     benchmarkStorageLatency
   };
 })();

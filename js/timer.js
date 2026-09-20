@@ -36,9 +36,13 @@ const TimerEngine = (() => {
     StateStore.setState({
       timerRunning: true,
       secondsRemaining: durationSeconds,
+      startTime: startTime,
       targetEndTime: targetEndTime,
       totalCycleSeconds: durationSeconds
     });
+    if (typeof StateStore.transitionFSM === 'function') {
+      StateStore.transitionFSM('START_CYCLE');
+    }
 
     if (intervalId) clearInterval(intervalId);
     intervalId = setInterval(syncDeltaTick, 500); // 500ms check avoids boundary clipping
@@ -65,6 +69,9 @@ const TimerEngine = (() => {
       secondsRemaining: remainingSeconds,
       targetEndTime: null
     });
+    if (typeof StateStore.transitionFSM === 'function') {
+      StateStore.transitionFSM('PAUSE_CYCLE');
+    }
   }
 
   function resume() {

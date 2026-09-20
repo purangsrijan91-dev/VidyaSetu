@@ -24,14 +24,14 @@ const DiagnosticsEngine = (() => {
             minMeasuredHeight = Math.round(rect.height);
             sampleButtonId = id;
           }
-          if (rect.height < 56 || rect.width < 56) {
+          if (rect.height < 64 || rect.width < 64) {
             touchPass = false;
           }
         }
       }
 
       results.push({
-        name: `बटन टच टारगेट माप (WCAG >= 56px)`,
+        name: `बटन टच टारगेट माप (WCAG AAA >= 64px)`,
         pass: touchPass,
         detail: `वास्तविक मापित: ${minMeasuredHeight}px (#${sampleButtonId})`
       });

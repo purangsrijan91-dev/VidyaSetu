@@ -233,7 +233,11 @@ const AppController = (() => {
   // Generative Bhasha Setu Action
   async function generatePedagogicalAnalogy() {
     const inputEl = document.getElementById('concept-custom-input');
-    const query = (inputEl?.value || 'घटाव').trim();
+    const rawVal = inputEl?.value || 'घटाव';
+    const cleanQuery = (typeof StateStore.sanitizeInput === 'function')
+      ? StateStore.sanitizeInput(rawVal, 80)
+      : rawVal.trim().substring(0, 80);
+    const query = cleanQuery || 'घटाव';
     const dialectEl = document.getElementById('dialect-selector');
     const dialectKey = dialectEl?.value || 'awadhi_bhojpuri';
     const state = StateStore.getState();
@@ -377,9 +381,16 @@ const AppController = (() => {
   // 100% Pure DOM Construction for Catch-Up Diagnostic (Immune to DOM XSS)
   function launchCatchUpDiagnostic() {
     const inputEl = document.getElementById('student-name-input');
-    const rawStudentName = inputEl ? inputEl.value.trim() : '';
-    const studentName = rawStudentName || 'रोहन (कक्षा 2)';
+    const rawStudentName = inputEl ? inputEl.value : '';
+    const cleanName = (typeof StateStore.sanitizeInput === 'function')
+      ? StateStore.sanitizeInput(rawStudentName, 60)
+      : rawStudentName.trim().substring(0, 60);
+    const studentName = cleanName || 'रोहन (कक्षा 2)';
     
+    if (typeof StateStore.transitionFSM === 'function') {
+      StateStore.transitionFSM('OPEN_DIAGNOSTIC');
+    }
+
     const reasonEl = document.getElementById('absence-reason');
     const reason = reasonEl ? reasonEl.value : 'harvest';
     const reasonText = reason === 'harvest' ? 'रबी/खरीफ कटाई' : reason === 'migration' ? 'पारिवारिक प्रवास' : 'स्वास्थ्य कारण';

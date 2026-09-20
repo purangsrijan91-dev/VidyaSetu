@@ -121,6 +121,27 @@ async function runSuite() {
     StateStore.setState({ schoolMode: 'rural' });
   });
 
+  runTest('15-Minute Multi-Grade FSM transitions predictably across pedagogical phases', () => {
+    StateStore.transitionFSM('START_CYCLE');
+    assert.strictEqual(StateStore.getState().fsmState, 'PHASE_1_DIRECT_G1');
+    StateStore.transitionFSM('PAUSE_CYCLE');
+    assert.strictEqual(StateStore.getState().fsmState, 'PAUSED');
+    StateStore.transitionFSM('RESUME_CYCLE');
+    assert.strictEqual(StateStore.getState().fsmState, 'PHASE_1_DIRECT_G1');
+    StateStore.transitionFSM('OPEN_DIAGNOSTIC');
+    assert.strictEqual(StateStore.getState().fsmState, 'DIAGNOSTIC_REMEDIATION');
+    StateStore.transitionFSM('CLOSE_DIAGNOSTIC');
+  });
+
+  runTest('InputSanitizer cleanses malicious XSS markup and control characters', () => {
+    const dirtyInput = '<script>alert("hacked")</script>राजेश कुमार \x00\x1F';
+    const cleaned = StateStore.sanitizeInput(dirtyInput, 50);
+    assert.strictEqual(cleaned.includes('<'), false);
+    assert.strictEqual(cleaned.includes('>'), false);
+    assert.strictEqual(cleaned.includes('"'), false);
+    assert.ok(cleaned.includes('राजेश कुमार'));
+  });
+
   // --- 2. True Delta-Time Clock Tests ---
   console.log('\n⏱️ 2. True Delta-Time Clock Subsystem');
   runTest('Timer initializes without drift', () => {
@@ -177,6 +198,24 @@ async function runSuite() {
     const bench = await StorageVault.benchmarkStorageLatency();
     assert.strictEqual(bench.pass, true);
     assert.ok(typeof bench.latencyMs === 'number');
+  });
+
+  await runAsyncTest('Diagnostic Queue enqueues and dequeues remediation students FIFO', async () => {
+    const entry = await StorageVault.enqueueDiagnosticStudent({
+      name: 'पिंकी (कक्षा 1)',
+      reason: 'health',
+      isProficient: false
+    });
+    assert.ok(entry);
+    assert.strictEqual(entry.name, 'पिंकी (कक्षा 1)');
+    assert.strictEqual(entry.status, 'pending');
+
+    const queue = await StorageVault.getDiagnosticQueue();
+    assert.ok(queue.some(q => q.name === 'पिंकी (कक्षा 1)'));
+
+    const dequeued = await StorageVault.dequeueDiagnosticStudent();
+    assert.ok(dequeued);
+    assert.strictEqual(dequeued.status, 'in_progress');
   });
 
   // --- 4. Generative Bhasha Setu Tests ---

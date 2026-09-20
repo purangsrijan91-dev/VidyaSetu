@@ -48,7 +48,8 @@ module.exports = {
         'teacher-base': ['1.25rem', { lineHeight: '1.9rem' }],
         'teacher-title': ['1.75rem', { lineHeight: '2.25rem' }]
       },
-      minHeight: { 'touch': '56px' }
+      minHeight: { 'touch': '64px', 'touch-sm': '56px' },
+      minWidth: { 'touch': '64px' }
     }
   },
   plugins: [],
