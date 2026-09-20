@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+
+const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -1469,7 +1472,7 @@
         if ('speechSynthesis' in window) {
           try {
             window.speechSynthesis.cancel();
-            const cleanText = text.replace(/(\d+)\s*[-–—]\s*(\d+)/g, '$1 to $2');
+            const cleanText = text.replace(/(\\d+)\\s*[-–—]\\s*(\\d+)/g, '$1 to $2');
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.pitch = 1.18;
             utterance.rate = 0.88;
@@ -2088,7 +2091,7 @@
         trainFeedbackBox.style.display = 'block';
         if (v1 === puzzle.a1 && v2 === puzzle.a2) {
           trainFeedbackBox.style.color = '#A7F3D0';
-          trainFeedbackBox.textContent = '🎉 Excellent! Train completed accurately: [ ' + puzzle.display.replace(/\?/g, (m, offset) => (offset < 15 ? puzzle.a1 : puzzle.a2)) + ' ]';
+          trainFeedbackBox.textContent = '🎉 Excellent! Train completed accurately: [ ' + puzzle.display.replace(/\\?/g, (m, offset) => (offset < 15 ? puzzle.a1 : puzzle.a2)) + ' ]';
           announceSpeech("Excellent! Number train completed accurately.");
         } else {
           trainFeedbackBox.style.color = '#FECACA';
@@ -2398,7 +2401,7 @@
 
       function renderDynamicProblem() {
         const gradeStr = selectGrade.value || "Grade 1";
-        const gradeNum = parseInt(gradeStr.replace(/\D/g, ''), 10) || 1;
+        const gradeNum = parseInt(gradeStr.replace(/\\D/g, ''), 10) || 1;
         const subj = selectSubject.value || "Mathematics";
 
         currentActiveProblem = generateDynamicProblem(gradeNum, subj);
@@ -2986,3 +2989,7 @@
   </script>
 </body>
 </html>
+`;
+
+fs.writeFileSync(path.join(__dirname, '..', 'index.html'), htmlContent.trim() + '\n', 'utf8');
+console.log('Successfully written master refactored index.html!');
