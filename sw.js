@@ -1,5 +1,6 @@
 // VidyaSetu Service Worker - Zero-Connectivity Offline Engine (sw.js)
-const CACHE_NAME = 'vidyasetu-v3';
+// Updated for instant access on normal refresh with Network-First navigation & Stale-While-Revalidate
+const CACHE_NAME = 'vidyasetu-v5-emeritus';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -21,11 +22,14 @@ const CORE_ASSETS = [
 
 // 1. Install Event: Pre-cache all core HTML, CSS, manifest, icons, and modular JS
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[VidyaSetu SW] Pre-caching core assets for zero-connectivity classrooms');
-      return cache.addAll(CORE_ASSETS);
-    }).then(() => self.skipWaiting())
+      return cache.addAll(CORE_ASSETS).catch((err) => {
+        console.warn('[VidyaSetu SW] Cache addAll partial failure:', err);
+      });
+    })
   );
 });
 
@@ -45,32 +49,60 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. Fetch Event: Cache-First strategy for instant launching in zero-connectivity environments
+// 3. Fetch Event:
+// - Network-First for HTML navigation: guarantees normal refreshes load freshest deploy when online, falls back to cache offline
+// - Stale-While-Revalidate for static assets: instant load with background cache refresh
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+  const url = new URL(event.request.url);
 
-      return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200) {
+  // Allow cross-origin media/video iframes to pass through normally
+  if (url.origin !== self.location.origin) return;
+
+  const isNavigation = event.request.mode === 'navigate' ||
+                       event.request.destination === 'document' ||
+                       event.request.headers.get('accept')?.includes('text/html');
+
+  if (isNavigation) {
+    // Network-First for HTML pages
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
           return networkResponse;
-        }
+        })
+        .catch(() => {
+          // Offline fallback
+          return caches.match(event.request).then((cached) => {
+            return cached || caches.match('./index.html');
+          });
+        })
+    );
+    return;
+  }
 
-        const responseClone = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
+  // Stale-While-Revalidate for static assets (CSS, JS, fonts, icons)
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => cachedResponse);
 
-        return networkResponse;
-      }).catch(() => {
-        if (event.request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('./index.html');
-        }
-      });
+      return cachedResponse || fetchPromise;
     })
   );
 });
