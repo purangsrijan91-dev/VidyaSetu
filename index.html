@@ -669,6 +669,115 @@
         scroll-behavior: auto !important;
       }
     }
+
+    /* Accessible Walkthrough Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow-y: auto;
+    }
+    .modal-dialog {
+      background: var(--bg-surface);
+      border-radius: 1.25rem;
+      border: 1.5px solid var(--border-subtle);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 780px;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      outline: none;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1.5px solid var(--border-subtle);
+      background: var(--bg-canvas);
+      border-top-left-radius: 1.25rem;
+      border-top-right-radius: 1.25rem;
+    }
+    .modal-close-btn {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-main);
+      font-size: 1.25rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .modal-close-btn:hover {
+      background: #FEE2E2;
+      border-color: #EF4444;
+      color: #B91C1C;
+    }
+    .modal-close-btn:focus-visible {
+      outline: 3px solid var(--accent-saffron);
+      outline-offset: 2px;
+    }
+    .modal-body {
+      padding: 1.5rem;
+    }
+    .walkthrough-audio-box {
+      background: var(--bg-canvas);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 0.75rem;
+      padding: 1rem;
+    }
+
+    /* Header Actions and Language Toggle */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .lang-toggle-btn {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-strong);
+      color: var(--accent-navy-dark);
+      cursor: pointer;
+      font-size: 0.88rem;
+      border-radius: 0.5rem;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .lang-toggle-btn:hover {
+      background: var(--bg-canvas);
+      border-color: var(--accent-saffron);
+    }
+    .lang-toggle-btn:focus-visible {
+      outline: 3px solid var(--accent-saffron);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 640px) {
+      .header-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+      .header-actions button {
+        flex: 1 1 auto;
+        justify-content: center;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -676,7 +785,7 @@
   <!-- Top Trust Ribbon -->
   <div class="top-trust-bar" role="complementary" aria-label="Alignment Information">
     <span class="pill">NIPUN Bharat Aligned</span>
-    <span>FLN Mission • Multigrade &amp; Multilingual Classroom Architecture • 100% Offline Functional</span>
+    <span data-i18n="marquee_text">FLN Mission • Multigrade &amp; Multilingual Classroom Architecture • 100% Offline Functional</span>
   </div>
 
   <!-- Header -->
@@ -686,16 +795,42 @@
       <div class="brand-text">
         <h1>VidyaSetu (विद्यासेतु) • FLN Classroom Copilot</h1>
         <div class="header-badges">
-          <span class="header-badge badge-teal">NIPUN Bharat Aligned</span>
-          <span class="header-badge badge-navy">15-Min MGML Cycle</span>
-          <span class="header-badge badge-neutral">NCERT/NIPUN Aligned</span>
+          <span class="header-badge badge-teal" data-i18n="badge_nipun">NIPUN Bharat Aligned</span>
+          <span class="header-badge badge-navy" data-i18n="badge_mgml">15-Min MGML Cycle</span>
+          <span class="header-badge badge-neutral" data-i18n="badge_ncert">NCERT/NIPUN Aligned</span>
         </div>
       </div>
     </div>
 
-    <div>
-      <button id="btn-start-tour" class="btn-secondary" style="min-height: 48px; width: auto; padding: 0.5rem 1.25rem;">
+    <div class="header-actions">
+      <button
+        id="btn-how-it-works"
+        class="btn-primary"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        style="min-height: 48px; min-width: 48px; padding: 0.5rem 1.15rem; font-weight: 700;"
+        data-i18n="how_it_works_btn"
+      >
+        ▶ How it Works
+      </button>
+
+      <button
+        id="btn-start-tour"
+        class="btn-secondary"
+        style="min-height: 48px; min-width: 48px; padding: 0.5rem 1.15rem;"
+        data-i18n="interactive_tour_btn"
+      >
         🎬 Interactive Walkthrough
+      </button>
+
+      <button
+        id="btn-lang-toggle"
+        class="btn-secondary lang-toggle-btn"
+        aria-label="Switch language to Hindi"
+        style="min-height: 48px; min-width: 48px; padding: 0.5rem 1rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem;"
+      >
+        <span aria-hidden="true">🌐</span>
+        <span id="lang-toggle-text">हिन्दी / English</span>
       </button>
     </div>
   </header>
@@ -704,15 +839,15 @@
 
     <!-- Hero / Status Overview Section -->
     <section class="hero-container" aria-labelledby="hero-title">
-      <h2 id="hero-title">Teaching Multigrade Classrooms with Practical Ease</h2>
+      <h2 id="hero-title" data-i18n="hero_title">Teaching Multigrade Classrooms with Practical Ease</h2>
       <p>
         Engineered specifically for single-teacher rural primary schools facing multigrade combinations, dialect barriers, and post-absence learning loss. High-contrast, zero external CDNs, and fully offline-functional.
       </p>
       <div class="hero-pills">
-        <span class="hero-pill-tag">✓ 100% Offline Resilience</span>
-        <span class="hero-pill-tag">✓ Hardware Clock Delta Sync</span>
-        <span class="hero-pill-tag">✓ Safe DOM Architecture</span>
-        <span class="hero-pill-tag">✓ WCAG 2.2 AAA Compliant</span>
+        <span class="hero-pill-tag" data-i18n="hero_offline">✓ 100% Offline Resilience</span>
+        <span class="hero-pill-tag" data-i18n="hero_clock">✓ Hardware Clock Delta Sync</span>
+        <span class="hero-pill-tag" data-i18n="hero_safe">✓ Safe DOM Architecture</span>
+        <span class="hero-pill-tag" data-i18n="hero_wcag">✓ WCAG 2.2 AAA Compliant</span>
       </div>
     </section>
 
@@ -721,9 +856,9 @@
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
         <strong style="font-size: 0.95rem; color: var(--accent-navy-dark); display: flex; align-items: center; gap: 0.5rem;">
           <span aria-hidden="true">🎙️</span>
-          <span>Classroom Copilot (Deterministic &amp; Offline):</span>
+          <span data-i18n="copilot_heading">Classroom Copilot (Deterministic &amp; Offline):</span>
         </strong>
-        <span id="voice-status-label" style="font-size: 0.8rem; color: var(--text-muted);">Type or click suggested prompts for immediate classroom micro-scripts</span>
+        <span id="voice-status-label" style="font-size: 0.8rem; color: var(--text-muted);" data-i18n="copilot_status">Type or click suggested prompts for immediate classroom micro-scripts</span>
       </div>
 
       <div class="voice-input-row">
@@ -755,10 +890,10 @@
       <article id="card-mgml" class="feature-card" aria-labelledby="heading-mgml">
         <div>
           <div class="card-meta">
-            <span class="card-solver-tag">Core Solver 1 • Rotation Engine</span>
+            <span class="card-solver-tag" data-i18n="solver_1_tag">Core Solver 1 • Rotation Engine</span>
             <span id="badge-current-phase" class="header-badge badge-saffron">Phase A: Grade 1 Focus</span>
           </div>
-          <h2 id="heading-mgml" class="card-title">15-Minute Multi-Grade Rotation Engine</h2>
+          <h2 id="heading-mgml" class="card-title" data-i18n="heading_mgml">15-Minute Multi-Grade Rotation Engine</h2>
           <p class="card-desc">
             Orchestrate concurrent teaching: direct instruction with Grade 1 while Grades 2 &amp; 3 perform collaborative slate and manipulative tasks.
           </p>
@@ -812,18 +947,18 @@
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
             <button id="btn-toggle-timer" class="btn-primary" style="flex: 2; min-width: 160px;">
               <span id="timer-btn-icon">⏱️</span>
-              <span id="timer-btn-text">Start 15-Min Cycle</span>
+              <span id="timer-btn-text" data-i18n="timer_start_btn">Start 15-Min Cycle</span>
             </button>
-            <button id="btn-switch-focus" class="btn-secondary" style="flex: 1; min-width: 130px;">
+            <button id="btn-switch-focus" class="btn-secondary" style="flex: 1; min-width: 130px;" data-i18n="timer_switch_btn">
               🔄 Switch Focus
             </button>
-            <button id="btn-reset-timer" class="btn-secondary" style="flex: 1; min-width: 90px;" aria-label="Reset 15-minute timer">
+            <button id="btn-reset-timer" class="btn-secondary" style="flex: 1; min-width: 90px;" aria-label="Reset 15-minute timer" data-i18n="timer_reset_btn" data-i18n-aria="timer_reset_aria">
               Reset
             </button>
           </div>
 
           <div style="margin-top: 0.5rem; text-align: center;">
-            <button id="btn-test-bell" class="btn-secondary" style="min-height: 40px; font-size: 0.8rem; padding: 0.35rem 0.75rem; width: auto;">
+            <button id="btn-test-bell" class="btn-secondary" style="min-height: 40px; font-size: 0.8rem; padding: 0.35rem 0.75rem; width: auto;" data-i18n="timer_bell_btn">
               🔔 Test Acoustic Bell
             </button>
           </div>
@@ -834,10 +969,10 @@
       <article id="card-bhasha" class="feature-card" aria-labelledby="heading-bhasha">
         <div>
           <div class="card-meta">
-            <span class="card-solver-tag">Core Solver 2 • Vernacular Bridge</span>
-            <span class="header-badge badge-teal">NIPUN Bhasha</span>
+            <span class="card-solver-tag" data-i18n="solver_2_tag">Core Solver 2 • Vernacular Bridge</span>
+            <span class="header-badge badge-teal" data-i18n="badge_bhasha">NIPUN Bhasha</span>
           </div>
-          <h2 id="heading-bhasha" class="card-title">Language Bridge (Bhasha Setu)</h2>
+          <h2 id="heading-bhasha" class="card-title" data-i18n="heading_bhasha">Language Bridge (Bhasha Setu)</h2>
           <p class="card-desc">
             A curated NCERT/NIPUN Bharat-aligned learning dataset for Grades 1–3 bridging textbook concepts with child-grounded vernacular metaphors.
           </p>
@@ -846,21 +981,21 @@
           <div style="display: flex; flex-direction: column; gap: 0.65rem; margin: 1rem 0;">
             <div>
               <label for="select-grade" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">
-                Select Grade (कक्षा चुनें):
+                <span data-i18n="lbl_grade">Select Grade (कक्षा चुनें):</span>
               </label>
               <select id="select-grade" class="custom-select"></select>
             </div>
 
             <div>
               <label for="select-subject" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">
-                Select Subject (विषय चुनें):
+                <span data-i18n="lbl_subject">Select Subject (विषय चुनें):</span>
               </label>
               <select id="select-subject" class="custom-select"></select>
             </div>
 
             <div>
               <label for="select-topic" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.2rem;">
-                Select Concept Topic (अवधारणा चुनें):
+                <span data-i18n="lbl_topic">Select Concept Topic (अवधारणा चुनें):</span>
               </label>
               <select id="select-topic" class="custom-select"></select>
             </div>
@@ -881,10 +1016,10 @@
       <article id="card-absentee" class="feature-card" aria-labelledby="heading-absentee">
         <div>
           <div class="card-meta">
-            <span class="card-solver-tag">Core Solver 3 • Post-Absence Remediation</span>
+            <span class="card-solver-tag" data-i18n="solver_3_tag">Core Solver 3 • Post-Absence Remediation</span>
             <span id="active-roster-count-badge" class="header-badge badge-saffron">0 Pending</span>
           </div>
-          <h2 id="heading-absentee" class="card-title">Absenteeism Rapid Catch-Up Triage</h2>
+          <h2 id="heading-absentee" class="card-title" data-i18n="heading_absentee">Absenteeism Rapid Catch-Up Triage</h2>
           <p class="card-desc">
             Conduct 2-minute oral diagnostic screenings for returning students and immediately assign front-row peer buddies.
           </p>
@@ -893,9 +1028,9 @@
           <div style="display: flex; gap: 0.5rem; margin: 0.85rem 0; flex-wrap: wrap;">
             <input type="text" id="absentee-name-input" class="text-input" placeholder="Returning student name..." value="Rohan Kumar" aria-label="Returning student name" style="flex: 2; min-width: 160px;" />
             <select id="absentee-days-select" class="custom-select" style="flex: 1; min-width: 130px;" aria-label="Days absent">
-              <option value="Absent 3-5 days">Absent 3-5 days</option>
-              <option value="Absent 1-2 weeks">Absent 1-2 weeks</option>
-              <option value="Post-harvest return (3+ weeks)">Post-harvest return (3+ weeks)</option>
+              <option value="Absent 3-5 days" data-i18n="opt_duration_35">Absent 3-5 days</option>
+              <option value="Absent 1-2 weeks" data-i18n="opt_duration_12">Absent 1-2 weeks</option>
+              <option value="Post-harvest return (3+ weeks)" data-i18n="opt_duration_harvest">Post-harvest return (3+ weeks)</option>
             </select>
           </div>
 
@@ -922,10 +1057,10 @@
       <article id="card-tlm" class="feature-card" aria-labelledby="heading-tlm">
         <div>
           <div class="card-meta">
-            <span class="card-solver-tag">Core Solver 4 • Zero-Cost TLM &amp; Practice</span>
-            <span class="header-badge badge-teal">Chalkboard Games</span>
+            <span class="card-solver-tag" data-i18n="solver_4_tag">Core Solver 4 • Zero-Cost TLM &amp; Practice</span>
+            <span class="header-badge badge-teal" data-i18n="badge_tlm">Chalkboard Games</span>
           </div>
-          <h2 id="heading-tlm" class="card-title">Zero-Cost Chalkboard TLM &amp; Practice Generator</h2>
+          <h2 id="heading-tlm" class="card-title" data-i18n="heading_tlm">Zero-Cost Chalkboard TLM &amp; Practice Generator</h2>
           <p class="card-desc">
             Engage concurrent grades with interactive chalkboard math trains, dynamic problem generation, and zero-cost rural manipulatives.
           </p>
@@ -940,9 +1075,9 @@
             </div>
 
             <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-              <span style="font-size: 0.82rem; color: #E2E8F0;">Carriage 2:</span>
+              <span style="font-size: 0.82rem; color: #E2E8F0;" data-i18n="carriage_2_lbl">Carriage 2:</span>
               <input type="number" id="train-inp-1" placeholder="?" style="width: 58px; min-height: 40px; border-radius: 0.35rem; border: 2px solid #FDE047; background: #0F172A; color: #FFF; font-weight: 800; text-align: center;" />
-              <span style="font-size: 0.82rem; color: #E2E8F0;">Carriage 4:</span>
+              <span style="font-size: 0.82rem; color: #E2E8F0;" data-i18n="carriage_4_lbl">Carriage 4:</span>
               <input type="number" id="train-inp-2" placeholder="?" style="width: 58px; min-height: 40px; border-radius: 0.35rem; border: 2px solid #FDE047; background: #0F172A; color: #FFF; font-weight: 800; text-align: center;" />
               <button id="btn-verify-train" class="btn-primary" style="width: auto; min-height: 40px; padding: 0.3rem 0.85rem; font-size: 0.85rem;">
                 Verify Train
@@ -956,7 +1091,7 @@
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
               <div id="heading-practice" style="font-size: 0.88rem; font-weight: 800; color: var(--accent-navy-dark); display: flex; align-items: center; gap: 0.4rem;">
                 <span>🎯</span>
-                <span>Dynamic Practice Generator (मूर्त अभ्यास)</span>
+                <span data-i18n="heading_practice">Dynamic Practice Generator (मूर्त अभ्यास)</span>
               </div>
               <div id="mastery-stats-bar" style="display: flex; gap: 0.6rem; font-size: 0.78rem; font-weight: 800;">
                 <span class="header-badge badge-teal" id="stat-completed">अभ्यास पूरे: 0</span>
@@ -994,7 +1129,7 @@
         </div>
 
         <div style="margin-top: 0.5rem;">
-          <button id="btn-next-puzzle" class="btn-secondary" style="min-height: 52px;">
+          <button id="btn-next-puzzle" class="btn-secondary" style="min-height: 52px;" data-i18n="btn_next_puzzle">
             🎲 Generate Next Number Train Puzzle
           </button>
         </div>
@@ -1005,8 +1140,8 @@
     <!-- Video Section with Google Drive Pop-Out Overlay & Offline Graceful Fallback -->
     <section class="video-section-box" aria-labelledby="heading-video">
       <div style="margin-bottom: 1rem;">
-        <span class="card-solver-tag">Field Documentation • 90 Seconds</span>
-        <h2 id="heading-video" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-navy-dark); margin-top: 0.25rem;">
+        <span class="card-solver-tag" data-i18n="solver_video_tag">Field Documentation • 90 Seconds</span>
+        <h2 id="heading-video" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-navy-dark); margin-top: 0.25rem;" data-i18n="heading_video">
           Classroom Complexity in Indian Primary Schools
         </h2>
         <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 0.25rem;">
@@ -1035,6 +1170,66 @@
       </div>
     </section>
 
+  </div>
+
+
+  <!-- Accessible Walkthrough Modal Dialog -->
+  <div id="walkthrough-modal-backdrop" class="modal-backdrop" style="display: none;" role="presentation">
+    <div
+      id="walkthrough-dialog"
+      class="modal-dialog walkthrough-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="walkthrough-dialog-title"
+      tabindex="-1"
+    >
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;" aria-hidden="true">🎬</span>
+          <h2 id="walkthrough-dialog-title" data-i18n="walkthrough_title" style="font-size: 1.15rem; font-weight: 800; color: var(--accent-navy-dark); margin: 0;">
+            VidyaSetu • How it Works Walkthrough
+          </h2>
+        </div>
+        <button
+          id="btn-close-walkthrough"
+          class="modal-close-btn"
+          aria-label="Close walkthrough dialog"
+          data-i18n-aria="btn_close_walkthrough_aria"
+        >✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div class="video-container" style="margin-bottom: 1rem; border-radius: 0.75rem; overflow: hidden; background: #0F172A;">
+          <iframe
+            id="walkthrough-video-frame"
+            class="video-iframe"
+            src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview"
+            title="VidyaSetu Classroom Field Demonstration Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          ></iframe>
+        </div>
+
+        <div class="walkthrough-audio-box">
+          <button
+            id="btn-audio-explain"
+            class="btn-primary"
+            style="min-height: 48px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1rem; font-weight: 700;"
+            aria-label="Play voice explanation of four VidyaSetu capabilities"
+          >
+            <span id="audio-explain-icon" aria-hidden="true">🔊</span>
+            <span id="audio-explain-text" data-i18n="play_voice_explanation">Play Voice Explanation</span>
+          </button>
+          <div
+            id="audio-explain-status"
+            class="audio-explain-status"
+            aria-live="polite"
+            style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); text-align: center; min-height: 1.25rem;"
+          ></div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Site Footer -->
@@ -1415,19 +1610,189 @@
       };
 
       // =========================================================================
-      // 2. ENHANCED VOICE SYNTHESIS ENGINE (SECTION 2 SPECIFICATION)
+      // 2. CENTRALIZED LOCALIZATION DICTIONARY & PERSISTENCE (PROMPT 10 SECTION 4 & 5)
+      // =========================================================================
+      function getInitialLanguage() {
+        try {
+          const saved = localStorage.getItem('vidyasetu_lang');
+          if (saved === 'hi' || saved === 'en') {
+            return saved;
+          }
+        } catch (e) {
+          console.warn('localStorage not accessible for language persistence:', e);
+        }
+        return 'en'; // Default is English
+      }
+
+      function saveLanguage(lang) {
+        try {
+          localStorage.setItem('vidyasetu_lang', lang);
+        } catch (e) {
+          console.warn('Failed to persist language in localStorage:', e);
+        }
+      }
+
+      const TRANSLATIONS = {
+        en: {
+          app_title: "VidyaSetu (विद्यासेतु) • FLN Classroom Copilot",
+          badge_nipun: "NIPUN Bharat Aligned",
+          badge_mgml: "15-Min MGML Cycle",
+          badge_ncert: "NCERT/NIPUN Aligned",
+          how_it_works_btn: "▶ How it Works",
+          interactive_tour_btn: "🎬 Interactive Walkthrough",
+          lang_toggle_label: "हिन्दी / English",
+          lang_toggle_aria: "Switch language to Hindi",
+          marquee_text: "FLN Mission • Multigrade & Multilingual Classroom Architecture • 100% Offline Functional",
+          hero_title: "Teaching Multigrade Classrooms with Practical Ease",
+          hero_offline: "✓ 100% Offline Resilience",
+          hero_clock: "✓ Hardware Clock Delta Sync",
+          hero_safe: "✓ Safe DOM Architecture",
+          hero_wcag: "✓ WCAG 2.2 AAA Compliant",
+          copilot_heading: "Classroom Copilot (Deterministic & Offline):",
+          copilot_status: "Type or click suggested prompts for immediate classroom micro-scripts",
+          copilot_placeholder: "Ask teaching copilot (e.g., quiet room game, place value)...",
+          copilot_ask_btn: "Ask Copilot",
+          copilot_mic_aria: "Listen with microphone",
+          solver_1_tag: "Core Solver 1 • Rotation Engine",
+          heading_mgml: "15-Minute Multi-Grade Rotation Engine",
+          timer_start_btn: "Start 15-Min Cycle",
+          timer_pause_btn: "Pause Cycle",
+          timer_resume_btn: "Resume Cycle",
+          timer_switch_btn: "🔄 Switch Focus",
+          timer_reset_btn: "Reset",
+          timer_reset_aria: "Reset 15-minute timer",
+          timer_bell_btn: "🔔 Test Acoustic Bell",
+          solver_2_tag: "Core Solver 2 • Vernacular Bridge",
+          badge_bhasha: "NIPUN Bhasha",
+          heading_bhasha: "Language Bridge (Bhasha Setu)",
+          lbl_grade: "Select Grade (कक्षा चुनें):",
+          lbl_subject: "Select Subject (विषय चुनें):",
+          lbl_topic: "Select Concept Topic (अवधारणा चुनें):",
+          btn_explain: "💡 Explain in Local Context",
+          solver_3_tag: "Core Solver 3 • Post-Absence Remediation",
+          heading_absentee: "Absenteeism Rapid Catch-Up Triage",
+          lbl_student_name: "Student Name:",
+          placeholder_student_name: "Enter student name...",
+          lbl_absence_duration: "Absence Duration:",
+          opt_duration_35: "Absent 3-5 days",
+          opt_duration_12: "Absent 1-2 weeks",
+          opt_duration_harvest: "Post-harvest return (3+ weeks)",
+          btn_start_diagnostic: "📋 Start 2-Min Oral Diagnostic",
+          solver_4_tag: "Core Solver 4 • Zero-Cost TLM & Practice",
+          badge_tlm: "Chalkboard Games",
+          heading_tlm: "Zero-Cost Chalkboard TLM & Practice Generator",
+          carriage_2_lbl: "Carriage 2:",
+          carriage_4_lbl: "Carriage 4:",
+          btn_verify_train: "Verify Train",
+          btn_next_puzzle: "🎲 Generate Next Number Train Puzzle",
+          heading_practice: "Dynamic Practice Generator (मूर्त अभ्यास)",
+          solver_video_tag: "Field Documentation • 90 Seconds",
+          heading_video: "Classroom Complexity in Indian Primary Schools",
+          walkthrough_title: "VidyaSetu • How it Works Walkthrough",
+          btn_close_walkthrough_aria: "Close walkthrough dialog",
+          play_voice_explanation: "Play Voice Explanation",
+          stop_voice_explanation: "Stop Voice Explanation",
+          footer_cache: "Offline Cache: Active",
+          footer_wcag: "WCAG 2.2 AAA"
+        },
+        hi: {
+          app_title: "विद्यासेतु (VidyaSetu) • एफ़एलएन कक्षा कोपायलट",
+          badge_nipun: "निपुण भारत संरेखित",
+          badge_mgml: "15-मिनट चक्र",
+          badge_ncert: "एनसीईआरटी/निपुण संरेखित",
+          how_it_works_btn: "▶ यह कैसे काम करता है",
+          interactive_tour_btn: "🎬 इंटरएक्टिव वॉकथ्रू",
+          lang_toggle_label: "English / हिन्दी",
+          lang_toggle_aria: "भाषा अंग्रेजी में बदलें",
+          marquee_text: "निपुण भारत मिशन • बहु-कक्षा एवं बहुभाषी शिक्षण मंच • 100% ऑफलाइन कार्यात्मक",
+          hero_title: "बहु-कक्षा शिक्षण को बनाएं सरल और व्यावहारिक",
+          hero_offline: "✓ 100% ऑफलाइन मजबूती",
+          hero_clock: "✓ हार्डवेयर घड़ी डेल्टा सिंक",
+          hero_safe: "✓ सुरक्षित डीओएम आर्किटेक्चर",
+          hero_wcag: "✓ डब्ल्यूसीएजी 2.2 एएए",
+          copilot_heading: "कक्षा कोपायलट (ऑफलाइन एवं सटीक):",
+          copilot_status: "त्वरित कक्षा माइक्रो-स्क्रिप्ट के लिए सुझाए गए प्रॉम्प्ट पर क्लिक करें या लिखें",
+          copilot_placeholder: "शिक्षण कोपायलट से पूछें (उदा. शांत खेल, स्थानीय मान)...",
+          copilot_ask_btn: "कोपायलट से पूछें",
+          copilot_mic_aria: "माइक्रोफ़ोन से बोलें",
+          solver_1_tag: "मुख्य समाधान 1 • रोटेशन इंजन",
+          heading_mgml: "15-मिनट बहु-कक्षा रोटेशन इंजन",
+          timer_start_btn: "15-मिनट चक्र शुरू करें",
+          timer_pause_btn: "चक्र रोकें",
+          timer_resume_btn: "चक्र जारी रखें",
+          timer_switch_btn: "🔄 ध्यान बदलें",
+          timer_reset_btn: "रीसेट",
+          timer_reset_aria: "15-मिनट टाइमर रीसेट करें",
+          timer_bell_btn: "🔔 घंटी ध्वनि परखें",
+          solver_2_tag: "मुख्य समाधान 2 • स्थानीय भाषा सेतु",
+          badge_bhasha: "निपुण भाषा",
+          heading_bhasha: "भाषा सेतु (Bhasha Setu)",
+          lbl_grade: "कक्षा चुनें:",
+          lbl_subject: "विषय चुनें:",
+          lbl_topic: "अवधारणा चुनें:",
+          btn_explain: "💡 स्थानीय संदर्भ में समझाएं",
+          solver_3_tag: "मुख्य समाधान 3 • अनुपस्थिति उपचारात्मक जांच",
+          heading_absentee: "अनुपस्थिति त्वरित उपचारात्मक जांच",
+          lbl_student_name: "छात्र/छात्रा का नाम:",
+          placeholder_student_name: "छात्र का नाम लिखें...",
+          lbl_absence_duration: "अनुपस्थिति अवधि:",
+          opt_duration_35: "3-5 दिन अनुपस्थित",
+          opt_duration_12: "1-2 सप्ताह अनुपस्थित",
+          opt_duration_harvest: "फसल कटाई बाद वापसी (3+ सप्ताह)",
+          btn_start_diagnostic: "📋 2-मिनट ओरल जांच शुरू करें",
+          solver_4_tag: "मुख्य समाधान 4 • शून्य-लागत टीएलएम एवं अभ्यास",
+          badge_tlm: "श्यामपट्ट खेल",
+          heading_tlm: "शून्य-लागत श्यामपट्ट टीएलएम व अभ्यास जनरेटर",
+          carriage_2_lbl: "डिब्बा 2:",
+          carriage_4_lbl: "डिब्बा 4:",
+          btn_verify_train: "रेलगाड़ी जांच करें",
+          btn_next_puzzle: "🎲 अगली संख्या रेलगाड़ी बनाएं",
+          heading_practice: "गतिशील अभ्यास जनरेटर (मूर्त अभ्यास)",
+          solver_video_tag: "फील्ड दस्तावेजीकरण • 90 सेकंड",
+          heading_video: "भारतीय प्राथमिक विद्यालयों में कक्षा की जटिलता",
+          walkthrough_title: "विद्यासेतु • यह कैसे काम करता है वॉकथ्रू",
+          btn_close_walkthrough_aria: "वॉकथ्रू संवाद बंद करें",
+          play_voice_explanation: "ऑडियो व्याख्या सुनें",
+          stop_voice_explanation: "ऑडियो व्याख्या रोकें",
+          footer_cache: "ऑफलाइन कैश: सक्रिय",
+          footer_wcag: "डब्ल्यूसीएजी 2.2 एएए"
+        }
+      };
+
+      // =========================================================================
+      // 3. OPTIMIZED SPEECH SYNTHESIS ENGINE (PROMPT 10 SECTION 2 SPECIFICATION)
       // =========================================================================
       let cachedVoices = [];
 
       function populateVoices() {
         if ('speechSynthesis' in window) {
-          cachedVoices = window.speechSynthesis.getVoices() || [];
+          try {
+            cachedVoices = window.speechSynthesis.getVoices() || [];
+          } catch (e) {
+            cachedVoices = [];
+          }
         }
       }
-      populateVoices();
-      if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
-        window.speechSynthesis.onvoiceschanged = populateVoices;
+
+      if ('speechSynthesis' in window) {
+        populateVoices();
+        if (window.speechSynthesis.onvoiceschanged !== undefined) {
+          window.speechSynthesis.onvoiceschanged = populateVoices;
+        }
       }
+
+      // Voice Preferences per Prompt 10 Section 2
+      const PREFERRED_INDIAN_VOICE_NAMES = [
+        'Google हिन्दी',
+        'Google Hindi',
+        'Google English (India)',
+        'Microsoft Heera',
+        'Microsoft Swara',
+        'Neerja',
+        'Kavya',
+        'en-IN-Wavenet',
+        'hi-IN-Wavenet'
+      ];
 
       function selectBestVoice(lang = 'hi-IN') {
         if (!cachedVoices || cachedVoices.length === 0) {
@@ -1435,53 +1800,310 @@
         }
         if (!cachedVoices || cachedVoices.length === 0) return null;
 
-        // Priority 1: Hindi (hi-IN)
-        if (lang.startsWith('hi')) {
-          const hiVoices = cachedVoices.filter(v => v.lang && v.lang.replace('_', '-').toLowerCase().startsWith('hi'));
-          const preferredHi = hiVoices.find(v => /google|हिन्दी|hindi|swara|heera|kalpana|neerja|female/i.test(v.name));
-          if (preferredHi) return preferredHi;
-          if (hiVoices.length > 0) return hiVoices[0];
+        const isHindiTarget = lang.toLowerCase().startsWith('hi');
+        const primaryLangCode = isHindiTarget ? 'hi-IN' : 'en-IN';
+        const secondaryLangCode = isHindiTarget ? 'en-IN' : 'hi-IN';
+
+        // 1. Try matching target language with preferred Indian voice name
+        for (const prefName of PREFERRED_INDIAN_VOICE_NAMES) {
+          const match = cachedVoices.find(v =>
+            v.lang && v.lang.replace('_', '-').toLowerCase().startsWith(primaryLangCode.toLowerCase().slice(0, 2)) &&
+            v.name && v.name.toLowerCase().includes(prefName.toLowerCase())
+          );
+          if (match) return match;
         }
 
-        // Priority 2: Indian English (en-IN)
-        const inEnVoices = cachedVoices.filter(v => v.lang && (v.lang === 'en-IN' || v.lang === 'en_IN'));
-        const preferredEn = inEnVoices.find(v => /google|india|indian|female/i.test(v.name));
-        if (preferredEn) return preferredEn;
-        if (inEnVoices.length > 0) return inEnVoices[0];
+        // 2. Try exact match on primary language code (e.g. hi-IN or en-IN)
+        const exactLangMatch = cachedVoices.find(v =>
+          v.lang && v.lang.replace('_', '-').toLowerCase() === primaryLangCode.toLowerCase()
+        );
+        if (exactLangMatch) return exactLangMatch;
 
-        // Priority 3: Any natural-sounding available voice
-        const naturalVoice = cachedVoices.find(v => /natural|neural|google/i.test(v.name));
-        if (naturalVoice) return naturalVoice;
+        // 3. Try prefix match on target language (e.g. 'hi' or 'en')
+        const prefixMatch = cachedVoices.find(v =>
+          v.lang && v.lang.replace('_', '-').toLowerCase().startsWith(primaryLangCode.toLowerCase().slice(0, 2))
+        );
+        if (prefixMatch) return prefixMatch;
 
-        // Priority 4: Browser default voice
+        // 4. Try any preferred Indian voice name regardless of language
+        for (const prefName of PREFERRED_INDIAN_VOICE_NAMES) {
+          const match = cachedVoices.find(v =>
+            v.name && v.name.toLowerCase().includes(prefName.toLowerCase())
+          );
+          if (match) return match;
+        }
+
+        // 5. Try secondary Indian language code
+        const secondaryMatch = cachedVoices.find(v =>
+          v.lang && v.lang.replace('_', '-').toLowerCase().startsWith(secondaryLangCode.toLowerCase().slice(0, 2))
+        );
+        if (secondaryMatch) return secondaryMatch;
+
+        // 6. Graceful fallback: default voice or first available
         const defaultVoice = cachedVoices.find(v => v.default);
-        if (defaultVoice) return defaultVoice;
-
-        return cachedVoices[0] || null;
+        return defaultVoice || cachedVoices[0] || null;
       }
 
       const srAnnouncer = document.getElementById('sr-live-region');
 
-      function announceSpeech(text, lang = 'hi-IN') {
+      function announceSpeech(text, lang = null) {
+        // Queue protection: Stop any ongoing walkthrough audio explanation before speaking
+        stopAudioExplanation();
+
         if (srAnnouncer) {
           srAnnouncer.textContent = text;
         }
-        if ('speechSynthesis' in window) {
-          try {
-            window.speechSynthesis.cancel();
-            const cleanText = text.replace(/(\d+)\s*[-–—]\s*(\d+)/g, '$1 to $2');
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.pitch = 1.18;
-            utterance.rate = 0.88;
-            utterance.volume = 0.95;
-            const voice = selectBestVoice(lang);
-            if (voice) {
-              utterance.voice = voice;
-              utterance.lang = voice.lang || lang;
-            }
-            window.speechSynthesis.speak(utterance);
-          } catch (e) {}
+
+        if (!('speechSynthesis' in window)) return;
+
+        try {
+          // Cancel previous speech to prevent overlapping queues
+          window.speechSynthesis.cancel();
+
+          const targetLang = lang || (appState.lang === 'hi' ? 'hi-IN' : 'en-IN');
+          const cleanText = text.replace(/(\d+)\s*[-–—]\s*(\d+)/g, '$1 to $2');
+          const utterance = new SpeechSynthesisUtterance(cleanText);
+
+          // Conservative, natural parameters (Prompt 10: pitch 1.0, rate 0.92, volume 1.0; legacy ref: utterance.pitch = 1.18, utterance.rate = 0.88, utterance.volume = 0.95)
+          utterance.pitch = 1.0;
+          utterance.rate = 0.92;
+          utterance.volume = 1.0;
+
+          const voice = selectBestVoice(targetLang);
+          if (voice) {
+            utterance.voice = voice;
+            utterance.lang = voice.lang || targetLang;
+          } else {
+            utterance.lang = targetLang;
+          }
+
+          utterance.onerror = (e) => {
+            console.warn('Speech synthesis playback error:', e);
+          };
+
+          window.speechSynthesis.speak(utterance);
+        } catch (e) {
+          console.warn('Speech synthesis unavailable or failed:', e);
         }
+      }
+
+      
+      // =========================================================================
+      // 3B. HOW IT WORKS WALKTHROUGH & 4-PART AUDIO EXPLANATION (PROMPT 10 SECTION 3)
+      // =========================================================================
+      const AUDIO_WALKTHROUGH = {
+        en: [
+          "The 15-minute multi-grade cycle rotates direct teacher instruction between Grade 1 and Grades 2 and 3, ensuring every learner stays actively engaged.",
+          "Bhasha Setu bridges formal textbook concepts with rural vernacular metaphors and practical classroom micro-scripts.",
+          "The 2-minute oral diagnostic screens returning absent students and pairs them with peer buddies for immediate foundational catch-up.",
+          "Zero-cost chalkboard games and dynamic practice use slates, chalk, and local pebbles to solidify core numeracy and literacy."
+        ],
+        hi: [
+          "15 मिनट का मल्टी-ग्रेड चक्र कक्षा 1 और कक्षा 2-3 के बीच प्रत्यक्ष शिक्षण को संतुलित करता है, जिससे सभी बच्चे सक्रिय रहते हैं।",
+          "भाषा सेतु किताबी परिभाषाओं को ग्रामीण सादृश्यों और व्यावहारिक गतिविधियों से जोड़ता है।",
+          "2 मिनट का ओरल डायग्नोस्टिक अनुपस्थित रहे छात्रों की जांच कर सहपाठी मित्र जोड़ता है।",
+          "शून्य लागत श्यामपट्ट खेल और अभ्यास स्लेट, चाक और कंकड़ का उपयोग करके बुनियादी समझ पक्की करते हैं।"
+        ]
+      };
+
+      let isAudioExplaining = false;
+      let audioExplanationUtteranceIndex = 0;
+      let lastFocusedElement = null;
+
+      function stopAudioExplanation() {
+        if (!isAudioExplaining && !('speechSynthesis' in window && window.speechSynthesis.speaking)) return;
+        isAudioExplaining = false;
+        audioExplanationUtteranceIndex = 0;
+        if ('speechSynthesis' in window) {
+          try { window.speechSynthesis.cancel(); } catch (e) {}
+        }
+        updateAudioExplainButtonState();
+      }
+
+      function updateAudioExplainButtonState() {
+        const btn = document.getElementById('btn-audio-explain');
+        const icon = document.getElementById('audio-explain-icon');
+        const text = document.getElementById('audio-explain-text');
+        const status = document.getElementById('audio-explain-status');
+        const lang = appState.lang || 'en';
+
+        if (!btn) return;
+        if (isAudioExplaining) {
+          if (icon) icon.textContent = '⏹';
+          if (text) text.textContent = lang === 'hi' ? 'ऑडियो व्याख्या रोकें' : 'Stop Voice Explanation';
+          btn.setAttribute('aria-label', lang === 'hi' ? 'ऑडियो व्याख्या रोकें' : 'Stop Voice Explanation');
+          if (status) {
+            status.textContent = lang === 'hi'
+              ? ('भाग ' + (audioExplanationUtteranceIndex + 1) + ' / 4 बोल रहे हैं...')
+              : ('Playing part ' + (audioExplanationUtteranceIndex + 1) + ' of 4...');
+          }
+        } else {
+          if (icon) icon.textContent = '🔊';
+          if (text) text.textContent = lang === 'hi' ? 'ऑडियो व्याख्या सुनें' : 'Play Voice Explanation';
+          btn.setAttribute('aria-label', lang === 'hi' ? 'ऑडियो व्याख्या सुनें' : 'Play Voice Explanation');
+          if (status) status.textContent = '';
+        }
+      }
+
+      function playNextWalkthroughUtterance() {
+        if (!isAudioExplaining) return;
+        const lang = appState.lang || 'en';
+        const utterances = AUDIO_WALKTHROUGH[lang] || AUDIO_WALKTHROUGH.en;
+
+        if (audioExplanationUtteranceIndex >= utterances.length) {
+          isAudioExplaining = false;
+          audioExplanationUtteranceIndex = 0;
+          updateAudioExplainButtonState();
+          return;
+        }
+
+        const textToSpeak = utterances[audioExplanationUtteranceIndex];
+        updateAudioExplainButtonState();
+
+        if (!('speechSynthesis' in window)) {
+          isAudioExplaining = false;
+          updateAudioExplainButtonState();
+          const status = document.getElementById('audio-explain-status');
+          if (status) status.textContent = lang === 'hi' ? 'स्पीच सिंथेसिस उपलब्ध नहीं है।' : 'Speech synthesis not available.';
+          return;
+        }
+
+        try {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(textToSpeak);
+          const speechLang = lang === 'hi' ? 'hi-IN' : 'en-IN';
+          utterance.lang = speechLang;
+          const voice = selectBestVoice(speechLang);
+          if (voice) utterance.voice = voice;
+          utterance.pitch = 1.0;
+          utterance.rate = 0.92;
+          utterance.volume = 1.0;
+
+          utterance.onend = () => {
+            if (isAudioExplaining) {
+              audioExplanationUtteranceIndex++;
+              setTimeout(() => {
+                if (isAudioExplaining) playNextWalkthroughUtterance();
+              }, 250);
+            }
+          };
+
+          utterance.onerror = (err) => {
+            console.warn('Walkthrough speech error:', err);
+            isAudioExplaining = false;
+            audioExplanationUtteranceIndex = 0;
+            updateAudioExplainButtonState();
+          };
+
+          window.speechSynthesis.speak(utterance);
+        } catch (err) {
+          console.error('Error in walkthrough speech:', err);
+          isAudioExplaining = false;
+          audioExplanationUtteranceIndex = 0;
+          updateAudioExplainButtonState();
+        }
+      }
+
+      function toggleAudioExplanation() {
+        if (isAudioExplaining) {
+          stopAudioExplanation();
+        } else {
+          isAudioExplaining = true;
+          audioExplanationUtteranceIndex = 0;
+          playNextWalkthroughUtterance();
+        }
+      }
+
+      function openWalkthrough() {
+        lastFocusedElement = document.activeElement;
+        const backdrop = document.getElementById('walkthrough-modal-backdrop');
+        const dialog = document.getElementById('walkthrough-dialog');
+        const btn = document.getElementById('btn-how-it-works');
+        if (backdrop && dialog) {
+          backdrop.style.display = 'flex';
+          if (btn) btn.setAttribute('aria-expanded', 'true');
+          document.body.style.overflow = 'hidden';
+          const closeBtn = document.getElementById('btn-close-walkthrough');
+          if (closeBtn) closeBtn.focus();
+          else dialog.focus();
+        }
+      }
+
+      function closeWalkthrough() {
+        stopAudioExplanation();
+        const backdrop = document.getElementById('walkthrough-modal-backdrop');
+        const btn = document.getElementById('btn-how-it-works');
+        if (backdrop) {
+          backdrop.style.display = 'none';
+          if (btn) btn.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
+        if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+          lastFocusedElement.focus();
+        }
+      }
+
+      // =========================================================================
+      // 3C. LANGUAGE TOGGLE & DECLARATIVE TRANSLATION ENGINE (PROMPT 10 SECTION 4)
+      // =========================================================================
+      function applyTranslations(lang) {
+        const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+        document.documentElement.lang = lang;
+
+        // Update data-i18n elements
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key] !== undefined) {
+            el.textContent = dict[key];
+          }
+        });
+
+        // Update data-i18n-aria elements
+        document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+          const key = el.getAttribute('data-i18n-aria');
+          if (dict[key] !== undefined) {
+            el.setAttribute('aria-label', dict[key]);
+          }
+        });
+
+        // Update data-i18n-placeholder elements
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.getAttribute('data-i18n-placeholder');
+          if (dict[key] !== undefined) {
+            el.setAttribute('placeholder', dict[key]);
+          }
+        });
+
+        // Update data-i18n-title elements
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+          const key = el.getAttribute('data-i18n-title');
+          if (dict[key] !== undefined) {
+            el.setAttribute('title', dict[key]);
+          }
+        });
+
+        // Update language toggle control label and aria
+        const langToggleBtn = document.getElementById('btn-lang-toggle');
+        const langToggleText = document.getElementById('lang-toggle-text');
+        if (langToggleBtn) {
+          langToggleBtn.setAttribute('aria-label', dict.lang_toggle_aria || 'Switch language');
+        }
+        if (langToggleText) {
+          langToggleText.textContent = dict.lang_toggle_label || 'हिन्दी / English';
+        }
+
+        // Update dynamic sub-components without losing active state
+        updatePhaseUI();
+        updateTimerDisplay();
+        updateMasteryDisplay();
+        updateAudioExplainButtonState();
+        renderActiveRoster();
+      }
+
+      function toggleLanguage() {
+        appState.lang = appState.lang === 'hi' ? 'en' : 'hi';
+        saveLanguage(appState.lang);
+        applyTranslations(appState.lang);
       }
 
       function playAcousticBell() {
@@ -1514,6 +2136,7 @@
       // 3. AUTHORITATIVE APPLICATION STATE
       // =========================================================================
       const appState = {
+        lang: getInitialLanguage(),
         phase: 'A', // 'A' (Grade 1 Direct, Grades 2-3 Peer) or 'B' (Grades 2-3 Direct, Grade 1 Independent)
         timer: {
           running: false,
@@ -2975,6 +3598,71 @@
       window.addEventListener('online', checkVideoConnectivity);
       window.addEventListener('offline', checkVideoConnectivity);
       checkVideoConnectivity();
+
+
+      // Bind Triad Enhancements Event Listeners
+      const btnHowItWorks = document.getElementById('btn-how-it-works');
+      if (btnHowItWorks) {
+        btnHowItWorks.addEventListener('click', openWalkthrough);
+      }
+
+      const btnCloseWalkthrough = document.getElementById('btn-close-walkthrough');
+      if (btnCloseWalkthrough) {
+        btnCloseWalkthrough.addEventListener('click', closeWalkthrough);
+      }
+
+      const walkthroughBackdrop = document.getElementById('walkthrough-modal-backdrop');
+      if (walkthroughBackdrop) {
+        walkthroughBackdrop.addEventListener('click', (e) => {
+          if (e.target === walkthroughBackdrop) closeWalkthrough();
+        });
+      }
+
+      const btnAudioExplain = document.getElementById('btn-audio-explain');
+      if (btnAudioExplain) {
+        btnAudioExplain.addEventListener('click', toggleAudioExplanation);
+      }
+
+      const btnLangToggle = document.getElementById('btn-lang-toggle');
+      if (btnLangToggle) {
+        btnLangToggle.addEventListener('click', toggleLanguage);
+      }
+
+      // Accessible keyboard trap and Escape handler
+      document.addEventListener('keydown', (e) => {
+        const backdrop = document.getElementById('walkthrough-modal-backdrop');
+        if (!backdrop || backdrop.style.display === 'none') return;
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeWalkthrough();
+          return;
+        }
+
+        if (e.key === 'Tab') {
+          const dialog = document.getElementById('walkthrough-dialog');
+          if (!dialog) return;
+          const focusables = dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), iframe');
+          if (focusables.length === 0) return;
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === first) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (document.activeElement === last) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+      });
+
+      // Initialize UI with preferred or stored language
+      applyTranslations(appState.lang);
 
       if (fieldVideoFrame) {
         fieldVideoFrame.addEventListener('error', () => {
