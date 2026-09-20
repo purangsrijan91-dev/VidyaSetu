@@ -1,6 +1,6 @@
 // VidyaSetu Service Worker - Zero-Connectivity Offline Engine (sw.js)
 // Updated for instant access on normal refresh with Network-First navigation & Stale-While-Revalidate
-const CACHE_NAME = 'vidyasetu-v6-emeritus';
+const CACHE_NAME = 'vidyasetu-v7-nipun';
 const CORE_ASSETS = [
   './',
   './index.html',
