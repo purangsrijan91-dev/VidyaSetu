@@ -212,17 +212,26 @@ const AppController = (() => {
     
     allTabs.forEach(t => {
       const btn = document.getElementById(`nav-tab-${t}`);
+      const mobBtn = document.getElementById(`mobile-nav-${t}`);
       const view = document.getElementById(`view-${t}`);
       if (t === tabName) {
         if (btn) {
           btn.classList.add('active', 'bg-amber-500/20', 'text-edu-amber', 'border-amber-500/40');
           btn.classList.remove('text-slate-400');
         }
+        if (mobBtn) {
+          mobBtn.classList.add('text-amber-400');
+          mobBtn.classList.remove('text-slate-400');
+        }
         if (view) view.classList.remove('hidden');
       } else {
         if (btn) {
           btn.classList.remove('active', 'bg-amber-500/20', 'text-edu-amber', 'border-amber-500/40');
           btn.classList.add('text-slate-400');
+        }
+        if (mobBtn) {
+          mobBtn.classList.remove('text-amber-400');
+          mobBtn.classList.add('text-slate-400');
         }
         if (view) view.classList.add('hidden');
       }
