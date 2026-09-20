@@ -1,6 +1,6 @@
 // VidyaSetu Service Worker - Zero-Connectivity Offline Engine (service-worker.js)
 // Updated for instant access on normal refresh with Network-First navigation & Stale-While-Revalidate
-const CACHE_NAME = 'vidyasetu-v8-multipage';
+const CACHE_NAME = 'vidyasetu-v9-deck-aligned';
 const CORE_ASSETS = [
   './',
   './index.html',

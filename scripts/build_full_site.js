@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+
+// We will generate the updated index.html with all features, zero innerHTML, and the full 12-slide presentation deck.
+const html = `<!DOCTYPE html>
 <html lang="hi" class="h-full bg-slate-50">
 <head>
   <meta charset="UTF-8" />
@@ -3814,12 +3818,12 @@
       const tlmGamesRepo = {
         chalk: {
           title: 'श्यामपट्ट खेल: "संख्या रेलगाड़ी" (Number Train - Slide 9)',
-          diagram: '+-------+       +-------+       +-------+       +-------+\n| [ 2 ] | ===== | [ ? ] | ===== | [ 4 ] | ===== | [ ? ] |\n+-------+       +-------+       +-------+       +-------+\n डिब्बा 1        डिब्बा 2        डिब्बा 3        डिब्बा 4',
+          diagram: '+-------+       +-------+       +-------+       +-------+\\n| [ 2 ] | ===== | [ ? ] | ===== | [ 4 ] | ===== | [ ? ] |\\n+-------+       +-------+       +-------+       +-------+\\n डिब्बा 1        डिब्बा 2        डिब्बा 3        डिब्बा 4',
           rule: 'कक्षा 1 के बच्चे छूटे डिब्बे के लिए कंकड़ गिनते हैं; कक्षा 2 के बच्चे श्यामपट्ट पर छूटी संख्याएं (3 और 5) लिखते हैं। 100% सामूहिक सक्रिय सहभागिता।'
         },
         pebbles: {
           title: 'कंकड़ खेल: "संख्या का घर" (Number Houses)',
-          diagram: '(इकाई) ──> (दहाई) ──> (सैकड़ा)\n[०००]       [००००]      [००]',
+          diagram: '(इकाई) ──> (दहाई) ──> (सैकड़ा)\\n[०००]       [००००]      [००]',
           rule: 'जमीन पर 3 गोल घेरे बनाएं (इकाई, दहाई, सैकड़ा)। बच्चे 15 कंकड़ों को घेरे में फेंककर अपना स्कोर जोड़ेंगे।'
         },
         sticks: {
@@ -3894,7 +3898,7 @@
           cardSelector: '[aria-labelledby="heading-bhasha"]',
           stepBadge: 'चुनौती 2 / 3 • घरेलू बोली का अंतर (Language Gap)',
           title: 'घर की बोली बनाम किताबी भाषा (Bhasha Setu)',
-          problemText: '🛑 समस्या: "Often the child\'s language at home is different from the language used in the classroom creating a gap between instruction and understanding."',
+          problemText: '🛑 समस्या: "Often the child\\'s language at home is different from the language used in the classroom creating a gap between instruction and understanding."',
           solutionText: '💡 विद्यासेतु समाधान: भाषा सेतु (Bhasha Setu 1ली से 5वीं)। कठिन किताबी शब्दों (जैसे घटाव, अवरोही क्रम, स्थानीय मान) को बच्चों के घरेलू परिवेश के उदाहरणों (पेड़ से बेर गिरना, छत की सीढ़ी उतरना, माचिस की तीलियाँ) में बदलकर तुरंत अर्थ स्पष्ट करता है।',
           speechSummary: 'चुनौती 2: घर की बोली और किताबी भाषा का अंतर। भाषा सेतु कठिन किताबी शब्दों को बच्चों के घरेलू परिवेश के उदाहरणों में समझाता है।',
           actionLabel: '🗣️ संपूर्ण भाषा सेतु पेज देखें',
@@ -3973,7 +3977,7 @@
         if (elements.srAnnouncer) elements.srAnnouncer.textContent = text;
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
-          const sanitisedText = text.replace(/(d+)s*[-–—]s*(d+)/g, '$1 से $2');
+          const sanitisedText = text.replace(/(\d+)\s*[-–—]\s*(\d+)/g, '$1 से $2');
           const utterance = new SpeechSynthesisUtterance(sanitisedText);
           utterance.lang = 'hi-IN';
           utterance.rate = 0.88;
@@ -4329,3 +4333,7 @@
   </script>
 </body>
 </html>
+`;
+
+fs.writeFileSync('index.html', html, 'utf8');
+console.log('Successfully wrote updated index.html with 12-slide deck and zero innerHTML!');
