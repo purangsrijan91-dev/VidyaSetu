@@ -1,11 +1,20 @@
 // VidyaSetu Service Worker - Zero-Connectivity Offline Engine
-const CACHE_NAME = 'vidyasetu-v2';
+const CACHE_NAME = 'vidyasetu-v3';
 const CORE_ASSETS = [
   './',
   './index.html',
   './css/styles.css',
   './manifest.json',
-  './assets/icon.svg'
+  './assets/icon.svg',
+  './js/state.js',
+  './js/timer.js',
+  './js/audio.js',
+  './js/storage.js',
+  './js/modal.js',
+  './js/rag.js',
+  './js/voice.js',
+  './js/diagnostics.js',
+  './js/app.js'
 ];
 
 // 1. Install Event: Pre-cache all core HTML, CSS, manifest, and icons
