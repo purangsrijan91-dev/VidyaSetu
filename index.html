@@ -9,14 +9,15 @@
   <title>VidyaSetu (विद्यासेतु) • प्राथमिक कक्षा साथी | NIPUN Bharat Classroom Copilot</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
+  <script src="js/bhasha-data.js"></script>
 
   <style>
     :root {
-      --bg-base: #F8F9FA;
+      --bg-base: #F8FAFC;
       --bg-surface: #FFFFFF;
       --bg-surface-elevated: #F1F5F9;
       --border-subtle: #E2E8F0;
-      --border-focus: #00BE6D;
+      --border-focus: #0D9488;
       --text-primary: #0F172A;
       --text-secondary: #475569;
       --text-muted: #64748B;
@@ -70,7 +71,7 @@
       border: 0;
     }
 
-    /* Top Trust Announcement Banner */
+    /* Top National Announcement Bar */
     .top-trust-bar {
       background-color: var(--accent-navy-dark);
       color: #FFFFFF;
@@ -86,21 +87,21 @@
     }
 
     .top-trust-bar span.pill {
-      background: var(--accent-teal);
+      background: var(--accent-saffron);
       color: #FFFFFF;
       font-size: 0.7rem;
       font-weight: 800;
-      padding: 0.15rem 0.5rem;
+      padding: 0.15rem 0.55rem;
       border-radius: 9999px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
-    /* Top Navigation (National Primary Header) */
+    /* Primary Navigation Header */
     header {
       background-color: #FFFFFF;
       border-bottom: 1px solid var(--border-subtle);
-      padding: 1rem 1.5rem;
+      padding: 0.85rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -115,7 +116,10 @@
     .brand-group {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.85rem;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
     }
 
     .brand-logo-badge {
@@ -127,13 +131,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       font-weight: 900;
       box-shadow: 0 4px 10px rgba(30, 58, 138, 0.25);
     }
 
     .app-title {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       font-weight: 900;
       color: var(--accent-navy-dark);
       letter-spacing: -0.02em;
@@ -141,33 +145,49 @@
     }
 
     .app-subtitle {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--accent-teal-dark);
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
     }
 
+    /* Desktop Navigation Links */
     .nav-links-desktop {
       display: none;
       align-items: center;
-      gap: 1.5rem;
-      font-size: 0.92rem;
+      gap: 0.5rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      color: var(--text-secondary);
     }
 
     @media (min-width: 960px) {
       .nav-links-desktop { display: flex; }
     }
 
-    .nav-links-desktop a {
+    .nav-link-btn {
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.15s ease;
+      padding: 0.45rem 0.85rem;
+      border-radius: 0.5rem;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border: 1px solid transparent;
+      cursor: pointer;
     }
-    .nav-links-desktop a:hover {
+
+    .nav-link-btn:hover {
       color: var(--accent-navy);
+      background-color: var(--accent-navy-light);
+    }
+
+    .nav-link-btn.active {
+      color: var(--accent-navy-dark);
+      background-color: var(--accent-navy-light);
+      border-color: #BFDBFE;
+      font-weight: 800;
     }
 
     .header-actions {
@@ -184,7 +204,7 @@
       padding: 1.25rem 1rem;
       max-width: 1240px;
       margin: 0 auto;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     @media (min-width: 768px) {
@@ -193,7 +213,76 @@
       }
     }
 
-    /* Hero Section (Pedagogical Framework) */
+    /* Page View Containers */
+    .page-view {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    .page-view.hidden {
+      display: none !important;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Breadcrumbs Bar on Subpages */
+    .breadcrumb-bar {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.85rem;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .breadcrumb-path {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .breadcrumb-path a {
+      color: var(--accent-navy);
+      text-decoration: none;
+    }
+
+    .breadcrumb-path a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--bg-surface-elevated);
+      color: var(--accent-navy-dark);
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 0.85rem;
+      border-radius: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .btn-back-home:hover {
+      background: var(--accent-navy-light);
+      border-color: #BFDBFE;
+    }
+
+    /* Hero Section */
     .hero-container {
       background-color: #FFFFFF;
       border: 1px solid var(--border-subtle);
@@ -249,7 +338,6 @@
       margin-bottom: 1.5rem;
     }
 
-    /* Search & Filter Mockup (Classroom Challenge Selector) */
     .hero-search-box {
       background: var(--bg-surface-elevated);
       border: 1.5px solid var(--border-subtle);
@@ -301,7 +389,7 @@
       background: var(--accent-teal-dark);
     }
 
-    /* Video Frame in Hero */
+    /* Video Frame */
     .hero-video-box {
       position: relative;
       width: 100%;
@@ -344,7 +432,7 @@
       border: 1px solid rgba(255,255,255,0.2);
     }
 
-    /* Quick Interactive Launcher (Classroom Complexity Walkthrough) */
+    /* Walkthrough Launcher */
     .tour-launcher-section {
       background: #FFFFFF;
       border: 1px solid var(--border-subtle);
@@ -384,7 +472,7 @@
       box-shadow: 0 4px 12px rgba(13, 148, 136, 0.35);
     }
 
-    /* Stats & Impact Metrics Bar */
+    /* Stats Strip */
     .stats-strip {
       background: var(--accent-navy-dark);
       border-radius: 1.25rem;
@@ -424,7 +512,7 @@
       letter-spacing: 0.04em;
     }
 
-    /* Guided Tour Banner (Deep Indigo Theme) */
+    /* Tour Active Banner */
     .tour-banner {
       position: sticky;
       top: 5rem;
@@ -455,7 +543,7 @@
       z-index: 20;
     }
 
-    /* Section Header */
+    /* Section Head */
     .section-head {
       margin-bottom: 0.25rem;
     }
@@ -477,7 +565,7 @@
       letter-spacing: -0.02em;
     }
 
-    /* Dashboard Grid (Modular Pedagogical Cards) */
+    /* Dashboard Grid */
     .dashboard-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -563,12 +651,12 @@
       color: var(--text-secondary);
     }
 
-    /* Animated Visual Chalkboard Banner */
+    /* Animated Visual Banner */
     .animated-banner {
       width: 100%;
-      height: 100px;
+      height: 90px;
       border-radius: 0.75rem;
-      background: linear-gradient(-45deg, #071D49, #003388, #0B2556, #0044AA);
+      background: linear-gradient(-45deg, #0F172A, #1E3A8A, #0D9488, #0F766E);
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
       display: flex;
@@ -595,13 +683,13 @@
       padding: 0 1rem;
     }
 
-    /* Primary Action Buttons (Minimum 64px Touch Target) */
+    /* Action Buttons (>=48px Touch Targets) */
     .btn-action {
       width: 100%;
       min-height: 64px;
       padding: 1rem 1.25rem;
       border-radius: 0.85rem;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
@@ -617,11 +705,11 @@
       transform: scale(0.98);
     }
 
-    .btn-green {
+    .btn-green, .btn-teal {
       background-color: var(--accent-teal);
       color: #FFFFFF;
     }
-    .btn-green:hover {
+    .btn-green:hover, .btn-teal:hover {
       background-color: var(--accent-teal-dark);
       box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3);
     }
@@ -633,22 +721,6 @@
     .btn-navy:hover {
       background-color: var(--accent-navy-dark);
       box-shadow: 0 6px 20px rgba(30, 58, 138, 0.3);
-    }
-
-    .btn-amber {
-      background-color: var(--accent-teal);
-      color: #FFFFFF;
-    }
-    .btn-amber:hover {
-      background-color: var(--accent-teal-dark);
-    }
-
-    .btn-blue {
-      background-color: var(--accent-navy);
-      color: #FFFFFF;
-    }
-    .btn-blue:hover {
-      background-color: var(--accent-navy-dark);
     }
 
     .select-input, .text-input {
@@ -668,15 +740,15 @@
       outline: none;
     }
 
-    /* Bottom Voice Bar (Deep Indigo Theme) */
+    /* Voice Bar */
     .voice-bar-btn {
       width: 100%;
-      min-height: 72px;
+      min-height: 68px;
       background: linear-gradient(135deg, var(--accent-navy-dark) 0%, #0B2556 100%);
       border: 2px solid #38BDF8;
       border-radius: 1.25rem;
       color: #FFFFFF;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -711,7 +783,7 @@
       border: 2px solid var(--border-subtle);
       border-radius: 1.25rem;
       width: 100%;
-      max-width: 600px;
+      max-width: 650px;
       max-height: 90vh;
       overflow-y: auto;
       padding: 1.75rem;
@@ -749,7 +821,75 @@
       color: var(--accent-teal-dark);
     }
 
-    /* Site Footer */
+    /* Dialect Selector Tabs */
+    .dialect-tabs-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+
+    .dialect-tab-btn {
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-secondary);
+      padding: 0.45rem 0.9rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .dialect-tab-btn:hover {
+      border-color: var(--accent-teal);
+      color: var(--accent-teal-dark);
+    }
+
+    .dialect-tab-btn.active {
+      background: var(--accent-teal);
+      border-color: var(--accent-teal);
+      color: #FFFFFF;
+      font-weight: 800;
+    }
+
+    /* Roster Table */
+    .roster-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .roster-table th, .roster-table td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .roster-table th {
+      background: var(--bg-surface-elevated);
+      color: var(--accent-navy-dark);
+      font-weight: 800;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .status-pending { background: #FEF3C7; color: #B45309; }
+    .status-active { background: #E0E7FF; color: #3730A3; }
+    .status-resolved { background: #D1FAE5; color: #065F46; }
+
+    /* Footer */
     footer.site-footer {
       background-color: var(--accent-navy-dark);
       color: #FFFFFF;
@@ -791,15 +931,15 @@
 
   <div id="sr-live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- National Trust Announcement -->
+  <!-- Top National Announcement -->
   <div class="top-trust-bar">
-    <span class="pill" style="background: var(--accent-saffron); color: #FFF;">FLN 2026</span>
-    <span>प्राथमिक शिक्षा सशक्तिकरण • Aligned with NEP 2020, NCERT & DIET Guidelines • 100% Offline PWA</span>
+    <span class="pill">FLN 2026</span>
+    <span>🇮🇳 भारत सरकार • निपुण भारत मिशन • प्राथमिक शाला बहु-कक्षा साथी • 100% निःशुल्क एवं ऑफ़लाइन PWA</span>
   </div>
 
-  <!-- National Primary Header -->
+  <!-- Header with Brand and Subpage Navigation -->
   <header role="banner">
-    <a href="./" class="brand-group" style="text-decoration: none; color: inherit; cursor: pointer;" aria-label="VidyaSetu Homepage (विद्यासेतु मुख्य पृष्ठ)">
+    <a href="#/home" class="brand-group" aria-label="VidyaSetu Homepage (विद्यासेतु मुख्य पृष्ठ)">
       <div class="brand-logo-badge" aria-hidden="true">🎓</div>
       <div>
         <h1 class="app-title">VidyaSetu (विद्यासेतु)</h1>
@@ -807,12 +947,13 @@
       </div>
     </a>
 
-    <!-- Desktop Navigation Links (Header Navigation) -->
+    <!-- Desktop Navigation Links (Separate Pages) -->
     <nav class="nav-links-desktop" aria-label="मुख्य नेविगेशन">
-      <a href="#solvers-section">कक्षा समाधान (Solvers)</a>
-      <a href="#video-section">ग्राउंड वीडियो (Field Video)</a>
-      <a href="#heading-bhasha">भाषा सेतु (Dialect)</a>
-      <a href="#heading-absentee">2-मिनट जांच (Catch-Up)</a>
+      <a href="#/home" class="nav-link-btn active" data-page="home">🏠 मुख्य पृष्ठ</a>
+      <a href="#/solvers" class="nav-link-btn" data-page="solvers">⏱️ कक्षा समाधान</a>
+      <a href="#/video" class="nav-link-btn" data-page="video">📹 फील्ड वीडियो</a>
+      <a href="#/bhasha" class="nav-link-btn" data-page="bhasha">🗣️ भाषा सेतु</a>
+      <a href="#/catchup" class="nav-link-btn" data-page="catchup">⚡ 2-मिनट वापसी जांच</a>
     </nav>
 
     <div class="header-actions">
@@ -827,269 +968,693 @@
 
   <div class="layout-wrapper">
 
-    <!-- HERO SECTION (Pedagogy Layout) -->
-    <section class="hero-container" aria-labelledby="hero-heading">
-      <div>
-        <div class="hero-tag">
-          <span>🌿</span>
-          <span>🇮🇳 निपुण भारत FLN फ्रेमवर्क • बहु-कक्षा साथी</span>
-        </div>
-        <h2 id="hero-heading" class="hero-title">
-          सिखाएं। <span class="text-gradient">भारत के हर प्राथमिक शिक्षक के साथ।</span>
-        </h2>
-        <p class="hero-desc">
-          अल्प-संसाधन प्राथमिक विद्यालयों की 3 प्रमुख चुनौतियों—<strong>2 से 3 कक्षाएं संयुक्त</strong>, <strong>घरेलू बोली बनाम किताबी भाषा का अंतर</strong>, और <strong>फसल कटाई के बाद अनुपस्थिति</strong> का त्वरित, व्यावहारिक समाधान।
-        </p>
+    <!-- ========================================================================= -->
+    <!-- PAGE 1: HOME DASHBOARD OVERVIEW (#/home or #/)                             -->
+    <!-- ========================================================================= -->
+    <section id="page-home" class="page-view" aria-label="मुख्य पृष्ठ">
 
-        <!-- Category Quick-Filter Bar -->
-        <div class="hero-search-box">
-          <select id="hero-category-select" class="search-select" aria-label="चुनौती चुनें">
-            <option value="all">🎯 सभी 3 कक्षा जटिलताएं देखें (All Challenges)</option>
-            <option value="mgml">1️⃣ 2 से 3 कक्षाएं संयुक्त (MGML Split Teaching)</option>
-            <option value="bhasha">2️⃣ घरेलू बोली अंतर (Bhasha Setu Dialect Bridge)</option>
-            <option value="absentee">3️⃣ अनुपस्थिति व लर्निंग गैप (2-Min Catch-Up)</option>
-          </select>
-          <button id="btn-hero-explore" class="btn-search">
-            <span>समाधान देखें</span>
-            <span>➔</span>
-          </button>
-        </div>
-
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
-          <span>✓ 100% ऑफ़लाइन PWA</span>
-          <span>✓ शून्य-लागत TLM</span>
-          <span>✓ अवधी/भोजपुरी/बुंदेली सहायता</span>
-        </div>
-      </div>
-
-      <!-- Hero Video Box (Field Documentation) -->
-      <div id="video-section" class="hero-video-box">
-        <div class="video-container">
-          <iframe 
-            src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview" 
-            allow="autoplay; encrypted-media" 
-            title="Classroom Complexity in Indian Primary Schools">
-          </iframe>
-        </div>
-        <div class="video-floating-badge">
-          <span>📹</span>
-          <span>ग्राउंड रियलिटी • 90-Sec Field Documentation</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Quick Classroom Complexity Walkthrough Launcher -->
-    <section class="tour-launcher-section">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-        <strong style="color: var(--accent-navy-dark); font-size: 0.98rem; display: flex; align-items: center; gap: 0.5rem;">
-          <span>🧭</span>
-          <span>कक्षा जटिलता समाधान नेविगेशन (Classroom Complexity Walkthrough):</span>
-        </strong>
-        <span style="font-size: 0.82rem; color: var(--text-muted);">क्लिक करके लाइव समाधान देखें</span>
-      </div>
-      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-        <button id="btn-pill-step-1" class="tour-step-pill">
-          1️⃣ 2 से 3 कक्षाएं संयुक्त (MGML Split)
-        </button>
-        <button id="btn-pill-step-2" class="tour-step-pill">
-          2️⃣ घरेलू बोली अंतर (Bhasha Setu)
-        </button>
-        <button id="btn-pill-step-3" class="tour-step-pill">
-          3️⃣ अनुपस्थिति रिकवरी (2-Min Catch-Up)
-        </button>
-        <button id="btn-pill-step-all" class="tour-step-pill active">
-          ▶️ पूरा सजीव डेमो शुरू करें (Full Tour)
-        </button>
-      </div>
-    </section>
-
-    <!-- Guided Tour Active Banner (Visible during demo walkthrough) -->
-    <div id="demo-tour-banner" class="tour-banner hidden" role="region" aria-label="सजीव समाधान डेमो">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
-        <div style="flex: 1;">
-          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-            <span id="tour-step-badge" style="background: var(--accent-teal); color: #FFFFFF; font-size: 0.75rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 9999px;">
-              चुनौती 1 / 3
-            </span>
-            <h3 id="tour-step-title" style="font-size: 1.15rem; font-weight: 900; color: #FFFFFF; margin: 0;">
-              2 से 3 कक्षाएं एक साथ (Multi-Grade MGML)
-            </h3>
-          </div>
-          <p id="tour-problem-text" style="font-size: 0.88rem; color: #CBD5E1; margin: 0.25rem 0; font-style: italic;"></p>
-          <p id="tour-solution-text" style="font-size: 0.95rem; color: #FDE047; font-weight: 700; margin: 0.25rem 0 0;"></p>
-        </div>
-        <button id="btn-close-tour" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #FFF; width: 48px; height: 48px; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; cursor: pointer;" aria-label="डेमो बंद करें">✕</button>
-      </div>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.5rem; margin-top: 0.5rem;">
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <button id="btn-tour-action" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
-            ⚡ लाइव चलाएं (Execute)
-          </button>
-          <button id="btn-tour-read-aloud" class="btn-action btn-navy" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
-            🔊 बोलकर समझें
-          </button>
-        </div>
-        <div style="display: flex; gap: 0.5rem;">
-          <button id="btn-tour-prev" class="btn-action" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1px solid rgba(255,255,255,0.25); min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
-            ◀ पिछला
-          </button>
-          <button id="btn-tour-next" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
-            अगला कदम ▶
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Impact Metrics Strip -->
-    <section class="stats-strip" aria-label="प्रभाव आंकड़े">
-      <div class="stat-item">
-        <span class="stat-num">15 मिनट</span>
-        <span class="stat-label">चक्रीय बहु-कक्षा चक्र</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">3 बोलियां</span>
-        <span class="stat-label">अवधी, भोजपुरी, बुंदेली सेतु</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">2 मिनट</span>
-        <span class="stat-label">मौखिक वापसी जांच व साथी</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-num">100%</span>
-        <span class="stat-label">शून्य-इंटरनेट ऑफ़लाइन PWA</span>
-      </div>
-    </section>
-
-    <!-- SECTION TITLE: CLASSROOM SOLVERS -->
-    <div id="solvers-section" class="section-head">
-      <span class="section-pretitle">EXPLORE CLASSROOM SOLVERS</span>
-      <h2 class="section-title">विद्यासेतु शिक्षण मॉड्यूल</h2>
-    </div>
-
-    <!-- MAIN DASHBOARD GRID (Program Cards Style) -->
-    <main class="dashboard-grid" role="main">
-
-      <!-- TILE 1: MULTI-GRADE TIMER -->
-      <section class="feature-card" aria-labelledby="heading-mgml">
+      <!-- Hero Section -->
+      <section class="hero-container" aria-labelledby="hero-heading">
         <div>
-          <div class="card-meta">
-            <span class="card-tag">समस्या 1 • बहु-कक्षा चक्र</span>
-            <span class="video-tag" id="cycle-step-badge">15-Min Split</span>
+          <div class="hero-tag">
+            <span>🌿</span>
+            <span>निपुण भारत FLN फ्रेमवर्क • बहु-कक्षा साथी</span>
           </div>
-          <h3 id="heading-mgml" class="card-title">बहु-कक्षा विभाजन सहायक</h3>
-          <p class="card-desc">कक्षा 1 को पढ़ाते समय कक्षा 2 और 3 को स्व-अध्ययन खेल में व्यस्त रखें।</p>
-          
-          <div class="animated-banner">
-            <span class="chalkboard-text">🎯 15 मिनट: प्रत्यक्ष शिक्षण ↔ सहपाठी खेल</span>
+          <h2 id="hero-heading" class="hero-title">
+            सिखाएं। <span class="text-gradient">भारत के हर प्राथमिक शिक्षक के साथ।</span>
+          </h2>
+          <p class="hero-desc">
+            अल्प-संसाधन प्राथमिक विद्यालयों की 3 प्रमुख चुनौतियों—<strong>2 से 3 कक्षाएं संयुक्त</strong>, <strong>घरेलू बोली बनाम किताबी भाषा का अंतर</strong>, और <strong>फसल कटाई के बाद अनुपस्थिति</strong> का त्वरित, व्यावहारिक समाधान।
+          </p>
+
+          <!-- Category Quick-Filter Bar -->
+          <div class="hero-search-box">
+            <select id="hero-category-select" class="search-select" aria-label="चुनौती चुनें">
+              <option value="all">🎯 सभी 3 कक्षा जटिलताएं देखें (All Challenges)</option>
+              <option value="mgml">1️⃣ 2 से 3 कक्षाएं संयुक्त (MGML Split Teaching)</option>
+              <option value="bhasha">2️⃣ घरेलू बोली अंतर (Bhasha Setu Dialect Bridge)</option>
+              <option value="absentee">3️⃣ अनुपस्थिति व लर्निंग गैप (2-Min Catch-Up)</option>
+            </select>
+            <button id="btn-hero-explore" class="btn-search">
+              <span>समाधान पेज खोलें</span>
+              <span>➔</span>
+            </button>
           </div>
 
-          <div class="info-pane">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <strong id="active-group-label" style="color: var(--accent-navy);">कक्षा 1: प्रत्यक्ष शिक्षक समय</strong>
-              <span id="timer-display" class="timer-readout">15:00</span>
-            </div>
-            <p id="split-instruction-text" style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">
-              <strong>शिक्षक:</strong> कक्षा 1 को 'क' और 'म' वर्ण ध्वनि सिखाएं।<br>
-              <strong>कक्षा 2 व 3:</strong> 10-10 कंकड़ों के समूह बनाकर स्लेट पर गिनती लिखें।
-            </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
+            <span>✓ 100% ऑफ़लाइन PWA</span>
+            <span>✓ शून्य-लागत TLM</span>
+            <span>✓ अवधी/भोजपुरी/बुंदेली सहायता</span>
           </div>
         </div>
-        <button id="btn-toggle-timer" class="btn-action btn-green">
-          <span id="timer-icon" aria-hidden="true">⏱️</span>
-          <span id="timer-btn-text">15 मिनट चक्र शुरू करें</span>
-        </button>
+
+        <!-- Video Box Preview in Hero -->
+        <div id="video-section" class="hero-video-box">
+          <div class="video-container">
+            <iframe 
+              src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview" 
+              allow="autoplay; encrypted-media" 
+              title="Classroom Complexity in Indian Primary Schools">
+            </iframe>
+          </div>
+          <div class="video-floating-badge">
+            <span>📹</span>
+            <span>ग्राउंड रियलिटी • 90-Sec Field Documentation</span>
+          </div>
+        </div>
       </section>
 
-      <!-- TILE 2: BHASHA SETU -->
-      <section class="feature-card" aria-labelledby="heading-bhasha">
-        <div>
-          <div class="card-meta">
-            <span class="card-tag">भाषा अंतर • Dialect Bridge</span>
-            <span class="video-tag">ध्वनि अनुवाद</span>
-          </div>
-          <h3 id="heading-bhasha" class="card-title">भाषा सेतु (Bhasha Setu)</h3>
-          <p class="card-desc">कठिन किताबी शब्दों को बच्चों की घरेलू बोली और ग्रामीण उदाहरणों में समझें।</p>
+      <!-- Walkthrough Launcher Section -->
+      <section class="tour-launcher-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+          <strong style="color: var(--accent-navy-dark); font-size: 0.98rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>🧭</span>
+            <span>कक्षा जटिलता समाधान नेविगेशन (Classroom Complexity Walkthrough):</span>
+          </strong>
+          <span style="font-size: 0.82rem; color: var(--text-muted);">क्लिक करके लाइव समाधान देखें</span>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button id="btn-pill-step-1" class="tour-step-pill">
+            1️⃣ 2 से 3 कक्षाएं संयुक्त (MGML Split)
+          </button>
+          <button id="btn-pill-step-2" class="tour-step-pill">
+            2️⃣ घरेलू बोली अंतर (Bhasha Setu)
+          </button>
+          <button id="btn-pill-step-3" class="tour-step-pill">
+            3️⃣ अनुपस्थिति रिकवरी (2-Min Catch-Up)
+          </button>
+          <button id="btn-pill-step-all" class="tour-step-pill active">
+            ▶️ पूरा सजीव डेमो शुरू करें (Full Tour)
+          </button>
+        </div>
+      </section>
 
-          <div class="animated-banner" style="background: linear-gradient(-45deg, #071D49, #00824B, #003388, #00BE6D);">
-            <span class="chalkboard-text">🗣️ "अवरोही क्रम = छत की सीढ़ी से उतरना"</span>
+      <!-- Guided Tour Active Banner -->
+      <div id="demo-tour-banner" class="tour-banner hidden" role="region" aria-label="सजीव समाधान डेमो">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+          <div style="flex: 1;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+              <span id="tour-step-badge" style="background: var(--accent-teal); color: #FFFFFF; font-size: 0.75rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+                चुनौती 1 / 3
+              </span>
+              <h3 id="tour-step-title" style="font-size: 1.15rem; font-weight: 900; color: #FFFFFF; margin: 0;">
+                2 से 3 कक्षाएं एक साथ (Multi-Grade MGML)
+              </h3>
+            </div>
+            <p id="tour-problem-text" style="font-size: 0.88rem; color: #CBD5E1; margin: 0.25rem 0; font-style: italic;"></p>
+            <p id="tour-solution-text" style="font-size: 0.95rem; color: #FDE047; font-weight: 700; margin: 0.25rem 0 0;"></p>
+          </div>
+          <button id="btn-close-tour" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #FFF; width: 48px; height: 48px; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; cursor: pointer;" aria-label="डेमो बंद करें">✕</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.5rem; margin-top: 0.5rem;">
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <button id="btn-tour-action" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+              ⚡ लाइव चलाएं (Execute)
+            </button>
+            <button id="btn-tour-read-aloud" class="btn-action btn-navy" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+              🔊 बोलकर समझें
+            </button>
+          </div>
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="btn-tour-prev" class="btn-action" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1px solid rgba(255,255,255,0.25); min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+              ◀ पिछला
+            </button>
+            <button id="btn-tour-next" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+              अगला कदम ▶
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Portal Cards to Dedicated Pages -->
+      <div id="solvers-section" class="section-head">
+        <span class="section-pretitle">EXPLORE CLASSROOM SOLVERS</span>
+        <h2 class="section-title">विद्यासेतु समर्पित शिक्षण मॉड्यूल</h2>
+      </div>
+
+      <div class="dashboard-grid">
+        <!-- Tile 1: Multi-grade Timer Page Link -->
+        <article class="feature-card" aria-labelledby="heading-mgml">
+          <div>
+            <div class="card-meta">
+              <span class="card-tag">समस्या 1 • बहु-कक्षा चक्र</span>
+              <span class="video-tag" id="cycle-step-badge">15-Min Split</span>
+            </div>
+            <h3 id="heading-mgml" class="card-title">बहु-कक्षा विभाजन सहायक</h3>
+            <p class="card-desc">कक्षा 1 को पढ़ाते समय कक्षा 2 व 3 को स्व-अध्ययन खेल में व्यस्त रखें।</p>
+            <div class="animated-banner">
+              <span class="chalkboard-text">🎯 15 मिनट: प्रत्यक्ष शिक्षण ↔ सहपाठी खेल</span>
+            </div>
+            <div class="info-pane">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong id="active-group-label" style="color: var(--accent-navy);">कक्षा 1: प्रत्यक्ष शिक्षक समय</strong>
+                <span id="timer-display" class="timer-readout">15:00</span>
+              </div>
+              <p id="split-instruction-text" style="margin: 0.4rem 0 0; font-size: 0.9rem; color: var(--text-secondary);">
+                <strong>शिक्षक:</strong> कक्षा 1 को 'क' और 'म' वर्ण ध्वनि सिखाएं।<br>
+                <strong>कक्षा 2 व 3:</strong> 10-10 कंकड़ों के समूह बनाकर स्लेट पर गिनती लिखें।
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+            <button id="btn-toggle-timer" class="btn-action btn-green">
+              <span id="timer-icon" aria-hidden="true">⏱️</span>
+              <span id="timer-btn-text">15 मिनट चक्र शुरू करें</span>
+            </button>
+            <a href="#/solvers" class="btn-action" style="background: var(--bg-surface-elevated); color: var(--accent-navy-dark); border: 1.5px solid var(--border-subtle); min-height: 52px; text-decoration: none; font-size: 0.95rem;">
+              <span>कक्षा समाधान समर्पित पेज खोलें</span>
+              <span>➔</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Tile 2: Bhasha Setu Page Link -->
+        <article class="feature-card" aria-labelledby="heading-bhasha">
+          <div>
+            <div class="card-meta">
+              <span class="card-tag">समस्या 2 • भाषा अंतर</span>
+              <span class="video-tag">1ली - 5वीं संदर्शिका</span>
+            </div>
+            <h3 id="heading-bhasha" class="card-title">भाषा सेतु (1ली से 5वीं कक्षा)</h3>
+            <p class="card-desc">कठिन किताबी शब्दों को बच्चों की घरेलू बोली और ग्रामीण उदाहरणों में समझें।</p>
+            <div class="animated-banner" style="background: linear-gradient(-45deg, #0F172A, #0F766E, #1E3A8A, #0D9488);">
+              <span class="chalkboard-text">🗣️ 1ली से 5वीं: गणित • हिन्दी • पर्यावरण</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+              <label for="concept-dropdown" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-navy);">त्वरित अवधारणा चुनें:</label>
+              <select id="concept-dropdown" class="select-input">
+                <option value="subtraction">घटाव (कक्षा 1 गणित) - बेर गिरना</option>
+                <option value="place_value">स्थानीय मान (कक्षा 2 गणित) - बंडल व तीली</option>
+                <option value="fractions">भिन्न (कक्षा 3 गणित) - रोटी का बंटवारा</option>
+                <option value="perimeter">परिमाप (कक्षा 4 गणित) - खेत की मेड़</option>
+                <option value="hcf">HCF (कक्षा 5 गणित) - सबसे बड़ा नाप</option>
+              </select>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+            <button id="btn-explain-concept" class="btn-action btn-navy">
+              <span aria-hidden="true">🗣️</span>
+              <span>घरेलू संदर्भ में समझाएं</span>
+            </button>
+            <a href="#/bhasha" class="btn-action" style="background: var(--bg-surface-elevated); color: var(--accent-navy-dark); border: 1.5px solid var(--border-subtle); min-height: 52px; text-decoration: none; font-size: 0.95rem;">
+              <span>संपूर्ण भाषा सेतु पेज खोलें (1ली से 5वीं)</span>
+              <span>➔</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Tile 3: Vacation Return Diagnostic Link -->
+        <article class="feature-card" aria-labelledby="heading-absentee">
+          <div>
+            <div class="card-meta">
+              <span class="card-tag">समस्या 3 • उपचारात्मक शिक्षण</span>
+              <span id="remediation-roster-count" class="video-tag">0 लंबित</span>
+            </div>
+            <h3 id="heading-absentee" class="card-title">छुट्टी के बाद वापसी जांच</h3>
+            <p class="card-desc">छुट्टी या फसल कटाई के बाद लौटे बच्चे की 2 मिनट में जांच करें और सहपाठी साथी जोड़ें।</p>
+            <div class="info-pane" style="margin-bottom: 0.75rem;">
+              💡 <strong>3 त्वरित मौखिक प्रश्न</strong> बच्चे के ड्रॉप-ऑफ स्तर का पता लगाते हैं।
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+              <label for="student-name-input" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-navy);">लौटे हुए बच्चे का नाम:</label>
+              <input type="text" id="student-name-input" class="text-input" placeholder="उदा. रोहन कुमार (कक्षा 2)" maxlength="32" />
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+            <button id="btn-open-diagnostic" class="btn-action btn-green">
+              <span aria-hidden="true">⚡</span>
+              <span>2-मिनट मौखिक जांच शुरू करें</span>
+            </button>
+            <a href="#/catchup" class="btn-action" style="background: var(--bg-surface-elevated); color: var(--accent-navy-dark); border: 1.5px solid var(--border-subtle); min-height: 52px; text-decoration: none; font-size: 0.95rem;">
+              <span>वापसी जांच समर्पित पेज खोलें</span>
+              <span>➔</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Tile 4: Field Video & Ground Documentation -->
+        <article class="feature-card" aria-labelledby="heading-video-card">
+          <div>
+            <div class="card-meta">
+              <span class="card-tag">ग्राउंड रियलिटी • Video</span>
+              <span class="video-tag">90-Sec Documentary</span>
+            </div>
+            <h3 id="heading-video-card" class="card-title">ग्राउंड फील्ड वीडियो विश्लेषण</h3>
+            <p class="card-desc">भारतीय प्राथमिक शालाओं में 2-3 कक्षाओं के संयुक्त शिक्षण की वास्तविक स्थिति देखें।</p>
+            <div class="info-pane">
+              <strong>केस स्टडी बिंदु:</strong>
+              <p style="margin: 0.25rem 0 0; font-size: 0.9rem; color: var(--text-secondary);">
+                • 1 शिक्षक पर 3 कक्षाओं का भार<br>
+                • अवधी-भोजपुरी बोली अंतर<br>
+                • कटाई उपरांत 40% अनुपस्थिति
+              </p>
+            </div>
+          </div>
+          <div style="display: flex; gap: 0.5rem; flex-direction: column;">
+            <button id="btn-view-tlm" class="btn-action" style="background-color: var(--bg-surface-elevated); color: var(--text-primary); border: 1.5px solid var(--border-subtle);">
+              <span aria-hidden="true">🎯</span>
+              <span>शून्य-लागत श्यामपट्ट खेल देखें</span>
+            </button>
+            <a href="#/video" class="btn-action btn-navy" style="min-height: 52px; text-decoration: none; font-size: 0.95rem;">
+              <span>फील्ड वीडियो व विश्लेषण पेज खोलें</span>
+              <span>➔</span>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Stats Strip -->
+      <section class="stats-strip" aria-label="प्रभाव आंकड़े">
+        <div class="stat-item">
+          <span class="stat-num">15 मिनट</span>
+          <span class="stat-label">चक्रीय बहु-कक्षा चक्र</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">Classes 1-5</span>
+          <span class="stat-label">गणित, हिन्दी, EVS सेतु</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">2 मिनट</span>
+          <span class="stat-label">मौखिक वापसी जांच व साथी</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">शून्य-इंटरनेट ऑफ़लाइन PWA</span>
+        </div>
+      </section>
+
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PAGE 2: CLASSROOM SOLUTIONS DEDICATED PAGE (#/solvers)                    -->
+    <!-- ========================================================================= -->
+    <section id="page-solvers" class="page-view hidden" aria-label="कक्षा समाधान">
+      <div class="breadcrumb-bar">
+        <div class="breadcrumb-path">
+          <a href="#/home">🏠 मुख्य पृष्ठ</a>
+          <span>›</span>
+          <span style="color: var(--accent-navy-dark);">कक्षा समाधान (Classroom Multi-Grade Solvers)</span>
+        </div>
+        <a href="#/home" class="btn-back-home">← मुख्य पृष्ठ पर लौटें</a>
+      </div>
+
+      <div class="section-head">
+        <span class="section-pretitle">MULTI-GRADE CLASSROOM WORKSTATION</span>
+        <h2 class="section-title">बहु-कक्षा चक्रीय शिक्षण संदर्शिका</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+          जब एक ही शिक्षक को 2 या 3 कक्षाएं एक साथ पढ़ानी हों, तो 15-मिनट चक्रीय टाइमर एक समूह को प्रत्यक्ष सिखाता है और दूसरे को स्लेट खेल में सक्रिय रखता है।
+        </p>
+      </div>
+
+      <!-- Multi-Grade Interactive Configuration -->
+      <div style="background: #FFF; border: 1.5px solid var(--border-subtle); border-radius: 1.25rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--accent-navy-dark);">⚙️ कक्षा युग्म व समय चक्र चुनें:</h3>
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+            <div>
+              <label for="solvers-grade-combo" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-navy);">कक्षा युग्म (Grade Pairing):</label>
+              <select id="solvers-grade-combo" class="select-input">
+                <option value="1_23">कक्षा 1 + कक्षा 2 व 3 (प्राथमिक मानक)</option>
+                <option value="23_45">कक्षा 2 व 3 + कक्षा 4 व 5 (उच्च प्राथमिक)</option>
+                <option value="single_teacher">एकल-शिक्षक शाला (कक्षा 1-2 + कक्षा 3-5)</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size: 0.85rem; font-weight: 700; color: var(--accent-navy);">शिक्षण चक्र अवधि (Cycle Duration):</label>
+              <div style="display: flex; gap: 0.5rem; margin-top: 0.25rem;">
+                <button type="button" class="cycle-duration-btn active tour-step-pill" data-seconds="900" style="flex: 1; justify-content: center;">15 मिनट</button>
+                <button type="button" class="cycle-duration-btn tour-step-pill" data-seconds="600" style="flex: 1; justify-content: center;">10 मिनट</button>
+                <button type="button" class="cycle-duration-btn tour-step-pill" data-seconds="1200" style="flex: 1; justify-content: center;">20 मिनट</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Split Instruction Screen -->
+        <div style="background: var(--bg-surface-elevated); border: 2px solid #BFDBFE; border-radius: 1rem; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <span style="font-size: 0.8rem; font-weight: 800; color: var(--accent-teal-dark); text-transform: uppercase;">सक्रिय शिक्षण चरण</span>
+              <h4 id="solvers-focus-heading" style="font-size: 1.25rem; font-weight: 900; color: var(--accent-navy-dark); margin-top: 0.15rem;">
+                समूह A (कक्षा 1): प्रत्यक्ष शिक्षक समय
+              </h4>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span id="solvers-timer-display" class="timer-readout" style="font-size: 2.25rem;">15:00</span>
+              <button id="btn-solvers-timer-toggle" class="btn-action btn-green" style="min-height: 48px; width: auto; padding: 0.5rem 1.25rem;">
+                ▶️ चक्र शुरू करें
+              </button>
+            </div>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
-            <label for="concept-dropdown" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-navy);">अवधारणा चुनें:</label>
-            <select id="concept-dropdown" class="select-input">
-              <option value="subtraction">घटाव (Subtraction) - शेष बचना</option>
-              <option value="descending">अवरोही क्रम (Descending Order) - बड़े से छोटा</option>
-              <option value="place_value">स्थानीय मान (Place Value) - इकाई/दहाई</option>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+              <div style="background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem;">
+                <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent-navy); text-transform: uppercase;">👨‍🏫 शिक्षक कार्य (Direct Instruction):</span>
+                <p id="solvers-teacher-task" style="margin: 0.35rem 0 0; font-size: 0.95rem; color: var(--text-primary); font-weight: 600;">
+                  कक्षा 1 के बच्चों को वर्ण ध्वनि 'क' और 'म' की पहचान कराएं और श्यामपट्ट पर चित्र बनाकर वर्ण गोला लगवाएं।
+                </p>
+              </div>
+              <div style="background: #FFFFFF; border: 1.5px solid #CCFBF1; border-radius: 0.75rem; padding: 1rem;">
+                <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent-teal-dark); text-transform: uppercase;">🎲 सहपाठी कार्य (Peer Self-Learning):</span>
+                <p id="solvers-peer-task" style="margin: 0.35rem 0 0; font-size: 0.95rem; color: var(--text-primary); font-weight: 600;">
+                  कक्षा 2 व 3 के बच्चे 10-10 कंकड़ों के समूह बनाकर स्लेट पर गिनती लिखें और एक-दूसरे की स्लेट जांचें।
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <button id="btn-solvers-switch-phase" class="btn-action" style="background: #FFFFFF; color: var(--accent-navy); border: 1px solid var(--accent-navy); min-height: 48px; width: auto; padding: 0.4rem 1rem; font-size: 0.9rem;">
+              🔄 अभी भूमिका बदलें (Switch Focus Now)
+            </button>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
+              🔔 समय पूरा होते ही स्वचालित घंटी बजेगी
+            </span>
+          </div>
+        </div>
+
+        <!-- Zero Cost TLM Generator on Solvers Page -->
+        <div style="margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+          <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--accent-navy-dark); margin-bottom: 0.5rem;">
+            🎯 शून्य-लागत TLM श्यामपट्ट खेल जेनरेटर:
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem; margin-bottom: 0.75rem;">
+            <div>
+              <label for="tlm-material-select" style="font-size: 0.85rem; font-weight: 700;">उपलब्ध प्राकृतिक सामग्री:</label>
+              <select id="tlm-material-select" class="select-input">
+                <option value="pebbles">कंकड़ / पत्थर (Pebbles)</option>
+                <option value="chalk">चॉक व श्यामपट्ट (Chalk & Board)</option>
+                <option value="sticks">माचिस की तीलियाँ / सींक (Sticks)</option>
+                <option value="leaves">पत्तियां व फूल (Leaves & Flowers)</option>
+                <option value="seeds">इमली के बीज (Tamarind Seeds)</option>
+              </select>
+            </div>
+            <div>
+              <label for="tlm-grade-select" style="font-size: 0.85rem; font-weight: 700;">लक्षित कक्षा:</label>
+              <select id="tlm-grade-select" class="select-input">
+                <option value="1">कक्षा 1</option>
+                <option value="2">कक्षा 2</option>
+                <option value="3">कक्षा 3</option>
+                <option value="4">कक्षा 4</option>
+                <option value="5">कक्षा 5</option>
+              </select>
+            </div>
+          </div>
+          <button id="btn-generate-tlm" class="btn-action btn-teal" style="min-height: 52px;">
+            <span>🎲 इस सामग्री से गतिविधि खेल बनाएं</span>
+          </button>
+          <div id="tlm-result-box" style="margin-top: 0.75rem; display: none;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PAGE 3: FIELD VIDEO & GROUND REALITY (#/video)                            -->
+    <!-- ========================================================================= -->
+    <section id="page-video" class="page-view hidden" aria-label="फील्ड वीडियो व विश्लेषण">
+      <div class="breadcrumb-bar">
+        <div class="breadcrumb-path">
+          <a href="#/home">🏠 मुख्य पृष्ठ</a>
+          <span>›</span>
+          <span style="color: var(--accent-navy-dark);">फील्ड वीडियो (Ground Reality Video)</span>
+        </div>
+        <a href="#/home" class="btn-back-home">← मुख्य पृष्ठ पर लौटें</a>
+      </div>
+
+      <div class="section-head">
+        <span class="section-pretitle">GROUND DOCUMENTATION & COMPLEXITY ANALYSIS</span>
+        <h2 class="section-title">भारतीय प्राथमिक कक्षाओं की जमीनी हकीकत</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+          90-सेकंड की इस फील्ड रिकॉर्डिंग में देखें कि अल्प-संसाधन विद्यालयों में 2-3 कक्षाओं को एक साथ संभालना शिक्षकों के लिए कितनी बड़ी चुनौती है।
+        </p>
+      </div>
+
+      <div style="background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-radius: 1.25rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+        <div class="hero-video-box">
+          <div class="video-container">
+            <iframe 
+              src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview" 
+              allow="autoplay; encrypted-media" 
+              title="Ground Classroom Complexity Video">
+            </iframe>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--accent-navy-dark);">
+            🔍 वीडियो में दर्ज 3 प्रमुख कक्षा जटिलताएं व समाधान:
+          </h3>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: var(--accent-navy); text-transform: uppercase;">चुनौती 1 • बहु-कक्षा एकीकरण</span>
+              <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin: 0.25rem 0;">2-3 कक्षाएं संयुक्त (MGML)</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                जब शिक्षक एक कक्षा को पढ़ाते हैं, तो दूसरी कक्षा बिना मार्गदर्शन के बैठी रहती है। 
+                <br><strong>विद्यासेतु हल:</strong> 15-मिनट चक्रीय टाइमर द्वारा प्रत्यक्ष शिक्षण ↔ सहपाठी खेल का संतुलन।
+              </p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: var(--accent-teal-dark); text-transform: uppercase;">चुनौती 2 • भाषा की खाई</span>
+              <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin: 0.25rem 0;">घरेलू बोली बनाम किताबी भाषा</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                किताबी भाषा (घटाव, अवरोही, स्थानीय मान) बच्चे की घरेलू बोली से अलग होने पर समझ रुक जाती है।
+                <br><strong>विद्यासेतु हल:</strong> भाषा सेतु अवधी, भोजपुरी और बुंदेली में तुरंत सादृश्य देता है।
+              </p>
+            </div>
+
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem;">
+              <span style="font-size: 0.78rem; font-weight: 800; color: var(--accent-saffron); text-transform: uppercase;">चुनौती 3 • मौसमी पलायन</span>
+              <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin: 0.25rem 0;">फसल कटाई के बाद अनुपस्थिति</h4>
+              <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                कटाई या बीमारी के बाद लौटे बच्चों का लर्निंग लॉस हो जाता है और शिक्षक अकेले दोबारा नहीं पढ़ा पाते।
+                <br><strong>विद्यासेतु हल:</strong> 2-मिनट मौखिक जांच और सहपाठी साथी (Peer Buddy) आवंटन।
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PAGE 4: LANGUAGE BRIDGE (BHASHA SETU) CLASSES 1-5 (#/bhasha)              -->
+    <!-- ========================================================================= -->
+    <section id="page-bhasha" class="page-view hidden" aria-label="भाषा सेतु 1ली से 5वीं कक्षा">
+      <div class="breadcrumb-bar">
+        <div class="breadcrumb-path">
+          <a href="#/home">🏠 मुख्य पृष्ठ</a>
+          <span>›</span>
+          <span style="color: var(--accent-navy-dark);">भाषा सेतु संदर्शिका (कक्षा 1 से 5वीं संपूर्ण पाठ्यक्रम)</span>
+        </div>
+        <a href="#/home" class="btn-back-home">← मुख्य पृष्ठ पर लौटें</a>
+      </div>
+
+      <div class="section-head">
+        <span class="section-pretitle">DIALECT BRIDGE & CURRICULUM SYLLABUS</span>
+        <h2 class="section-title">भाषा सेतु: कक्षा 1ली से 5वीं तक संपूर्ण अवधारणाएं</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+          अपनी कक्षा, विषय और पाठ चुनें। किताबी परिभाषा को अवधी, भोजपुरी, बुंदेली और सरल ग्रामीण संदर्भ में समझें।
+        </p>
+      </div>
+
+      <!-- Cascading Filter Controls -->
+      <div style="background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-radius: 1.25rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <!-- 1. Class Selector -->
+          <div>
+            <label for="bhasha-class-select" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy);">1. कक्षा चुनें (Select Class):</label>
+            <select id="bhasha-class-select" class="select-input">
+              <option value="class1">कक्षा 1 (Grade 1)</option>
+              <option value="class2" selected>कक्षा 2 (Grade 2)</option>
+              <option value="class3">कक्षा 3 (Grade 3)</option>
+              <option value="class4">कक्षा 4 (Grade 4)</option>
+              <option value="class5">कक्षा 5 (Grade 5)</option>
+            </select>
+          </div>
+
+          <!-- 2. Subject Selector -->
+          <div>
+            <label for="bhasha-subject-select" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy);">2. विषय चुनें (Select Subject):</label>
+            <select id="bhasha-subject-select" class="select-input">
+              <option value="math" selected>🔢 गणित (Mathematics)</option>
+              <option value="hindi">📖 भाषा / हिन्दी (Language)</option>
+              <option value="evs">🌿 पर्यावरण अध्ययन (EVS / Science)</option>
+            </select>
+          </div>
+
+          <!-- 3. Topic Selector (Populated dynamically) -->
+          <div>
+            <label for="bhasha-topic-select" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy);">3. पाठ / अवधारणा चुनें (Select Topic):</label>
+            <select id="bhasha-topic-select" class="select-input">
+              <!-- Dynamically populated from BhashaKnowledgeBank -->
             </select>
           </div>
         </div>
-        <button id="btn-explain-concept" class="btn-action btn-navy">
-          <span aria-hidden="true">🗣️</span>
-          <span>घरेलू संदर्भ में समझाएं</span>
-        </button>
-      </section>
 
-      <!-- TILE 3: ABSENTEEISM REMEDIATION -->
-      <section class="feature-card" aria-labelledby="heading-absentee">
+        <!-- 4. Dialect Choice Tabs -->
         <div>
-          <div class="card-meta">
-            <span class="card-tag">उपचारात्मक शिक्षण • Catch-Up</span>
-            <span id="remediation-roster-count" class="video-tag">0 लंबित</span>
-          </div>
-          <h3 id="heading-absentee" class="card-title">छुट्टी के बाद वापसी जांच</h3>
-          <p class="card-desc">छुट्टी के बाद लौटे बच्चे की 2 मिनट में जांच करें और सहपाठी साथी जोड़ें।</p>
-
-          <div class="info-pane" style="margin-bottom: 0.75rem;">
-            💡 <strong>3 त्वरित मौखिक प्रश्न</strong> बच्चे के ड्रॉप-ऑफ स्तर का पता लगाते हैं।
-          </div>
-
-          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label for="student-name-input" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-navy);">लौटे हुए बच्चे का नाम:</label>
-            <input type="text" id="student-name-input" class="text-input" placeholder="उदा. रोहन कुमार (कक्षा 2)" maxlength="32" />
+          <label style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy); display: block; margin-bottom: 0.25rem;">
+            4. घरेलू बोली का परिवेश चुनें (Dialect Context):
+          </label>
+          <div class="dialect-tabs-bar">
+            <button type="button" class="dialect-tab-btn active" data-dialect="awadhi">🌾 अवधी (Eastern UP)</button>
+            <button type="button" class="dialect-tab-btn" data-dialect="bhojpuri">🌾 भोजपुरी (Bihar / Purvanchal)</button>
+            <button type="button" class="dialect-tab-btn" data-dialect="bundeli">🌾 बुंदेली (MP / Bundelkhand)</button>
+            <button type="button" class="dialect-tab-btn" data-dialect="rural">🏡 सरल ग्रामीण हिन्दी</button>
           </div>
         </div>
-        <button id="btn-open-diagnostic" class="btn-action btn-green">
-          <span aria-hidden="true">⚡</span>
-          <span>2-मिनट मौखिक जांच शुरू करें</span>
+
+        <button id="btn-render-bhasha" class="btn-action btn-teal" style="min-height: 54px; margin-top: 0.5rem;">
+          <span>🔍 अवधारणा का सम्पूर्ण विवरण व बोली सादृश्य देखें</span>
         </button>
-      </section>
+      </div>
 
-      <!-- TILE 4: ZERO-COST TLM GAME -->
-      <section class="feature-card" aria-labelledby="heading-tlm">
-        <div>
-          <div class="card-meta">
-            <span class="card-tag">शून्य लागत सामग्री • No-Prep TLM</span>
-            <span class="video-tag">कंकड़ / चॉक</span>
+      <!-- Rendered Concept Detail Area -->
+      <div id="bhasha-output-container" style="display: flex; flex-direction: column; gap: 1rem;">
+        <!-- Dynamically rendered output card -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PAGE 5: VACATION RETURN CATCH-UP DIAGNOSTIC (#/catchup)                   -->
+    <!-- ========================================================================= -->
+    <section id="page-catchup" class="page-view hidden" aria-label="वापसी जांच व उपचारात्मक चक्र">
+      <div class="breadcrumb-bar">
+        <div class="breadcrumb-path">
+          <a href="#/home">🏠 मुख्य पृष्ठ</a>
+          <span>›</span>
+          <span style="color: var(--accent-navy-dark);">2-मिनट मौखिक वापसी जांच (Vacation Return Catch-Up)</span>
+        </div>
+        <a href="#/home" class="btn-back-home">← मुख्य पृष्ठ पर लौटें</a>
+      </div>
+
+      <div class="section-head">
+        <span class="section-pretitle">INTERACTIVE ORAL DIAGNOSTIC & PEER REMEDIATION</span>
+        <h2 class="section-title">छुट्टी / फसल कटाई के बाद वापसी जांच व सहपाठी चक्र</h2>
+        <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+          फसल कटाई, त्योहार या लंबी बीमारी के बाद लौटे बच्चे की 3 मौखिक प्रश्नों से तुरंत जांच करें और उसे सहपाठी साथी (Peer Buddy) आवंटित करें।
+        </p>
+      </div>
+
+      <!-- Step 1: Student Absence Profile Form -->
+      <div style="background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-radius: 1.25rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--accent-navy-dark);">
+          1. लौटे हुए बच्चे का विवरण भरें:
+        </h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          <div>
+            <label for="cu-student-name" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy);">बच्चे का नाम:</label>
+            <input type="text" id="cu-student-name" class="text-input" placeholder="उदा. रोहन कुमार, आरती" value="सोनू" maxlength="32" />
           </div>
-          <h3 id="heading-tlm" class="card-title">श्यामपट्ट खेल गतिविधि</h3>
-          <p class="card-desc">बिना किसी कागज या प्रिंट के, श्यामपट्ट और कंकड़ से 20 बच्चों को सक्रिय रखें।</p>
 
-          <div class="info-pane">
-            <strong style="color: var(--accent-navy-dark);">आज का खेल: "संख्या रेलगाड़ी"</strong>
-            <p style="margin: 0.35rem 0 0; font-size: 0.9rem; color: var(--text-secondary);">
-              बोर्ड पर रेलगाड़ी के 5 डिब्बे बनाएं, बीच के डिब्बे खाली छोड़ें। बच्चे कंकड़ गिनकर छूटे अंक भरेंगे।
-            </p>
+          <div>
+            <label for="cu-grade-select" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy);">कक्षा (Grade):</label>
+            <select id="cu-grade-select" class="select-input">
+              <option value="1">कक्षा 1 (Grade 1)</option>
+              <option value="2" selected>कक्षा 2 (Grade 2)</option>
+              <option value="3">कक्षा 3 (Grade 3)</option>
+              <option value="4">कक्षा 4 (Grade 4)</option>
+              <option value="5">कक्षा 5 (Grade 5)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="cu-reason-select" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy);">अनुपस्थिति का कारण व अवधि:</label>
+            <select id="cu-reason-select" class="select-input">
+              <option value="harvest">🌾 1-2 सप्ताह: फसल कटाई / बुवाई</option>
+              <option value="festival">💍 3-4 सप्ताह: शादी-विवाह / त्योहार</option>
+              <option value="migration">🧱 2+ माह: मौसमी ईंट-भट्ठा पलायन / बीमारी</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="cu-domain-select" style="font-size: 0.85rem; font-weight: 800; color: var(--accent-navy);">जांच का विषय क्षेत्र:</label>
+            <select id="cu-domain-select" class="select-input">
+              <option value="literacy">📖 बुनियादी भाषा व पठन (Literacy)</option>
+              <option value="numeracy">🔢 बुनियादी गणित व संख्या ज्ञान (Numeracy)</option>
+            </select>
           </div>
         </div>
-        <button id="btn-view-tlm" class="btn-action" style="background-color: var(--bg-surface-elevated); color: var(--text-primary); border: 1.5px solid var(--border-subtle);">
-          <span aria-hidden="true">🎯</span>
-          <span>खेल नियम और चरण देखें</span>
-        </button>
-      </section>
 
-    </main>
+        <button id="btn-generate-diagnostic-test" class="btn-action btn-green" style="min-height: 54px; margin-top: 0.5rem;">
+          <span>⚡ 3-प्रश्नीय मौखिक जांच पत्र तैयार करें</span>
+        </button>
+      </div>
+
+      <!-- Step 2: Interactive 3-Question Test Area -->
+      <div id="cu-test-area" style="display: none; background: #FFF; border: 2px solid #BFDBFE; border-radius: 1.25rem; padding: 1.5rem; flex-direction: column; gap: 1.25rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+          <h3 id="cu-test-title" style="font-size: 1.2rem; font-weight: 800; color: var(--accent-navy-dark);">
+            2. मौखिक जांच प्रश्न (बच्चे से अकेले में पूछें):
+          </h3>
+          <span style="font-size: 0.85rem; background: var(--accent-navy-light); color: var(--accent-navy); padding: 0.25rem 0.65rem; border-radius: 9999px; font-weight: 800;">
+            समय: 2 मिनट
+          </span>
+        </div>
+
+        <div id="cu-questions-list" style="display: flex; flex-direction: column; gap: 1rem;">
+          <!-- Questions with interactive scoring buttons rendered here -->
+        </div>
+
+        <button id="btn-evaluate-catchup" class="btn-action btn-navy" style="min-height: 52px;">
+          <span>📊 परिणाम व 7-दिवसीय उपचारात्मक योजना बनाएं</span>
+        </button>
+      </div>
+
+      <!-- Step 3: Diagnostic Outcome & Remediation Plan Area -->
+      <div id="cu-outcome-area" style="display: none; display: flex; flex-direction: column; gap: 1.25rem;">
+        <!-- Outcome card, buddy assignment, and micro-plan rendered here -->
+      </div>
+
+      <!-- Step 4: Active Remediation Roster -->
+      <div style="background: #FFFFFF; border: 1.5px solid var(--border-subtle); border-radius: 1.25rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+          <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--accent-navy-dark);">
+            📋 सक्रिय उपचारात्मक रोस्टर (Active Catch-Up Roster):
+          </h3>
+          <span id="roster-active-badge" style="font-size: 0.8rem; font-weight: 800; background: var(--accent-teal-light); color: var(--accent-teal-dark); border: 1px solid #CCFBF1; padding: 0.25rem 0.75rem; border-radius: 9999px;">
+            0 बच्चे लंबित
+          </span>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="roster-table">
+            <thead>
+              <tr>
+                <th>नाम</th>
+                <th>कक्षा</th>
+                <th>अनुपस्थिति</th>
+                <th>जांच स्तर</th>
+                <th>सहपाठी साथी</th>
+                <th>स्थिति</th>
+                <th>कार्य</th>
+              </tr>
+            </thead>
+            <tbody id="roster-table-body">
+              <tr>
+                <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">
+                  अभी कोई बच्चा लंबित नहीं है। ऊपर से नई जांच शुरू करें!
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
     <!-- Persistent Bottom Bar (Deep Navy Voice Bar) -->
     <aside role="complementary" aria-label="ध्वनि सहायक">
       <button id="btn-persistent-voice" class="voice-bar-btn" aria-label="आवाज सहायक से पूछें">
-        <span aria-hidden="true" style="font-size: 1.6rem;">🎤</span>
+        <span aria-hidden="true" style="font-size: 1.5rem;">🎤</span>
         <span id="voice-bar-label">बोलकर पूछें: "कक्षा 2 के लिए 10 मिनट खेल बताएं"</span>
       </button>
     </aside>
   </div>
 
-  <!-- Reusable Accessible Modal (Modal Dialog Theme) -->
+  <!-- Reusable Accessible Modal -->
   <div id="modal-wrapper" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
     <div class="modal-sheet">
       <div class="modal-header">
@@ -1107,7 +1672,7 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer-content">
       <div>
-        <a href="./" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; text-decoration: none; color: inherit; cursor: pointer;" aria-label="VidyaSetu Homepage (विद्यासेतु मुख्य पृष्ठ)">
+        <a href="#/home" style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; text-decoration: none; color: inherit; cursor: pointer;" aria-label="VidyaSetu Homepage (विद्यासेतु मुख्य पृष्ठ)">
           <div class="brand-logo-badge" style="width: 36px; height: 36px; font-size: 1.1rem;">🎓</div>
           <strong style="font-size: 1.25rem;">VidyaSetu (विद्यासेतु)</strong>
         </a>
@@ -1116,12 +1681,12 @@
         </p>
       </div>
       <div>
-        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--accent-teal);">प्रमुख मॉड्यूल</h4>
+        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--accent-teal);">समर्पित पेज</h4>
         <ul style="list-style: none; font-size: 0.85rem; color: #CBD5E1; display: flex; flex-direction: column; gap: 0.4rem;">
-          <li>• 15-मिनट MGML चक्र टाइमर</li>
-          <li>• भाषा सेतु (घरेलू बोली अनुवाद)</li>
-          <li>• 2-मिनट मौखिक वापसी जांच</li>
-          <li>• शून्य-लागत श्यामपट्ट खेल</li>
+          <li>• <a href="#/solvers" style="color: #CBD5E1; text-decoration: none;">15-मिनट MGML चक्र टाइमर</a></li>
+          <li>• <a href="#/bhasha" style="color: #CBD5E1; text-decoration: none;">भाषा सेतु (1ली से 5वीं कक्षा)</a></li>
+          <li>• <a href="#/catchup" style="color: #CBD5E1; text-decoration: none;">2-मिनट मौखिक वापसी जांच</a></li>
+          <li>• <a href="#/video" style="color: #CBD5E1; text-decoration: none;">ग्राउंड फील्ड वीडियो विश्लेषण</a></li>
         </ul>
       </div>
       <div>
@@ -1136,11 +1701,11 @@
     </div>
     <div class="footer-bottom">
       <span>© 2026 VidyaSetu (विद्यासेतु) • निपुण भारत प्राथमिक कक्षा साथी • NIPUN Bharat Companion</span>
-      <span>Made for Indian Primary Teachers</span>
+      <span>भारतीय प्राथमिक शिक्षकों के लिए समर्पित • 100% सुरक्षित एवं ऑफ़लाइन PWA</span>
     </div>
   </footer>
 
-  <!-- JavaScript Engine -->
+  <!-- Core JavaScript Engine -->
   <script>
     'use strict';
 
@@ -1151,7 +1716,11 @@
         targetEpoch: null,
         timerIntervalId: null,
         activeFocus: 1,
-        remediationQueue: []
+        remediationRoster: [
+          { name: 'पिंकी (कक्षा 1)', grade: '1', reason: 'बीमारी', level: 'हल्का गैप', buddy: 'अमित (कक्षा 2)', status: 'प्रगति पर' }
+        ],
+        currentDialect: 'awadhi',
+        currentTestAnswers: [null, null, null]
       };
 
       let currentTourIndex = 0;
@@ -1195,49 +1764,632 @@
         btnPill3: document.getElementById('btn-pill-step-3'),
         btnPillAll: document.getElementById('btn-pill-step-all'),
         heroSelect: document.getElementById('hero-category-select'),
-        btnHeroExplore: document.getElementById('btn-hero-explore')
+        btnHeroExplore: document.getElementById('btn-hero-explore'),
+
+        // Multi-Page Views
+        pageHome: document.getElementById('page-home'),
+        pageSolvers: document.getElementById('page-solvers'),
+        pageVideo: document.getElementById('page-video'),
+        pageBhasha: document.getElementById('page-bhasha'),
+        pageCatchup: document.getElementById('page-catchup'),
+
+        // Solvers Page Elements
+        solversGradeCombo: document.getElementById('solvers-grade-combo'),
+        solversTimerDisplay: document.getElementById('solvers-timer-display'),
+        btnSolversTimerToggle: document.getElementById('btn-solvers-timer-toggle'),
+        solversFocusHeading: document.getElementById('solvers-focus-heading'),
+        solversTeacherTask: document.getElementById('solvers-teacher-task'),
+        solversPeerTask: document.getElementById('solvers-peer-task'),
+        btnSolversSwitchPhase: document.getElementById('btn-solvers-switch-phase'),
+        tlmMaterialSelect: document.getElementById('tlm-material-select'),
+        tlmGradeSelect: document.getElementById('tlm-grade-select'),
+        btnGenerateTlm: document.getElementById('btn-generate-tlm'),
+        tlmResultBox: document.getElementById('tlm-result-box'),
+
+        // Bhasha Page Elements
+        bhashaClassSelect: document.getElementById('bhasha-class-select'),
+        bhashaSubjectSelect: document.getElementById('bhasha-subject-select'),
+        bhashaTopicSelect: document.getElementById('bhasha-topic-select'),
+        btnRenderBhasha: document.getElementById('btn-render-bhasha'),
+        bhashaOutputContainer: document.getElementById('bhasha-output-container'),
+
+        // CatchUp Page Elements
+        cuStudentName: document.getElementById('cu-student-name'),
+        cuGradeSelect: document.getElementById('cu-grade-select'),
+        cuReasonSelect: document.getElementById('cu-reason-select'),
+        cuDomainSelect: document.getElementById('cu-domain-select'),
+        btnGenerateDiagnosticTest: document.getElementById('btn-generate-diagnostic-test'),
+        cuTestArea: document.getElementById('cu-test-area'),
+        cuQuestionsList: document.getElementById('cu-questions-list'),
+        btnEvaluateCatchup: document.getElementById('btn-evaluate-catchup'),
+        cuOutcomeArea: document.getElementById('cu-outcome-area'),
+        rosterActiveBadge: document.getElementById('roster-active-badge'),
+        rosterTableBody: document.getElementById('roster-table-body')
       };
 
+      // 1. ROUTER: Client-Side Page Switcher
+      function navigateTo(route) {
+        window.location.hash = route;
+      }
+
+      function handleRoute() {
+        const hash = window.location.hash || '#/home';
+        const cleanRoute = hash.replace(/^#\/?/, '').split('?')[0] || 'home';
+
+        const pages = {
+          home: elements.pageHome,
+          solvers: elements.pageSolvers,
+          video: elements.pageVideo,
+          bhasha: elements.pageBhasha,
+          catchup: elements.pageCatchup
+        };
+
+        // Hide all pages
+        Object.values(pages).forEach(p => p && p.classList.add('hidden'));
+
+        // Show active page
+        const activeTarget = pages[cleanRoute] || elements.pageHome;
+        if (activeTarget) {
+          activeTarget.classList.remove('hidden');
+        }
+
+        // Update Nav Link Active States
+        document.querySelectorAll('.nav-link-btn').forEach(btn => {
+          if (btn.getAttribute('data-page') === cleanRoute) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+
+        // Update Document Title based on page
+        const titles = {
+          home: 'VidyaSetu (विद्यासेतु) • प्राथमिक कक्षा साथी | NIPUN Bharat Copilot',
+          solvers: 'VidyaSetu • कक्षा समाधान (Classroom Multi-Grade Solvers)',
+          video: 'VidyaSetu • फील्ड वीडियो व कक्षा विश्लेषण (Ground Reality)',
+          bhasha: 'VidyaSetu • भाषा सेतु (1ली से 5वीं कक्षा संपूर्ण संदर्शिका)',
+          catchup: 'VidyaSetu • 2-मिनट मौखिक वापसी जांच (Vacation Return Catch-Up)'
+        };
+        document.title = titles[cleanRoute] || titles.home;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // 2. BHASHA SETU: Cascading Selectors & Knowledge Bank
+      function populateBhashaTopics() {
+        if (!window.BhashaKnowledgeBank || !elements.bhashaTopicSelect) return;
+        const cls = elements.bhashaClassSelect.value;
+        const subj = elements.bhashaSubjectSelect.value;
+        const classData = BhashaKnowledgeBank[cls];
+        if (!classData || !classData.subjects[subj]) return;
+
+        const topics = classData.subjects[subj].topics;
+        elements.bhashaTopicSelect.replaceChildren();
+
+        topics.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.id;
+          opt.textContent = t.name;
+          elements.bhashaTopicSelect.appendChild(opt);
+        });
+
+        renderBhashaCard();
+      }
+
+      function getSelectedTopicData() {
+        if (!window.BhashaKnowledgeBank) return null;
+        const cls = elements.bhashaClassSelect.value;
+        const subj = elements.bhashaSubjectSelect.value;
+        const topicId = elements.bhashaTopicSelect.value;
+        const classData = BhashaKnowledgeBank[cls];
+        if (!classData || !classData.subjects[subj]) return null;
+        return classData.subjects[subj].topics.find(t => t.id === topicId) || classData.subjects[subj].topics[0];
+      }
+
+      function renderBhashaCard() {
+        const topic = getSelectedTopicData();
+        if (!topic || !elements.bhashaOutputContainer) return;
+
+        const dialectKey = state.currentDialect;
+        const dialectNameMap = {
+          awadhi: 'अवधी (Eastern UP)',
+          bhojpuri: 'भोजपुरी (Bihar / Purvanchal)',
+          bundeli: 'बुंदेली (MP / Bundelkhand)',
+          rural: 'सरल ग्रामीण हिन्दी'
+        };
+
+        const dialectText = topic[dialectKey] || topic.rural || topic.awadhi;
+
+        elements.bhashaOutputContainer.replaceChildren();
+
+        const card = document.createElement('div');
+        card.style.cssText = 'background: #FFFFFF; border: 2px solid #BFDBFE; border-radius: 1.25rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; box-shadow: 0 8px 24px -4px rgba(0,0,0,0.05);';
+
+        // Title Row
+        const headRow = document.createElement('div');
+        headRow.style.cssText = 'display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1.5px solid var(--border-subtle); padding-bottom: 0.75rem;';
+
+        const titleBox = document.createElement('div');
+        const badge = document.createElement('span');
+        badge.style.cssText = 'font-size: 0.75rem; font-weight: 800; background: var(--accent-teal-light); color: var(--accent-teal-dark); padding: 0.2rem 0.6rem; border-radius: 9999px; text-transform: uppercase;';
+        badge.textContent = elements.bhashaClassSelect.options[elements.bhashaClassSelect.selectedIndex].text + ' • ' + elements.bhashaSubjectSelect.options[elements.bhashaSubjectSelect.selectedIndex].text;
+
+        const h3 = document.createElement('h3');
+        h3.style.cssText = 'font-size: 1.35rem; font-weight: 900; color: var(--accent-navy-dark); margin-top: 0.35rem;';
+        h3.textContent = topic.name;
+        titleBox.append(badge, h3);
+
+        const btnAudio = document.createElement('button');
+        btnAudio.className = 'btn-action btn-teal';
+        btnAudio.style.cssText = 'min-height: 48px; width: auto; padding: 0.5rem 1.25rem; font-size: 0.95rem;';
+        btnAudio.textContent = '🔊 बोलकर समझें';
+        btnAudio.onclick = () => {
+          speakVernacular(topic.name + '। किताबी अर्थ: ' + topic.standard + '। ' + dialectNameMap[dialectKey] + ' में अर्थ: ' + dialectText + '।');
+        };
+
+        headRow.append(titleBox, btnAudio);
+
+        // Section 1: Standard Textbook Definition
+        const sec1 = document.createElement('div');
+        sec1.style.cssText = 'background: var(--bg-surface-elevated); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
+        const lbl1 = document.createElement('strong');
+        lbl1.style.cssText = 'display: block; font-size: 0.8rem; font-weight: 800; color: var(--accent-navy); text-transform: uppercase;';
+        lbl1.textContent = '📘 किताबी मानक परिभाषा (Standard Textbook Concept):';
+        const p1 = document.createElement('p');
+        p1.style.cssText = 'margin-top: 0.35rem; font-size: 0.95rem; color: var(--text-primary); font-weight: 600;';
+        p1.textContent = topic.standard;
+        sec1.append(lbl1, p1);
+
+        // Section 2: Rural Dialect Analogy
+        const sec2 = document.createElement('div');
+        sec2.style.cssText = 'background: var(--accent-teal-light); padding: 1rem; border-radius: 0.75rem; border: 1.5px solid #CCFBF1;';
+        const lbl2 = document.createElement('strong');
+        lbl2.style.cssText = 'display: block; font-size: 0.8rem; font-weight: 800; color: var(--accent-teal-dark); text-transform: uppercase;';
+        lbl2.textContent = '🏡 ' + dialectNameMap[dialectKey] + ' सादृश्य (Rural Analogy):';
+        const p2 = document.createElement('p');
+        p2.style.cssText = 'margin-top: 0.35rem; font-size: 1.1rem; color: var(--accent-navy-dark); font-weight: 800;';
+        p2.textContent = dialectText;
+        sec2.append(lbl2, p2);
+
+        // Section 3: Teacher-Child Dialogue Script
+        const sec3 = document.createElement('div');
+        sec3.style.cssText = 'background: #FFFFFF; border: 1.5px solid var(--border-subtle); padding: 1rem; border-radius: 0.75rem;';
+        const lbl3 = document.createElement('strong');
+        lbl3.style.cssText = 'display: block; font-size: 0.8rem; font-weight: 800; color: var(--accent-saffron); text-transform: uppercase;';
+        lbl3.textContent = '🗣️ शिक्षक-छात्र कक्षा संवाद मार्गदर्शन (Classroom Dialogue Script):';
+        const p3 = document.createElement('p');
+        p3.style.cssText = 'margin-top: 0.35rem; font-size: 0.95rem; color: var(--text-primary); font-style: italic;';
+        p3.textContent = topic.script;
+        sec3.append(lbl3, p3);
+
+        // Section 4: Zero-Cost TLM Activity
+        const sec4 = document.createElement('div');
+        sec4.style.cssText = 'background: #FEF3C7; padding: 1rem; border-radius: 0.75rem; border: 1px solid #FDE68A;';
+        const lbl4 = document.createElement('strong');
+        lbl4.style.cssText = 'display: block; font-size: 0.8rem; font-weight: 800; color: #92400E; text-transform: uppercase;';
+        lbl4.textContent = '🎯 शून्य-लागत TLM व स्लेट गतिविधि (Hands-on Slate & Pebble Activity):';
+        const p4 = document.createElement('p');
+        p4.style.cssText = 'margin-top: 0.35rem; font-size: 0.95rem; color: #78350F; font-weight: 600;';
+        p4.textContent = topic.activity;
+        sec4.append(lbl4, p4);
+
+        card.append(headRow, sec1, sec2, sec3, sec4);
+        elements.bhashaOutputContainer.appendChild(card);
+      }
+
+      // 3. VACATION RETURN CATCH-UP ENGINE
+      const CatchUpQuestionBank = {
+        '1_literacy': [
+          "1. स्लेट पर 'क' और 'म' वर्ण पहचान कर अपनी उंगली से गोला बनाएं।",
+          "2. यह सरल 2-अक्षर वाला शब्द पढ़कर सुनाएं: 'घर'",
+          "3. इस चित्र (नल) को देखकर बताएं इसका पहला अक्षर क्या है?"
+        ],
+        '1_numeracy': [
+          "1. इन 5 कंकड़ों को अपनी उंगली से एक-एक करके गिनें।",
+          "2. अंक कार्ड '3' और '7' पहचानकर बताएं कौन सा बड़ा है?",
+          "3. 2 कंकड़ों में 1 कंकड़ और मिला देने पर कुल कितने हुए?"
+        ],
+        '2_literacy': [
+          "1. छोटी 'ि' और बड़ी 'ी' वाले इन दो शब्दों को बोलकर अंतर बताएं: 'दिन' और 'दीन'!",
+          "2. यह सरल वाक्य पढ़कर सुनाएं: 'रमन घर चल कर जल भर।'",
+          "3. शब्द 'गरम' का उल्टा (विलोम) शब्द बताएं।"
+        ],
+        '2_numeracy': [
+          "1. संख्या '34' में दहाई का अंक कौन सा है और उसका मान कितना है?",
+          "2. 15 में 8 जोड़ने पर कितना आएगा? (स्लेट पर लिखकर दिखाएं)",
+          "3. 20 कंकड़ों में से 5-5 के कितने समूह बनेंगे?"
+        ],
+        '3_literacy': [
+          "1. इस 3-वाक्य वाले अनुच्छेद को बिना रुके पढ़कर सुनाएं।",
+          "2. वाक्य 'काली गाय मीठा दूध देती है' में से संज्ञा शब्द छांटें।",
+          "3. शब्द 'पानी' के दो अन्य नाम (पर्यायवाची) बताएं।"
+        ],
+        '3_numeracy': [
+          "1. संख्या '408' को शब्दों में लिखकर बताएं।",
+          "2. 7 का पहाड़ा 4 बार पढ़ें (7 × 4 = ?)।",
+          "3. 15 कंकड़ों को 3 बच्चों में बराबर-बराबर बांटने पर प्रत्येक को कितने मिलेंगे?"
+        ],
+        '4_literacy': [
+          "1. अपठित गद्यांश को 40 शब्द प्रति मिनट की धाराप्रवाह गति से पढ़ें।",
+          "2. वाक्य में विशेषण शब्द की पहचान करें: 'मेहनती किसान खेत में काम करता है।'",
+          "3. मुहावरे 'नौ दो ग्यारह होना' का अर्थ और एक वाक्य बताएं।"
+        ],
+        '4_numeracy': [
+          "1. संख्या 3,456 में अंक 4 का स्थानीय मान कितना है?",
+          "2. 45 को 6 से भाग देकर भागफल और शेषफल बताएं (45 ÷ 6)।",
+          "3. 10 मीटर लम्बे और 5 मीटर चौड़े खेत के चारों ओर तार लगाने के लिए कितनी लम्बाई चाहिए (परिमाप)?"
+        ],
+        '5_literacy': [
+          "1. वाक्य में क्रिया विशेषण छांटें: 'कछुआ धीरे-धीरे अपनी मंजिल तक पहुंच गया।'",
+          "2. वाक्य में सही विराम चिह्न (पूर्णविराम, अल्पविराम, प्रश्नवाचक) लगाएं।",
+          "3. 1 मिनट में बताएं: 'पेड़ हमारे सच्चे मित्र कैसे हैं?'"
+        ],
+        '5_numeracy': [
+          "1. 12 और 18 का महत्तम समापवर्तक (HCF) निकालें।",
+          "2. ₹ 5.75 में ₹ 2.50 जोड़कर कुल राशि बताएं।",
+          "3. घड़ी में जब ठीक 3 बजते हैं, तो दोनों सुइयों के बीच कौन सा कोण बनता है?"
+        ]
+      };
+
+      function generateDiagnosticTest() {
+        const studentName = (elements.cuStudentName.value || 'सोनू').trim();
+        const grade = elements.cuGradeSelect.value;
+        const domain = elements.cuDomainSelect.value;
+        const key = grade + '_' + domain;
+        const questions = CatchUpQuestionBank[key] || CatchUpQuestionBank['2_numeracy'];
+
+        state.currentTestAnswers = [null, null, null];
+        elements.cuTestArea.style.display = 'flex';
+        elements.cuOutcomeArea.style.display = 'none';
+
+        elements.cuTestTitle.textContent = '2. मौखिक जांच प्रश्न: ' + studentName + ' (कक्षा ' + grade + ' - ' + (domain === 'literacy' ? 'भाषा' : 'गणित') + '):';
+        elements.cuQuestionsList.replaceChildren();
+
+        questions.forEach((qText, qIdx) => {
+          const qCard = document.createElement('div');
+          qCard.style.cssText = 'background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem;';
+
+          const title = document.createElement('p');
+          title.style.cssText = 'font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0;';
+          title.textContent = qText;
+
+          const btnRow = document.createElement('div');
+          btnRow.style.cssText = 'display: flex; gap: 0.5rem; flex-wrap: wrap;';
+
+          const scores = [
+            { label: '🟢 सरलता से बताया (+2)', val: 2, bg: 'var(--accent-teal-light)', color: 'var(--accent-teal-dark)', border: '#CCFBF1' },
+            { label: '🟡 अटका / धीमा बताया (+1)', val: 1, bg: '#FEF3C7', color: '#B45309', border: '#FDE68A' },
+            { label: '🔴 नहीं बता पाया (0)', val: 0, bg: 'var(--accent-red-light)', color: 'var(--accent-red)', border: '#FECACA' }
+          ];
+
+          scores.forEach(s => {
+            const b = document.createElement('button');
+            b.type = 'button';
+            b.style.cssText = 'min-height: 48px; padding: 0.4rem 0.85rem; border-radius: 0.5rem; font-size: 0.88rem; font-weight: 700; cursor: pointer; border: 1.5px solid ' + s.border + '; background: #FFF; color: ' + s.color + '; transition: all 0.15s ease;';
+            b.textContent = s.label;
+            b.onclick = () => {
+              state.currentTestAnswers[qIdx] = s.val;
+              Array.from(btnRow.children).forEach(sibling => {
+                sibling.style.background = '#FFF';
+                sibling.style.boxShadow = 'none';
+              });
+              b.style.background = s.bg;
+              b.style.boxShadow = '0 0 0 2px ' + s.color;
+            };
+            btnRow.appendChild(b);
+          });
+
+          qCard.append(title, btnRow);
+          elements.cuQuestionsList.appendChild(qCard);
+        });
+
+        speakVernacular(studentName + ' के लिए 2 मिनट का मौखिक जांच पत्र तैयार है। बच्चे से अकेले में प्रश्न पूछें।');
+      }
+
+      function evaluateCatchUpTest() {
+        const studentName = (elements.cuStudentName.value || 'सोनू').trim();
+        const grade = elements.cuGradeSelect.value;
+        const reason = elements.cuReasonSelect.options[elements.cuReasonSelect.selectedIndex].text;
+
+        const scores = state.currentTestAnswers.map(s => s === null ? 0 : s);
+        const total = scores.reduce((a, b) => a + b, 0);
+
+        let bandName = '';
+        let bandBadge = '';
+        let buddyName = '';
+        let microPlan = '';
+        let parentMsg = '';
+
+        const peerPool = ['अमन (कक्षा 3)', 'प्रिया (कक्षा 2)', 'समीर (कक्षा 4)', 'अंजलि (कक्षा 1)'];
+        buddyName = peerPool[Math.floor(Math.random() * peerPool.length)];
+
+        if (total >= 5) {
+          bandName = 'स्तर पर है (Grade Ready)';
+          bandBadge = 'status-resolved';
+          microPlan = 'बच्चा कक्षा स्तर पर है। नियमित कक्षा शिक्षण में निरंतर रखें। सहपाठी साथी के साथ नियमित रूप से स्लेट पठन कराएं।';
+          parentMsg = 'नमस्ते! ' + studentName + ' स्कूल वापस आ गया है और उसका स्तर बहुत अच्छा है। रोज़ स्कूल भेजें ताकि गति बनी रहे।';
+        } else if (total >= 3) {
+          bandName = 'हल्का लर्निंग लॉस (Mild Gap)';
+          bandBadge = 'status-pending';
+          microPlan = '3-दिवसीय स्लेट उपचारात्मक योजना: सहपाठी साथी के साथ रोज़ 15 मिनट वर्ण कार्ड व कंकड़ खेल में बैठाएं। चौथे दिन 2-मिनट पुनः जांच लें।';
+          parentMsg = 'नमस्ते! ' + studentName + ' कुछ दिन अनुपस्थित रहा, इसलिए कुछ बातें भूला है। हम स्कूल में सहपाठी साथी के साथ अभ्यास करा रहे हैं। कृपया रोज़ स्कूल भेजें।';
+        } else {
+          bandName = 'गंभीर फाउंडेशनल गैप (Severe Gap)';
+          bandBadge = 'status-active';
+          microPlan = '7-दिवसीय सघन फाउंडेशनल सेतु: सहपाठी साथी ' + buddyName + ' के साथ दैनिक 20 मिनट प्रत्यक्ष कंकड़ व स्लेट अभ्यास। शिक्षक द्वारा व्यक्तिगत समय।';
+          parentMsg = 'नमस्ते! लंबी अनुपस्थिति के कारण ' + studentName + ' को सीखने में थोड़ी कठिनाई आ रही है। स्कूल में विशेष मदद दी जा रही है। घर पर भी रोज़ 15 मिनट स्लेट पर अभ्यास करवाएं।';
+        }
+
+        elements.cuOutcomeArea.style.display = 'flex';
+        elements.cuOutcomeArea.replaceChildren();
+
+        const outcomeCard = document.createElement('div');
+        outcomeCard.style.cssText = 'background: #FFFFFF; border: 2px solid var(--accent-teal); border-radius: 1.25rem; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 10px 30px rgba(13, 148, 136, 0.1);';
+
+        const head = document.createElement('div');
+        head.style.cssText = 'display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem;';
+        const h3 = document.createElement('h3');
+        h3.style.cssText = 'font-size: 1.25rem; font-weight: 800; color: var(--accent-navy-dark); margin: 0;';
+        h3.textContent = '📊 जांच परिणाम: ' + studentName + ' (अंक: ' + total + ' / 6)';
+
+        const badge = document.createElement('span');
+        badge.className = 'status-pill ' + bandBadge;
+        badge.style.fontSize = '0.9rem';
+        badge.textContent = bandName;
+        head.append(h3, badge);
+
+        const buddyBox = document.createElement('div');
+        buddyBox.style.cssText = 'background: var(--accent-teal-light); border: 1.5px solid #CCFBF1; border-radius: 0.75rem; padding: 1rem;';
+        buddyBox.innerHTML = '<strong>🤝 आवंटित सहपाठी साथी (Assigned Peer Buddy):</strong> <span style="font-weight: 800; color: var(--accent-teal-dark);">' + buddyName + '</span><br><span style="font-size: 0.9rem; color: var(--text-secondary);">सहपाठी साथी स्लेट कार्ड और कंकड़ खेल में साथ बैठकर रोज 15 मिनट दोहराव कराएगा।</span>';
+
+        const planBox = document.createElement('div');
+        planBox.style.cssText = 'background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem;';
+        planBox.innerHTML = '<strong>📅 7-दिवसीय उपचारात्मक योजना (Micro-Remediation Plan):</strong><p style="margin: 0.25rem 0 0; font-size: 0.95rem; color: var(--text-primary); font-weight: 600;">' + microPlan + '</p>';
+
+        const parentBox = document.createElement('div');
+        parentBox.style.cssText = 'background: #FEF3C7; border: 1px solid #FDE68A; border-radius: 0.75rem; padding: 1rem;';
+        parentBox.innerHTML = '<strong>💬 शिक्षक-अभिभावक संवाद संदेश (Parent Note in Hindi):</strong><p style="margin: 0.25rem 0 0; font-size: 0.95rem; color: #78350F; font-style: italic;">"' + parentMsg + '"</p>';
+
+        const actions = document.createElement('div');
+        actions.style.cssText = 'display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 0.5rem;';
+
+        const btnSaveRoster = document.createElement('button');
+        btnSaveRoster.className = 'btn-action btn-green';
+        btnSaveRoster.style.cssText = 'min-height: 48px; width: auto; padding: 0.5rem 1.25rem; font-size: 0.95rem;';
+        btnSaveRoster.textContent = '💾 उपचारात्मक रोस्टर में जोड़ें';
+        btnSaveRoster.onclick = () => {
+          state.remediationRoster.push({
+            name: studentName,
+            grade: grade,
+            reason: reason.split(':')[0],
+            level: bandName,
+            buddy: buddyName,
+            status: total >= 5 ? 'स्तर प्राप्त' : 'लंबित'
+          });
+          renderRosterTable();
+          alert('✅ ' + studentName + ' को उपचारात्मक रोस्टर में जोड़ दिया गया है!');
+        };
+
+        const btnAudio = document.createElement('button');
+        btnAudio.className = 'btn-action btn-navy';
+        btnAudio.style.cssText = 'min-height: 48px; width: auto; padding: 0.5rem 1.25rem; font-size: 0.95rem;';
+        btnAudio.textContent = '🔊 बोलकर सुनें';
+        btnAudio.onclick = () => {
+          speakVernacular(studentName + ' का जांच परिणाम: ' + bandName + '। सहपाठी साथी ' + buddyName + ' आवंटित किया गया है। ' + microPlan);
+        };
+
+        actions.append(btnSaveRoster, btnAudio);
+        outcomeCard.append(head, buddyBox, planBox, parentBox, actions);
+        elements.cuOutcomeArea.appendChild(outcomeCard);
+
+        speakVernacular(studentName + ' का स्तर निर्धारित हुआ: ' + bandName + '। सहपाठी साथी आवंटित है।');
+      }
+
+      function renderRosterTable() {
+        if (!elements.rosterTableBody) return;
+        elements.rosterTableBody.replaceChildren();
+
+        const pendingCount = state.remediationRoster.filter(r => r.status === 'लंबित' || r.status === 'प्रगति पर').length;
+        if (elements.rosterActiveBadge) elements.rosterActiveBadge.textContent = pendingCount + ' बच्चे लंबित';
+        if (elements.rosterCount) elements.rosterCount.textContent = pendingCount + ' लंबित';
+
+        if (state.remediationRoster.length === 0) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = 7;
+          td.style.cssText = 'text-align: center; color: var(--text-muted); padding: 1.5rem;';
+          td.textContent = 'अभी कोई बच्चा लंबित नहीं है। ऊपर से नई जांच शुरू करें!';
+          tr.appendChild(td);
+          elements.rosterTableBody.appendChild(tr);
+          return;
+        }
+
+        state.remediationRoster.forEach((item, idx) => {
+          const tr = document.createElement('tr');
+
+          const tdName = document.createElement('td');
+          tdName.style.fontWeight = '700';
+          tdName.textContent = item.name;
+
+          const tdGrade = document.createElement('td');
+          tdGrade.textContent = 'कक्षा ' + item.grade;
+
+          const tdReason = document.createElement('td');
+          tdReason.textContent = item.reason;
+
+          const tdLevel = document.createElement('td');
+          tdLevel.textContent = item.level;
+
+          const tdBuddy = document.createElement('td');
+          tdBuddy.textContent = item.buddy;
+
+          const tdStatus = document.createElement('td');
+          const pill = document.createElement('span');
+          pill.className = 'status-pill ' + (item.status === 'स्तर प्राप्त' ? 'status-resolved' : item.status === 'प्रगति पर' ? 'status-active' : 'status-pending');
+          pill.textContent = item.status;
+          tdStatus.appendChild(pill);
+
+          const tdAction = document.createElement('td');
+          const btnToggle = document.createElement('button');
+          btnToggle.style.cssText = 'background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); padding: 0.3rem 0.6rem; border-radius: 0.35rem; font-size: 0.75rem; font-weight: 700; cursor: pointer;';
+          btnToggle.textContent = item.status === 'स्तर प्राप्त' ? 'पुनः खोलें' : 'पूर्ण मार्क करें ✅';
+          btnToggle.onclick = () => {
+            item.status = item.status === 'स्तर प्राप्त' ? 'प्रगति पर' : 'स्तर प्राप्त';
+            renderRosterTable();
+          };
+          tdAction.appendChild(btnToggle);
+
+          tr.append(tdName, tdGrade, tdReason, tdLevel, tdBuddy, tdStatus, tdAction);
+          elements.rosterTableBody.appendChild(tr);
+        });
+      }
+
+      // 4. MULTI-GRADE TIMER ENGINE
+      function toggleTimer() {
+        if (!state.timerRunning) {
+          state.timerRunning = true;
+          state.targetEpoch = Date.now() + (state.durationSeconds * 1000);
+          elements.timerBtnText.textContent = 'रोकें (Pause)';
+          elements.timerIcon.textContent = '⏸️';
+          if (elements.btnSolversTimerToggle) elements.btnSolversTimerToggle.textContent = '⏸️ रोकें (Pause)';
+          speakVernacular('15 मिनट का बहु-कक्षा शिक्षण चक्र प्रारंभ हुआ।');
+          state.timerIntervalId = setInterval(tickTimer, 250);
+        } else {
+          state.timerRunning = false;
+          clearInterval(state.timerIntervalId);
+          const remainingMillis = Math.max(0, state.targetEpoch - Date.now());
+          state.durationSeconds = Math.round(remainingMillis / 1000);
+          elements.timerBtnText.textContent = 'पुनः शुरू करें (Resume)';
+          elements.timerIcon.textContent = '▶️';
+          if (elements.btnSolversTimerToggle) elements.btnSolversTimerToggle.textContent = '▶️ पुनः शुरू करें';
+        }
+      }
+
+      function tickTimer() {
+        const remainingMillis = Math.max(0, state.targetEpoch - Date.now());
+        const remainingSecs = Math.round(remainingMillis / 1000);
+        const mins = Math.floor(remainingSecs / 60);
+        const secs = remainingSecs % 60;
+        const timeStr = String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+        
+        elements.timerDisplay.textContent = timeStr;
+        if (elements.solversTimerDisplay) elements.solversTimerDisplay.textContent = timeStr;
+
+        if (remainingSecs <= 0) {
+          switchClassFocus();
+        }
+      }
+
+      function switchClassFocus() {
+        clearInterval(state.timerIntervalId);
+        state.durationSeconds = 900;
+        state.timerRunning = false;
+        state.activeFocus = state.activeFocus === 1 ? 2 : 1;
+
+        if (state.activeFocus === 1) {
+          elements.activeGroupLabel.textContent = 'कक्षा 1: प्रत्यक्ष शिक्षक समय';
+          elements.splitInstructionText.innerHTML = 
+            '<strong>शिक्षक:</strong> कक्षा 1 को ध्वनि अभ्यास कराएं।<br><strong>कक्षा 2 व 3:</strong> कंकड़ों से 10 के समूह बनाएं।';
+          if (elements.solversFocusHeading) elements.solversFocusHeading.textContent = 'समूह A (कक्षा 1): प्रत्यक्ष शिक्षक समय';
+          if (elements.solversTeacherTask) elements.solversTeacherTask.textContent = "कक्षा 1 के बच्चों को वर्ण ध्वनि 'क' और 'म' की पहचान कराएं और श्यामपट्ट पर चित्र बनवाएं।";
+          if (elements.solversPeerTask) elements.solversPeerTask.textContent = 'कक्षा 2 व 3 के बच्चे 10-10 कंकड़ों के समूह बनाकर स्लेट पर गिनती लिखें।';
+          speakVernacular('15 मिनट पूर्ण हुए। अब कक्षा 1 को प्रत्यक्ष समय दें।');
+        } else {
+          elements.activeGroupLabel.textContent = 'कक्षा 2 व 3: प्रत्यक्ष शिक्षक समय';
+          elements.splitInstructionText.innerHTML = 
+            '<strong>शिक्षक:</strong> कक्षा 2 व 3 को शब्द निर्माण सिखाएं।<br><strong>कक्षा 1:</strong> स्लेट पर चित्र देखकर पहला अक्षर लिखें।';
+          if (elements.solversFocusHeading) elements.solversFocusHeading.textContent = 'समूह B (कक्षा 2 व 3): प्रत्यक्ष शिक्षक समय';
+          if (elements.solversTeacherTask) elements.solversTeacherTask.textContent = 'कक्षा 2 व 3 के बच्चों को शब्द निर्माण व हासिल वाला जोड़ सिखाएं।';
+          if (elements.solversPeerTask) elements.solversPeerTask.textContent = 'कक्षा 1 के बच्चे स्लेट पर चित्र देखकर पहला अक्षर लिखें और रंग भरें।';
+          speakVernacular('15 मिनट पूर्ण हुए। अब कक्षा 2 और 3 को प्रत्यक्ष सिखाएं।');
+        }
+
+        elements.timerDisplay.textContent = '15:00';
+        if (elements.solversTimerDisplay) elements.solversTimerDisplay.textContent = '15:00';
+        elements.timerBtnText.textContent = 'अगला चक्र शुरू करें';
+        elements.timerIcon.textContent = '⏱️';
+        if (elements.btnSolversTimerToggle) elements.btnSolversTimerToggle.textContent = '▶️ अगला चक्र शुरू करें';
+      }
+
+      // 5. ZERO COST TLM GENERATOR
+      const tlmGamesRepo = {
+        pebbles: {
+          title: 'कंकड़ खेल: "संख्या का घर" (Number Houses)',
+          rule: 'जमीन पर 3 गोल घेरे बनाएं (इकाई, दहाई, सैकड़ा)। बच्चे 15 कंकड़ों को घेरे में फेंककर अपना स्कोर जोड़ेंगे।'
+        },
+        chalk: {
+          title: 'श्यामपट्ट खेल: "संख्या रेलगाड़ी" (Number Train)',
+          rule: 'बोर्ड पर 5 डिब्बों वाली ट्रेन बनाएं। बीच के डिब्बे खाली छोड़ें। बच्चे छूटे अंक भरेंगे।'
+        },
+        sticks: {
+          title: 'तीलियों का खेल: "बंडल बनाओ दहाई जीतो"',
+          rule: '10 तीलियों पर रबर या धागा बांधकर 1 दहाई बनाएं। 2 बंडल और 3 खुली तीली = तेईस।'
+        },
+        leaves: {
+          title: 'पत्तियों का खेल: "आकार और किनारों की खोज"',
+          rule: 'अलग-अलग आकार की पत्तियां इकट्ठा करें: नुकीली, गोल, चौड़ी। समरूपता और आकृतियों की तुलना करें।'
+        },
+        seeds: {
+          title: 'बीज खेल: "बराबर बंटवारे का बाजार"',
+          rule: '20 इमली के बीजों को 4 बच्चों में बराबर-बराबर बांटकर भाग (÷) की अवधारणा प्रत्यक्ष सिखाएं।'
+        }
+      };
+
+      function generateTlmGame() {
+        const mat = elements.tlmMaterialSelect.value;
+        const grade = elements.tlmGradeSelect.value;
+        const game = tlmGamesRepo[mat] || tlmGamesRepo.pebbles;
+
+        elements.tlmResultBox.style.display = 'block';
+        elements.tlmResultBox.style.cssText = 'margin-top: 0.75rem; background: #FFFFFF; border: 2px solid var(--accent-teal); border-radius: 0.85rem; padding: 1rem; display: block;';
+        elements.tlmResultBox.innerHTML = 
+          '<strong style="color: var(--accent-navy-dark); font-size: 1.05rem;">🎲 ' + game.title + ' (कक्षा ' + grade + ' हेतु):</strong>' +
+          '<p style="margin: 0.35rem 0 0; font-size: 0.95rem; color: var(--text-primary);">' + game.rule + '</p>' +
+          '<div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--accent-teal-dark); font-weight: 700;">✓ शून्य लागत • शून्य तैयारी समय • 100% भागीदारी</div>';
+
+        speakVernacular(game.title + '। ' + game.rule);
+      }
+
+      // 6. LIVE GUIDED TOUR
       const tourSteps = [
         {
-          headingId: 'heading-mgml',
+          route: 'solvers',
           cardSelector: '[aria-labelledby="heading-mgml"]',
           stepBadge: 'चुनौती 1 / 3 • 2 से 3 कक्षाएं संयुक्त (MGML)',
           title: '2 से 3 कक्षाएं एक साथ (Multi-Grade Split-Teaching)',
           problemText: '🛑 समस्या: "Teachers often need to teach 2 to 3 grades simultaneously meaning time spent with one group is time the other learns without guidance."',
-          solutionText: '💡 विद्यासेतु समाधान: 15-मिनट चक्रीय टाइमर (MGML Split)। शिक्षक कक्षा 1 को प्रत्यक्ष सिखाते हैं, जबकि कक्षा 2 और 3 कंकड़ों से स्लेट पर स्व-अध्ययन खेल में व्यस्त रहते हैं। 15 मिनट पूरे होते ही स्वचालित ध्वनि सूचना बजती है और भूमिकाएं बदल जाती हैं।',
+          solutionText: '💡 विद्यासेतु समाधान: 15-मिनट चक्रीय टाइमर (MGML Split)। शिक्षक कक्षा 1 को प्रत्यक्ष सिखाते हैं, जबकि कक्षा 2 व 3 कंकड़ों से स्लेट पर स्व-अध्ययन खेल में व्यस्त रहते हैं। 15 मिनट पूरे होते ही स्वचालित ध्वनि सूचना बजती है और भूमिकाएं बदल जाती हैं।',
           speechSummary: 'चुनौती 1: दो से तीन कक्षाएं एक साथ। विद्यासेतु का 15 मिनट टाइमर शिक्षक को कक्षा 1 को प्रत्यक्ष पढ़ाने और कक्षा 2 व 3 को कंकड़ खेल में व्यस्त रखने की समय-सारणी देता है। शिक्षक दो से तीन कक्षाओं को एक साथ आसानी से पढ़ा सकते हैं।',
           actionLabel: '⏱️ 15 मिनट चक्र शुरू करें',
           action: () => {
+            navigateTo('/solvers');
             if (!state.timerRunning) toggleTimer();
           }
         },
         {
-          headingId: 'heading-bhasha',
+          route: 'bhasha',
           cardSelector: '[aria-labelledby="heading-bhasha"]',
           stepBadge: 'चुनौती 2 / 3 • घरेलू बोली का अंतर (Language Gap)',
           title: 'घर की बोली बनाम किताबी भाषा (Bhasha Setu)',
           problemText: '🛑 समस्या: "Often the child\'s language at home is different from the language used in the classroom creating a gap between instruction and understanding."',
-          solutionText: '💡 विद्यासेतु समाधान: भाषा सेतु (Bhasha Setu)। कठिन किताबी शब्दों (जैसे घटाव, अवरोही क्रम, स्थानीय मान) को बच्चों के घरेलू परिवेश के उदाहरणों (पेड़ से बेर गिरना, छत की सीढ़ी उतरना, माचिस की तीलियाँ) में बदलकर तुरंत अर्थ स्पष्ट करता है।',
+          solutionText: '💡 विद्यासेतु समाधान: भाषा सेतु (Bhasha Setu 1ली से 5वीं)। कठिन किताबी शब्दों (जैसे घटाव, अवरोही क्रम, स्थानीय मान) को बच्चों के घरेलू परिवेश के उदाहरणों (पेड़ से बेर गिरना, छत की सीढ़ी उतरना, माचिस की तीलियाँ) में बदलकर तुरंत अर्थ स्पष्ट करता है।',
           speechSummary: 'चुनौती 2: घर की बोली और किताबी भाषा का अंतर। भाषा सेतु कठिन किताबी शब्दों को बच्चों के घरेलू परिवेश के उदाहरणों में समझाता है।',
-          actionLabel: '🗣️ घटाव को घरेलू संदर्भ में समझें',
+          actionLabel: '🗣️ संपूर्ण भाषा सेतु पेज देखें',
           action: () => {
-            if (elements.conceptDropdown) elements.conceptDropdown.value = 'subtraction';
-            triggerConceptExplanation();
+            navigateTo('/bhasha');
           }
         },
         {
-          headingId: 'heading-absentee',
+          route: 'catchup',
           cardSelector: '[aria-labelledby="heading-absentee"]',
           stepBadge: 'चुनौती 3 / 3 • अनुपस्थिति व लर्निंग गैप (Catch-Up)',
           title: 'अनुपस्थिति व दोबारा सिखाने की कमी (2-Min Catch-Up)',
           problemText: '🛑 समस्या: "Frequent student absenteeism creates learning gaps for the child with teachers having no time to reteach it individually, and no mechanism to help the child catch up."',
           solutionText: '💡 विद्यासेतु समाधान: 2-मिनट मौखिक वापसी जांच। फसल कटाई या बीमारी के बाद लौटे बच्चे की 3 त्वरित मौखिक प्रश्नों से जांच करें। अटकने पर बच्चे को सहपाठी साथी (Peer Buddy) के साथ अक्षर/संख्या कार्ड में लगाएं ताकि शिक्षक को अकेले दोबारा न पढ़ाना पड़े।',
           speechSummary: 'चुनौती 3: बार-बार अनुपस्थिति। 2 मिनट की मौखिक जांच से बच्चे का स्तर तुरंत पता चलता है और सहपाठी साथी के साथ उपचारात्मक कार्य शुरू होता है।',
-          actionLabel: '⚡ 2-मिनट मौखिक जांच शुरू करें',
+          actionLabel: '⚡ 2-मिनट वापसी जांच पेज खोलें',
           action: () => {
-            if (elements.studentInput) elements.studentInput.value = 'सोनू (कक्षा 2)';
-            openCatchUpDiagnostic();
+            navigateTo('/catchup');
           }
         }
       ];
@@ -1268,13 +2420,6 @@
           }
         });
 
-        document.querySelectorAll('.feature-card').forEach(c => c.classList.remove('tour-highlight'));
-        const targetCard = document.querySelector(step.cardSelector);
-        if (targetCard) {
-          targetCard.classList.add('tour-highlight');
-          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
         speakVernacular(step.speechSummary);
       }
 
@@ -1284,10 +2429,10 @@
 
       function closeTour() {
         if (elements.tourBanner) elements.tourBanner.classList.add('hidden');
-        document.querySelectorAll('.feature-card').forEach(c => c.classList.remove('tour-highlight'));
         [elements.btnPill1, elements.btnPill2, elements.btnPill3].forEach(p => p && p.classList.remove('active'));
       }
 
+      // Safe Modal
       function openSafeModal(titleText, contentNodeBuilder) {
         elements.modalHeading.textContent = titleText;
         elements.modalContent.replaceChildren();
@@ -1300,6 +2445,7 @@
         elements.modalWrapper.classList.add('hidden');
       }
 
+      // Speech Synthesis Helper
       function speakVernacular(text) {
         if (elements.srAnnouncer) elements.srAnnouncer.textContent = text;
         if ('speechSynthesis' in window) {
@@ -1312,186 +2458,7 @@
         }
       }
 
-      function toggleTimer() {
-        if (!state.timerRunning) {
-          state.timerRunning = true;
-          state.targetEpoch = Date.now() + (state.durationSeconds * 1000);
-          elements.timerBtnText.textContent = 'रोकें (Pause)';
-          elements.timerIcon.textContent = '⏸️';
-          speakVernacular('15 मिनट का बहु-कक्षा शिक्षण चक्र प्रारंभ हुआ।');
-          state.timerIntervalId = setInterval(tickTimer, 250);
-        } else {
-          state.timerRunning = false;
-          clearInterval(state.timerIntervalId);
-          const remainingMillis = Math.max(0, state.targetEpoch - Date.now());
-          state.durationSeconds = Math.round(remainingMillis / 1000);
-          elements.timerBtnText.textContent = 'पुनः शुरू करें (Resume)';
-          elements.timerIcon.textContent = '▶️';
-        }
-      }
-
-      function tickTimer() {
-        const remainingMillis = Math.max(0, state.targetEpoch - Date.now());
-        const remainingSecs = Math.round(remainingMillis / 1000);
-        const mins = Math.floor(remainingSecs / 60);
-        const secs = remainingSecs % 60;
-        elements.timerDisplay.textContent = 
-          `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-
-        if (remainingSecs <= 0) {
-          switchClassFocus();
-        }
-      }
-
-      function switchClassFocus() {
-        clearInterval(state.timerIntervalId);
-        state.durationSeconds = 900;
-        state.timerRunning = false;
-        state.activeFocus = state.activeFocus === 1 ? 2 : 1;
-
-        if (state.activeFocus === 1) {
-          elements.activeGroupLabel.textContent = 'कक्षा 1: प्रत्यक्ष शिक्षक समय';
-          elements.splitInstructionText.innerHTML = 
-            '<strong>शिक्षक:</strong> कक्षा 1 को ध्वनि अभ्यास कराएं।<br><strong>कक्षा 2 व 3:</strong> कंकड़ों से 10 के समूह बनाएं।';
-          speakVernacular('15 मिनट पूर्ण हुए। अब कक्षा 1 को प्रत्यक्ष समय दें।');
-        } else {
-          elements.activeGroupLabel.textContent = 'कक्षा 2 व 3: प्रत्यक्ष शिक्षक समय';
-          elements.splitInstructionText.innerHTML = 
-            '<strong>शिक्षक:</strong> कक्षा 2 व 3 को शब्द निर्माण सिखाएं।<br><strong>कक्षा 1:</strong> स्लेट पर चित्र देखकर पहला अक्षर लिखें।';
-          speakVernacular('15 मिनट पूर्ण हुए। अब कक्षा 2 और 3 को प्रत्यक्ष सिखाएं।');
-        }
-
-        elements.timerDisplay.textContent = '15:00';
-        elements.timerBtnText.textContent = 'अगला चक्र शुरू करें';
-        elements.timerIcon.textContent = '⏱️';
-      }
-
-      const VernacularRepo = {
-        subtraction: {
-          title: 'घटाव (Subtraction)',
-          formal: 'किसी राशि में से निश्चित संख्या कम करना या निकालना।',
-          vernacular: 'पेड़ से आम गिरना या हाट में पैसे खर्च होना।',
-          instruction: 'बच्चों से कहें: "यदि आपके पास 5 बेर हैं और 2 छोटे भाई को दे दिए, तो कितने बचे?"'
-        },
-        descending: {
-          title: 'अवरोही क्रम (Descending Order)',
-          formal: 'संख्याओं को बड़े से छोटे के मान में व्यवस्थित करना।',
-          vernacular: 'छत की सीढ़ी से जमीन की ओर नीचे उतरना।',
-          instruction: 'बच्चों से सीढ़ी उतरने का अभिनय कराएं: 5वीं सीढ़ी, फिर 4थी, फिर 3री और फिर जमीन।'
-        },
-        place_value: {
-          title: 'स्थानीय मान (Place Value)',
-          formal: 'अंक की स्थिति के अनुसार उसका मान निर्धारित होना।',
-          vernacular: 'माचिस की 10 तीलियों का बंडल (दहाई) और खुली तीली (इकाई)।',
-          instruction: '10 तीलियों को धागे से बांधकर 1 बंडल बनाएं। 1 बंडल और 3 तीली यानी तेरह।'
-        }
-      };
-
-      function triggerConceptExplanation() {
-        const key = elements.conceptDropdown.value;
-        const data = VernacularRepo[key] || VernacularRepo.subtraction;
-
-        openSafeModal(`भाषा सेतु: ${data.title}`, (container) => {
-          const card1 = document.createElement('div');
-          card1.style.cssText = 'background: var(--bg-surface-elevated); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
-          const label1 = document.createElement('span');
-          label1.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-navy); text-transform: uppercase;';
-          label1.textContent = 'किताबी परिभाषा (Textbook):';
-          const text1 = document.createElement('p');
-          text1.style.cssText = 'margin: 0.25rem 0 0; color: var(--text-primary); font-weight: 600;';
-          text1.textContent = data.formal;
-          card1.append(label1, text1);
-
-          const card2 = document.createElement('div');
-          card2.style.cssText = 'background: var(--accent-teal-light); padding: 1rem; border-radius: 0.75rem; border: 1px solid #CCFBF1;';
-          const label2 = document.createElement('span');
-          label2.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-teal-dark); text-transform: uppercase;';
-          label2.textContent = 'घरेलू बोली का उदाहरण (Rural Analogy):';
-          const text2 = document.createElement('p');
-          text2.style.cssText = 'margin: 0.25rem 0 0; color: var(--accent-navy-dark); font-weight: 700; font-size: 1.1rem;';
-          text2.textContent = data.vernacular;
-          const guide = document.createElement('p');
-          guide.style.cssText = 'margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--text-secondary);';
-          guide.textContent = data.instruction;
-          card2.append(label2, text2, guide);
-
-          container.append(card1, card2);
-        });
-
-        speakVernacular(`${data.title} को ग्रामीण संदर्भ में समझाएं: ${data.vernacular}`);
-      }
-
-      function openCatchUpDiagnostic() {
-        const rawName = elements.studentInput.value.trim() || 'रोहन (कक्षा 2)';
-
-        openSafeModal(`2-मिनट मौखिक जांच: ${rawName}`, (container) => {
-          const promptIntro = document.createElement('p');
-          promptIntro.textContent = 'बच्चे से अकेले में ये 3 त्वरित प्रश्न पूछें:';
-          promptIntro.style.color = 'var(--text-primary)';
-
-          const questionsBox = document.createElement('div');
-          questionsBox.style.cssText = 'background: var(--bg-surface-elevated); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 0.5rem;';
-          const q1 = document.createElement('div');
-          q1.textContent = "1. स्लेट पर 'म' और 'र' पहचान कर गोला बनाएं।";
-          const q2 = document.createElement('div');
-          q2.textContent = "2. इन 6 कंकड़ों में 2 कंकड़ और जोड़ें, कितने हुए?";
-          const q3 = document.createElement('div');
-          q3.textContent = "3. यह सरल शब्द पढ़कर सुनाएं: 'घर'";
-          questionsBox.append(q1, q2, q3);
-
-          const actionsRow = document.createElement('div');
-          actionsRow.style.cssText = 'display: flex; gap: 0.75rem; margin-top: 0.5rem;';
-
-          const btnPass = document.createElement('button');
-          btnPass.className = 'btn-action btn-green';
-          btnPass.style.cssText = 'min-height: 52px; font-size: 0.95rem;';
-          btnPass.textContent = 'स्तर पर है (Pass)';
-          btnPass.onclick = () => {
-            closeSafeModal();
-            speakVernacular(`${rawName} स्तर पर है। नियमित कार्य जारी रखें।`);
-          };
-
-          const btnFail = document.createElement('button');
-          btnFail.className = 'btn-action';
-          btnFail.style.cssText = 'min-height: 52px; font-size: 0.95rem; background-color: var(--accent-red-light); color: var(--accent-red); border: 1px solid var(--accent-red);';
-          btnFail.textContent = 'अटक रहा है (सहपाठी दें)';
-          btnFail.onclick = () => {
-            state.remediationQueue.push(rawName);
-            elements.rosterCount.textContent = `${state.remediationQueue.length} लंबित`;
-            closeSafeModal();
-            speakVernacular(`${rawName} को सहपाठी साथी के साथ अक्षर कार्ड खेल में बैठाएं।`);
-          };
-
-          actionsRow.append(btnPass, btnFail);
-          container.append(promptIntro, questionsBox, actionsRow);
-        });
-
-        speakVernacular(`${rawName} के लिए दो मिनट का मौखिक जांच कार्ड खोला गया है।`);
-      }
-
-      function openTlmModal() {
-        openSafeModal('शून्य-लागत श्यामपट्ट खेल', (container) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.cssText = 'background: var(--bg-surface-elevated); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
-          const title = document.createElement('h4');
-          title.style.cssText = 'color: var(--accent-navy-dark); font-size: 1.1rem; margin-bottom: 0.5rem;';
-          title.textContent = 'खेल: "संख्या रेलगाड़ी" (Number Train)';
-
-          const list = document.createElement('ol');
-          list.style.cssText = 'padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem; color: var(--text-primary);';
-          const li1 = document.createElement('li');
-          li1.textContent = 'बोर्ड पर 5 डिब्बों वाली रेलगाड़ी का चित्र बनाएं।';
-          const li2 = document.createElement('li');
-          li2.textContent = 'डिब्बा 1 में 2 और डिब्बा 3 में 4 लिखें; बीच का डिब्बा खाली छोड़ें।';
-          const li3 = document.createElement('li');
-          li3.textContent = 'कक्षा 1 के बच्चे से कंकड़ गिनवाएं और कक्षा 2 के बच्चे से छूटा अंक भरवाएं।';
-          list.append(li1, li2, li3);
-
-          wrapper.append(title, list);
-          container.append(wrapper);
-        });
-      }
-
+      // Self-Test
       function runSelfTest() {
         elements.modalWrapper.classList.remove('hidden');
         const tests = [
@@ -1525,14 +2492,14 @@
 
           tests.forEach(t => {
             const row = document.createElement('div');
-            row.style.cssText = `display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-radius: 0.5rem; background: ${t.passed ? 'var(--accent-teal-light)' : 'var(--accent-red-light)'}; border: 1px solid ${t.passed ? '#CCFBF1' : '#FECACA'};`;
+            row.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-radius: 0.5rem; background: ' + (t.passed ? 'var(--accent-teal-light)' : 'var(--accent-red-light)') + '; border: 1px solid ' + (t.passed ? '#CCFBF1' : '#FECACA') + ';';
 
             const name = document.createElement('span');
             name.style.cssText = 'font-weight: 600; color: var(--text-primary); font-size: 0.9rem;';
             name.textContent = t.name;
 
             const badge = document.createElement('span');
-            badge.style.cssText = `font-weight: 800; font-size: 0.85rem; color: ${t.passed ? 'var(--accent-teal-dark)' : 'var(--accent-red)'};`;
+            badge.style.cssText = 'font-weight: 800; font-size: 0.85rem; color: ' + (t.passed ? 'var(--accent-teal-dark)' : 'var(--accent-red)') + ';';
             badge.textContent = t.passed ? 'PASSED' : 'FAILED';
 
             row.append(name, badge);
@@ -1555,13 +2522,26 @@
 
       function handleHeroExplore() {
         const val = elements.heroSelect.value;
-        if (val === 'mgml') showTourStep(0);
-        else if (val === 'bhasha') showTourStep(1);
-        else if (val === 'absentee') showTourStep(2);
+        if (val === 'mgml') navigateTo('/solvers');
+        else if (val === 'bhasha') navigateTo('/bhasha');
+        else if (val === 'absentee') navigateTo('/catchup');
         else startTour();
       }
 
+      function openCatchUpDiagnostic() {
+        navigateTo('/catchup');
+      }
+
+      function openTlmModal() {
+        navigateTo('/solvers');
+      }
+
+      function triggerConceptExplanation() {
+        navigateTo('/bhasha');
+      }
+
       function init() {
+        // Service worker
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('./sw.js').then((reg) => {
             reg.update().catch(() => {});
@@ -1575,6 +2555,12 @@
             }
           });
         }
+
+        // Router listener
+        window.addEventListener('hashchange', handleRoute);
+        handleRoute();
+
+        // Event bindings
         elements.btnToggleTimer.addEventListener('click', toggleTimer);
         elements.btnExplainConcept.addEventListener('click', triggerConceptExplanation);
         elements.btnOpenDiagnostic.addEventListener('click', openCatchUpDiagnostic);
@@ -1584,7 +2570,7 @@
         elements.modalCloseBtn.addEventListener('click', closeSafeModal);
         elements.modalDismissBtn.addEventListener('click', closeSafeModal);
 
-        // Tour event bindings
+        if (elements.btnHeroExplore) elements.btnHeroExplore.addEventListener('click', handleHeroExplore);
         if (elements.btnStartTour) elements.btnStartTour.addEventListener('click', startTour);
         if (elements.btnCloseTour) elements.btnCloseTour.addEventListener('click', closeTour);
         if (elements.btnTourNext) elements.btnTourNext.addEventListener('click', () => showTourStep(currentTourIndex + 1));
@@ -1601,15 +2587,51 @@
         if (elements.btnPill3) elements.btnPill3.addEventListener('click', () => showTourStep(2));
         if (elements.btnPillAll) elements.btnPillAll.addEventListener('click', () => showTourStep(0));
 
-        if (elements.btnHeroExplore) elements.btnHeroExplore.addEventListener('click', handleHeroExplore);
+        // Solvers Page Bindings
+        if (elements.btnSolversTimerToggle) elements.btnSolversTimerToggle.addEventListener('click', toggleTimer);
+        if (elements.btnSolversSwitchPhase) elements.btnSolversSwitchPhase.addEventListener('click', switchClassFocus);
+        if (elements.btnGenerateTlm) elements.btnGenerateTlm.addEventListener('click', generateTlmGame);
 
-        // Auto-launch demo if ?demo is present in URL
+        document.querySelectorAll('.cycle-duration-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.cycle-duration-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.durationSeconds = parseInt(btn.getAttribute('data-seconds'), 10) || 900;
+            const mins = Math.floor(state.durationSeconds / 60);
+            elements.timerDisplay.textContent = String(mins).padStart(2, '0') + ':00';
+            if (elements.solversTimerDisplay) elements.solversTimerDisplay.textContent = String(mins).padStart(2, '0') + ':00';
+          });
+        });
+
+        // Bhasha Page Bindings
+        if (elements.bhashaClassSelect) elements.bhashaClassSelect.addEventListener('change', populateBhashaTopics);
+        if (elements.bhashaSubjectSelect) elements.bhashaSubjectSelect.addEventListener('change', populateBhashaTopics);
+        if (elements.bhashaTopicSelect) elements.bhashaTopicSelect.addEventListener('change', renderBhashaCard);
+        if (elements.btnRenderBhasha) elements.btnRenderBhasha.addEventListener('click', renderBhashaCard);
+
+        document.querySelectorAll('.dialect-tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.dialect-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.currentDialect = btn.getAttribute('data-dialect') || 'awadhi';
+            renderBhashaCard();
+          });
+        });
+
+        populateBhashaTopics();
+
+        // CatchUp Page Bindings
+        if (elements.btnGenerateDiagnosticTest) elements.btnGenerateDiagnosticTest.addEventListener('click', generateDiagnosticTest);
+        if (elements.btnEvaluateCatchup) elements.btnEvaluateCatchup.addEventListener('click', evaluateCatchUpTest);
+
+        renderRosterTable();
+
         if (new URLSearchParams(window.location.search).has('demo')) {
           setTimeout(startTour, 600);
         }
       }
 
-      return { init, startTour, showTourStep, closeTour };
+      return { init, startTour, showTourStep, closeTour, navigateTo };
     })();
 
     document.addEventListener('DOMContentLoaded', VidyaCore.init);

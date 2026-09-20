@@ -1,6 +1,6 @@
 // VidyaSetu Service Worker - Zero-Connectivity Offline Engine (service-worker.js)
 // Updated for instant access on normal refresh with Network-First navigation & Stale-While-Revalidate
-const CACHE_NAME = 'vidyasetu-v7-nipun';
+const CACHE_NAME = 'vidyasetu-v8-multipage';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const CORE_ASSETS = [
   './assets/icon.svg',
   './service-worker.js',
   './sw.js',
+  './js/bhasha-data.js',
   './js/state.js',
   './js/timer.js',
   './js/audio.js',
