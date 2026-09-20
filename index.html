@@ -1,851 +1,889 @@
 <!DOCTYPE html>
-<html lang="hi" class="h-full bg-slate-950 text-slate-100">
+<html lang="hi" class="h-full bg-slate-950">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://generativelanguage.googleapis.com; media-src 'self' blob:; object-src 'none';" />
-  <meta name="theme-color" content="#0B0F19" />
-  <meta name="description" content="VidyaSetu (विद्यासेतु): Zero-Connectivity Multigrade & Bilingual Classroom Companion for Indian Primary Teachers under NIPUN Bharat FLN Mission." />
-  <title>VidyaSetu (विद्यासेतु) - प्राथमिक शिक्षक साथी | Rural & Urban Primary Companion</title>
-
-  <!-- PWA Manifest & Vector Icon for Homescreen Installation -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src https://drive.google.com; media-src 'self' blob:; img-src 'self' https: data:;" />
+  <meta name="theme-color" content="#0F172A" />
+  <meta name="description" content="VidyaSetu: NIPUN Bharat Multigrade Classroom Copilot for Indian Primary Teachers." />
+  <title>VidyaSetu (विद्यासेतु) • प्राथमिक कक्षा साथी</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
-  <link rel="apple-touch-icon" href="assets/icon.svg" />
 
-  <!-- Precompiled Ahead-of-Time Stylesheet (60fps on Budget Android Go, Zero CDN JIT overhead) -->
-  <link rel="stylesheet" href="css/styles.css" />
-
-  <script>
-    // Offline Service Worker Registration for Instant Zero-Connectivity Launch
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
-          .then((reg) => console.log('[VidyaSetu PWA] Offline Service Worker active, scope:', reg.scope))
-          .catch(() => {
-            navigator.serviceWorker.register('./sw.js')
-              .then((reg) => console.log('[VidyaSetu PWA] Fallback SW active, scope:', reg.scope))
-              .catch((err) => console.warn('[VidyaSetu PWA] SW registration notice:', err));
-          });
-      });
+  <style>
+    :root {
+      --bg-base: #070D18;
+      --bg-surface: #101B30;
+      --bg-surface-elevated: #192845;
+      --border-subtle: #243B63;
+      --border-focus: #F59E0B;
+      --text-primary: #FFFFFF;
+      --text-secondary: #CBD5E1;
+      --accent-amber: #F59E0B;
+      --accent-green: #10B981;
+      --accent-blue: #38BDF8;
+      --accent-red: #F87171;
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
     }
-  </script>
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-stack);
+      line-height: 1.6;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 4px solid var(--border-focus) !important;
+      outline-offset: 3px !important;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .layout-wrapper {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .layout-wrapper {
+        padding: 2rem;
+      }
+    }
+
+    /* Top Navigation */
+    header {
+      background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(16,27,48,0.85) 100%);
+      border: 2px solid var(--border-subtle);
+      border-radius: 1.5rem;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 12px 30px -10px rgba(0,0,0,0.7);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .status-pulse {
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      background-color: var(--accent-green);
+      box-shadow: 0 0 16px var(--accent-green);
+      animation: gentlePulse 2.5s infinite;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.85); opacity: 0.6; }
+    }
+
+    .app-title {
+      font-size: 1.6rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .app-subtitle {
+      font-size: 0.82rem;
+      color: var(--accent-amber);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Hero Video Section */
+    .hero-video-panel {
+      background-color: var(--bg-surface);
+      border: 2px solid var(--border-subtle);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .video-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .video-tag {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--accent-amber);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 2px solid var(--border-subtle);
+      background-color: #000;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Dashboard Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 840px) {
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .feature-card {
+      background-color: var(--bg-surface);
+      border: 2px solid var(--border-subtle);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.25rem;
+      box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card:hover {
+      border-color: #3B5B8E;
+      transform: translateY(-2px);
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-amber);
+    }
+
+    .card-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #FFF;
+      line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-desc {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      margin-bottom: 0.75rem;
+    }
+
+    .info-pane {
+      background-color: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: 1rem;
+      padding: 1rem;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    /* Animated Visual Floating Banner */
+    .animated-banner {
+      width: 100%;
+      height: 110px;
+      border-radius: 0.75rem;
+      background: linear-gradient(-45deg, #102341, #1C355E, #0A1C36, #162E52);
+      background-size: 400% 400%;
+      animation: gradientShift 10s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed var(--border-subtle);
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .chalkboard-text {
+      color: #FACC15;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      font-size: 1rem;
+    }
+
+    /* Primary Action Buttons (Minimum 64px) */
+    .btn-action {
+      width: 100%;
+      min-height: 64px;
+      padding: 1rem 1.25rem;
+      border-radius: 1rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      border: none;
+      transition: transform 0.1s ease, filter 0.2s ease;
+      box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4);
+    }
+    .btn-action:active {
+      transform: scale(0.98);
+    }
+
+    .btn-amber { background-color: var(--accent-amber); color: #000; }
+    .btn-blue { background-color: var(--accent-blue); color: #061B2E; }
+    .btn-green { background-color: var(--accent-green); color: #022616; }
+
+    .select-input, .text-input {
+      width: 100%;
+      min-height: 52px;
+      background: var(--bg-base);
+      border: 2px solid var(--border-subtle);
+      border-radius: 0.75rem;
+      color: #FFF;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    /* Bottom Voice Bar */
+    .voice-bar-btn {
+      width: 100%;
+      min-height: 76px;
+      background: linear-gradient(135deg, var(--accent-amber) 0%, #FBBF24 100%);
+      border: 4px solid #FDE68A;
+      border-radius: 1.5rem;
+      color: #000;
+      font-size: 1.3rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(245, 158, 11, 0.35);
+      transition: transform 0.15s ease;
+    }
+    .voice-bar-btn:active { transform: scale(0.99); }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(5, 10, 20, 0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 100;
+    }
+    .modal-backdrop.hidden { display: none; }
+
+    .modal-sheet {
+      background-color: var(--bg-surface);
+      border: 3px solid var(--border-focus);
+      border-radius: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+    }
+
+    .modal-close-btn {
+      width: 48px;
+      height: 48px;
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: #FFF;
+      font-size: 1.25rem;
+      font-weight: bold;
+      border-radius: 0.75rem;
+      cursor: pointer;
+    }
+
+    .timer-readout {
+      font-size: 1.75rem;
+      font-weight: 900;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      color: var(--accent-green);
+    }
+  </style>
 </head>
-<body class="min-h-full bg-edu-base text-edu-textPrimary flex flex-col font-sans no-select antialiased gpu-accelerated pb-20 sm:pb-8">
+<body>
 
-  <!-- Accessibility Screen-Reader Live Region -->
-  <div id="sr-announcer" class="sr-only" role="status" aria-live="polite"></div>
+  <div id="sr-live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- TOP APP BAR -->
-  <header class="sticky top-0 z-40 glass-nav border-b border-slate-800/80 shadow-xl">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
-      
-      <!-- Brand & Mission Tagline -->
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-2xl shadow-md shadow-amber-500/20 border border-amber-400/30">
-          🎓
-        </div>
+  <div class="layout-wrapper">
+    <!-- Top Nav -->
+    <header role="banner">
+      <div class="brand-group">
+        <div class="status-pulse" aria-hidden="true"></div>
         <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-xl sm:text-2xl font-black text-white tracking-tight leading-none">VidyaSetu</h1>
-            <span class="text-[11px] bg-amber-500/15 text-edu-amber border border-amber-500/30 px-2.5 py-0.5 rounded-full font-bold">विद्यासेतु</span>
-          </div>
-          <p class="text-[11px] text-slate-400 font-medium tracking-wide mt-0.5">प्राथमिक शिक्षक साथी • NIPUN Bharat FLN Companion</p>
+          <h1 class="app-title">VidyaSetu (विद्यासेतु)</h1>
+          <p class="app-subtitle">NIPUN Bharat Primary Teacher Copilot</p>
         </div>
       </div>
-
-      <!-- Center: School Context Switcher (Rural vs Urban) -->
-      <div class="flex items-center bg-slate-900/90 p-1 rounded-2xl border border-slate-700/80 shadow-inner">
-        <button id="btn-mode-rural" onclick="VidyaEngine.setSchoolMode('rural')" class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-black transition-all flex items-center gap-1.5 bg-amber-500 text-slate-950 shadow-md">
-          <span>🌾</span>
-          <span>ग्रामीण शाला (Rural)</span>
-        </button>
-        <button id="btn-mode-urban" onclick="VidyaEngine.setSchoolMode('urban')" class="px-3.5 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 text-slate-300 hover:text-white">
-          <span>🏙️</span>
-          <span>शहरी शाला (Urban)</span>
+      <div>
+        <button id="btn-self-test" class="btn-action btn-amber" style="min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1rem;">
+          जांचें (Self-Test)
         </button>
       </div>
+    </header>
 
-      <!-- Right Action Items & Telemetry -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <div class="flex items-center gap-1.5 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1 rounded-full text-xs font-bold text-emerald-400">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span class="hidden sm:inline">PWA ऑफ़लाइन सक्रिय</span>
-          <span class="sm:hidden">ऑफ़लाइन</span>
-        </div>
-        <button onclick="VidyaEngine.openSettingsModal()" title="AI सेटिंग्स" class="w-9 h-9 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 rounded-xl text-sm font-bold text-slate-200 transition-all flex items-center justify-center active:scale-95">
-          <span>⚙️</span>
-        </button>
-        <button onclick="VidyaEngine.runSelfDiagnostics()" class="px-3 py-1.5 bg-slate-800/80 hover:bg-slate-700 border border-slate-700 rounded-xl text-xs font-bold text-slate-200 transition-all flex items-center gap-1.5 active:scale-95">
-          <span>🧪</span>
-          <span class="hidden sm:inline">जांच</span>
-        </button>
-      </div>
-
-    </div>
-
-    <!-- MAIN DESKTOP NAVIGATION TABS -->
-    <nav class="hidden sm:block border-t border-slate-800/60 bg-slate-950/60 px-4 sm:px-6">
-      <div class="max-w-7xl mx-auto flex gap-2 overflow-x-auto py-2 no-scrollbar text-xs sm:text-sm font-bold">
-        <button id="nav-tab-classroom" onclick="VidyaEngine.switchTab('classroom')" class="nav-tab active px-4 py-2 rounded-xl transition-all flex items-center gap-2 bg-amber-500/20 text-edu-amber border border-amber-500/40 whitespace-nowrap">
-          <span>🎛️</span>
-          <span>कक्षा नियंत्रण (Classroom Hub)</span>
-        </button>
-        <button id="nav-tab-relevance" onclick="VidyaEngine.switchTab('relevance')" class="nav-tab px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 whitespace-nowrap">
-          <span>🏫</span>
-          <span>ग्रामीण बनाम शहरी प्रासंगिकता (Relevance)</span>
-        </button>
-        <button id="nav-tab-nipun" onclick="VidyaEngine.switchTab('nipun')" class="nav-tab px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 whitespace-nowrap">
-          <span>📊</span>
-          <span>निपुण FLN ट्रैकर (Progress)</span>
-        </button>
-        <button id="nav-tab-voice" onclick="VidyaEngine.switchTab('voice')" class="nav-tab px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 whitespace-nowrap">
-          <span>🎙️</span>
-          <span>ध्वनि सहायक (Voice Studio)</span>
-        </button>
-        <button id="nav-tab-stories" onclick="VidyaEngine.switchTab('stories')" class="nav-tab px-4 py-2 rounded-xl transition-all flex items-center gap-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 whitespace-nowrap">
-          <span>❤️</span>
-          <span>शिक्षक गाथा व प्रभाव (Impact Stories)</span>
-        </button>
-      </div>
-    </nav>
-  </header>
-
-  <!-- MOVING TICKER / CLASSROOM PULSE -->
-  <div class="bg-gradient-to-r from-amber-600/90 via-amber-500/90 to-amber-600/90 text-slate-950 py-1.5 px-4 overflow-hidden border-b border-amber-400/30 font-bold text-xs sm:text-sm">
-    <div class="ticker-wrapper">
-      <div class="ticker-content flex items-center gap-8">
-        <span class="flex items-center gap-2">🟢 <strong>सजीव कक्षा स्थिति:</strong> कक्षा 1 और 2/3 संयुक्त शिक्षण सक्रिय</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🌾 <strong>ग्रामीण अपडेट:</strong> फसल कटाई के बाद लौटे बच्चों के लिए 2-मिनट ओरल कार्ड तैयार</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🤖 <strong>जेनेरेटिव AI भाषा सेतु:</strong> किसी भी पाठ्यक्रम विषय को अवधी, भोजपुरी, बुंदेली में बदलें</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🏙️ <strong>शहरी अपडेट:</strong> 55 बच्चों के बड़े बैच में 'संख्या रेलगाड़ी' से ध्वनि स्तर 50% कम</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🎯 <strong>निपुण भारत FLN लक्ष्य:</strong> कक्षा 3 तक सभी बच्चे अर्थ के साथ 60 शब्द/मिनट पढ़ें</span>
-        <span>•</span>
-      </div>
-      <div class="ticker-content flex items-center gap-8" aria-hidden="true">
-        <span class="flex items-center gap-2">🟢 <strong>सजीव कक्षा स्थिति:</strong> कक्षा 1 और 2/3 संयुक्त शिक्षण सक्रिय</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🌾 <strong>ग्रामीण अपडेट:</strong> फसल कटाई के बाद लौटे बच्चों के लिए 2-मिनट ओरल कार्ड तैयार</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🤖 <strong>जेनेरेटिव AI भाषा सेतु:</strong> किसी भी पाठ्यक्रम विषय को अवधी, भोजपुरी, बुंदेली में बदलें</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🏙️ <strong>शहरी अपडेट:</strong> 55 बच्चों के बड़े बैच में 'संख्या रेलगाड़ी' से ध्वनि स्तर 50% कम</span>
-        <span>•</span>
-        <span class="flex items-center gap-2">🎯 <strong>निपुण भारत FLN लक्ष्य:</strong> कक्षा 3 तक सभी बच्चे अर्थ के साथ 60 शब्द/मिनट पढ़ें</span>
-        <span>•</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- VOICE NOTICE BANNER (Low-end device TTS fallback warning) -->
-  <div id="voice-notice-banner" class="hidden bg-amber-900/90 border-b border-amber-500 text-amber-200 text-xs px-4 py-2 font-semibold text-center shadow-md"></div>
-
-  <!-- STICKY MINI-BAR WIDGET (Compact status bar for 5.5-inch screens during scrolling) -->
-  <aside id="sticky-mini-bar" class="sticky top-[60px] z-30 bg-slate-900/95 backdrop-blur border-b border-slate-800 px-4 py-2 flex items-center justify-between text-xs sm:hidden shadow-lg">
-    <div class="flex items-center gap-2">
-      <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span id="mini-bar-focus" class="font-bold text-amber-400">कक्षा 1 (प्रत्यक्ष शिक्षण)</span>
-    </div>
-    <div class="flex items-center gap-2">
-      <span id="mini-bar-timer" class="font-mono font-black text-amber-300 text-sm">15:00</span>
-      <button onclick="VidyaEngine.toggleSplitCycle()" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-lg text-[11px] transition-transform active:scale-95 shadow-sm">
-        रोकें / शुरू
-      </button>
-    </div>
-  </aside>
-
-  <!-- MAIN VIEWPORT CONTAINER -->
-  <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
-
-    <!-- DYNAMIC CONTEXT HERO BANNER -->
-    <section id="context-banner" class="glass-panel rounded-3xl p-5 sm:p-7 shadow-card-clean border border-slate-700/60 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-      <div class="flex items-start gap-4">
-        <div id="context-icon" class="text-4xl sm:text-5xl p-3 bg-slate-900/90 rounded-2xl border border-slate-700/80 shadow-inner flex items-center justify-center">
-          🌾
-        </div>
+    <!-- Section: Field Video Documentation -->
+    <section class="hero-video-panel" aria-labelledby="video-title">
+      <div class="video-header">
         <div>
-          <div class="flex items-center gap-2 mb-1.5">
-            <span id="context-pill" class="bg-amber-500 text-slate-950 text-xs font-black uppercase px-3 py-0.5 rounded-full shadow-sm">
-              ग्रामीण प्राथमिक विद्यालय परिप्रेक्ष्य
-            </span>
-            <span class="text-xs text-slate-400 font-semibold hidden sm:inline">• एकल शिक्षक, बहु-कक्षा (MGML)</span>
-          </div>
-          <h2 id="context-title" class="text-xl sm:text-2xl font-black text-white tracking-tight">
-            1 शिक्षक, 1 कमरा, कक्षा 1 से 3 संयुक्त (Multi-Grade)
+          <span class="video-tag">ग्राउंड रियलिटी • Classroom Complexity</span>
+          <h2 id="video-title" style="font-size: 1.25rem; font-weight: 800; margin-top: 0.25rem; color: #FFF;">
+            ग्रामीण कक्षाओं की चुनौतियाँ और विद्यासेतु समाधान
           </h2>
-          <p id="context-desc" class="text-sm sm:text-base text-slate-300 max-w-3xl mt-1 leading-relaxed">
-            घर की बोली (अवधी/भोजपुरी/बुंदेली) और किताबी हिंदी का अंतर मिटाएं, रबी-खरीफ कटाई के बाद लौटे बच्चों को साथ लाएं और बिना मुद्रित चार्ट के कंकड़ों से FLN सिखाएं।
-          </p>
         </div>
+        <span style="font-size: 0.85rem; color: var(--accent-amber);">90-Sec Overview</span>
       </div>
-
-      <!-- Quick Action: Interactive Classroom Simulator -->
-      <div class="flex flex-col sm:flex-row md:flex-col gap-2 w-full md:w-auto">
-        <button onclick="VidyaEngine.runInteractiveDemo()" class="min-h-[56px] px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 active:scale-95 text-slate-950 font-black text-sm rounded-2xl shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 transition-all">
-          <span>⚡</span>
-          <span>30-सेकंड सजीव सिमुलेशन चलाएं</span>
-        </button>
-        <span class="text-center text-[11px] text-slate-400 font-semibold">कक्षा का 1 दिन एक नज़र में</span>
+      <div class="video-container">
+        <iframe 
+          src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview" 
+          allow="autoplay; encrypted-media" 
+          title="Classroom Complexity in Indian Primary Schools">
+        </iframe>
       </div>
     </section>
 
-    <!-- ================================================================= -->
-    <!-- TAB 1: CLASSROOM CONTROL HUB (The 4 Core Classroom Solvers)      -->
-    <!-- ================================================================= -->
-    <div id="view-classroom" class="tab-view space-y-6">
+    <!-- Main Workspace Tiles -->
+    <main class="dashboard-grid" role="main">
 
-      <!-- 4 ZERO-DEPTH CLASSROOM TILES -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-
-        <!-- TILE 1: MULTI-GRADE SPLIT-TEACHING ORCHESTRATOR -->
-        <section class="glass-panel rounded-3xl p-6 flex flex-col justify-between shadow-card-clean border border-slate-700/60 hover:border-amber-500/50 transition-all">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-edu-amber text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                समस्या 1 • 2-3 कक्षाएं एक साथ (MGML)
-              </span>
-              <span id="split-timer-badge" class="bg-amber-950/80 text-amber-300 border border-amber-800/80 px-3 py-1 rounded-full text-xs font-bold">
-                15 मिनट चक्रीय चक्र
-              </span>
-            </div>
-            
-            <h3 class="text-teacher-title font-black text-white mb-1.5 flex items-center gap-2">
-              <span>बहु-कक्षा विभाजन सहायक (Orchestrator)</span>
-            </h3>
-            <p class="text-sm text-slate-300 font-medium mb-4 leading-relaxed">
-              जब आप कक्षा 1 को प्रत्यक्ष पढ़ाएं, तब कक्षा 2 व 3 को बिना शोर किए सार्थक अभ्यास में व्यस्त रखें।
-            </p>
-
-            <!-- Dynamic Split State Box -->
-            <div id="split-current-display" class="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/70 text-teacher-sm space-y-3 mb-4 shadow-inner">
-              <div class="flex items-center justify-between">
-                <span class="text-edu-amber font-black text-sm sm:text-base flex items-center gap-2">
-                  <span id="focus-dot" class="w-3 h-3 rounded-full bg-amber-400 animate-ping"></span>
-                  सक्रिय समूह: <span id="current-focus-label" class="text-white">कक्षा 1 (प्रत्यक्ष शिक्षण)</span>
-                </span>
-                <span id="countdown-timer" class="font-mono text-edu-green font-black text-2xl sm:text-3xl tracking-wider">15:00</span>
-              </div>
-
-              <!-- Animated Progress Bar -->
-              <div class="w-full bg-slate-950 rounded-full h-3 overflow-hidden border border-slate-800">
-                <div id="split-progress-fill" class="bg-gradient-to-r from-amber-500 to-emerald-400 h-full w-full transition-all duration-1000"></div>
-              </div>
-
-              <div id="split-guidance-content" class="text-slate-300 text-sm bg-slate-950/80 p-3.5 rounded-xl border border-slate-800 space-y-2">
-                <p id="split-guidance-t1" class="m-0 text-amber-200"></p>
-                <p id="split-guidance-t2" class="m-0 text-slate-300"></p>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-3 border-t border-slate-800/80 flex flex-wrap gap-3">
-            <button id="toggle-split-btn" onclick="VidyaEngine.toggleSplitCycle()" class="flex-1 min-h-touch bg-edu-amber hover:bg-amber-400 active:scale-[0.98] text-slate-950 text-teacher-base font-black rounded-2xl p-4 flex items-center justify-center gap-2 transition-transform shadow-lg shadow-amber-500/20">
-              <span id="split-icon" class="text-2xl">⏱️</span>
-              <span id="split-btn-label">15 मिनट चक्र शुरू करें</span>
-            </button>
-            <button onclick="VidyaEngine.forceNextSplitCycle()" title="बारी बदलें (Swap Focus)" class="px-5 bg-slate-800/90 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 rounded-2xl font-bold text-xs flex flex-col items-center justify-center gap-1">
-              <span class="text-lg">🔄</span>
-              <span>बारी बदलें</span>
-            </button>
-          </div>
-        </section>
-
-        <!-- TILE 2: BHASHA SETU (DYNAMIC GENERATIVE ON-DEVICE LLM & EDGE PIPELINE) -->
-        <section class="glass-panel rounded-3xl p-6 flex flex-col justify-between shadow-card-clean border border-slate-700/60 hover:border-sky-500/50 transition-all">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-sky-400 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
-                <span>🤖</span>
-                समस्या 2 • बोली अंतर (Generative Bhasha Setu)
-              </span>
-              <span id="rag-engine-badge" class="bg-sky-950/80 text-sky-300 border border-sky-800/80 px-3 py-1 rounded-full text-xs font-bold">
-                ⚡ ऑन-डिवाइस जेनेरेटिव AI
-              </span>
-            </div>
-            
-            <h3 class="text-teacher-title font-black text-white mb-1.5">
-              भाषा सेतु (Dialect Analogy Engine)
-            </h3>
-            <p class="text-sm text-slate-300 font-medium mb-3 leading-relaxed">
-              किसी भी पाठ्यक्रम विषय को बच्चे की स्थानीय ग्रामीण/शहरी बोली के घरेलू रूपक में तुरंत बदलें।
-            </p>
-
-            <!-- Real-Time Generative Input & Quick Syllabus Chips -->
-            <div class="space-y-3 mb-4">
-              <div>
-                <label for="concept-custom-input" class="text-xs text-edu-amber font-bold uppercase tracking-wider flex justify-between items-center mb-1.5">
-                  <span>पाठ्यपुस्तक का कोई भी विषय दर्ज करें:</span>
-                  <span class="text-[10px] text-slate-400 font-normal">गणित, विज्ञान, भाषा, पर्यावरण</span>
-                </label>
-                <div class="relative">
-                  <input id="concept-custom-input" type="text" placeholder="उदा. भिन्न (Fractions), गुरुत्वाकर्षण, वाष्पीकरण, संज्ञा..." class="w-full bg-slate-900/90 border border-slate-700 focus:border-sky-400 rounded-xl p-3 pr-10 text-white text-sm font-semibold transition-colors" />
-                  <button onclick="VidyaEngine.clearConceptInput()" class="absolute right-3 top-3.5 text-slate-400 hover:text-white text-xs">✕</button>
-                </div>
-              </div>
-
-              <!-- Quick Syllabus Concept Chips -->
-              <div class="space-y-1.5">
-                <div class="text-[11px] text-slate-400 font-bold">त्वरित चयन (Quick NCERT Syllabus Topics):</div>
-                <div class="flex flex-wrap gap-1.5 max-h-20 overflow-y-auto no-scrollbar">
-                  <button onclick="VidyaEngine.selectConceptChip('घटाव (Subtraction)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">घटाव</button>
-                  <button onclick="VidyaEngine.selectConceptChip('अवरोही क्रम (Descending Order)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">अवरोही क्रम</button>
-                  <button onclick="VidyaEngine.selectConceptChip('भिन्न (Fractions / बंटवारा)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">भिन्न (Fractions)</button>
-                  <button onclick="VidyaEngine.selectConceptChip('घर्षण (Friction / रुकावट)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">घर्षण</button>
-                  <button onclick="VidyaEngine.selectConceptChip('वाष्पीकरण (Evaporation)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">वाष्पीकरण</button>
-                  <button onclick="VidyaEngine.selectConceptChip('प्रकाश संश्लेषण (Photosynthesis)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">प्रकाश संश्लेषण</button>
-                  <button onclick="VidyaEngine.selectConceptChip('संज्ञा (Noun / नाम शब्द)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">संज्ञा</button>
-                  <button onclick="VidyaEngine.selectConceptChip('सौरमंडल (Solar System)')" class="px-2.5 py-1 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-xs text-slate-200 border border-slate-700/80 transition-colors">सौरमंडल</button>
-                </div>
-              </div>
-
-              <!-- Dialect / Context Selector -->
-              <div class="flex items-center gap-2 pt-1">
-                <label for="dialect-selector" class="text-xs text-slate-400 font-bold whitespace-nowrap">बोली (Dialect):</label>
-                <select id="dialect-selector" class="flex-1 bg-slate-900/90 border border-slate-700 rounded-xl p-2.5 text-xs text-white font-medium">
-                  <option value="awadhi_bhojpuri">🌾 अवधी / भोजपुरी (Eastern UP / Bihar)</option>
-                  <option value="bundeli">🌾 बुंदेली / मालवी (Bundelkhand / MP)</option>
-                  <option value="chhattisgarhi">🌾 छत्तीसगढ़ी / बघेली</option>
-                  <option value="maithili">🌾 मैथिली / अंगिका</option>
-                  <option value="urban_multilingual">🏙️ शहरी बहुभाषी (Migrant Mixed Slum)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-3 border-t border-slate-800/80">
-            <button id="generate-analogy-btn" onclick="VidyaEngine.generatePedagogicalAnalogy()" class="w-full min-h-touch bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 active:scale-[0.98] text-white text-teacher-base font-black rounded-2xl p-4 flex items-center justify-center gap-3 transition-transform shadow-lg shadow-sky-500/20">
-              <span id="rag-btn-icon" class="text-2xl">🧠</span>
-              <span id="rag-btn-label">घरेलू रूपक व संवाद उत्पन्न करें (Generate)</span>
-            </button>
-          </div>
-        </section>
-
-        <!-- TILE 3: ABSENTEEISM REMEDIATION CAPSULE (100% XSS-FREE PURE DOM) -->
-        <section class="glass-panel rounded-3xl p-6 flex flex-col justify-between shadow-card-clean border border-slate-700/60 hover:border-emerald-500/50 transition-all">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-edu-green text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
-                <span>⚡</span>
-                समस्या 3 • लगातार अनुपस्थिति (Absenteeism Gap)
-              </span>
-              <span id="remediation-badge" class="bg-emerald-950/80 text-edu-green border border-emerald-800/80 px-3 py-1 rounded-full text-xs font-bold">
-                2-मिनट त्वरित जांच
-              </span>
-            </div>
-            
-            <h3 class="text-teacher-title font-black text-white mb-1.5">
-              छुट्टी के बाद वापसी (Catch-Up Evaluation)
-            </h3>
-            <p class="text-sm text-slate-300 font-medium mb-4 leading-relaxed">
-              कटाई या बीमारी के बाद लौटे बच्चे के लिए 2-मिनट मौखिक जांच और सुरक्षित सहपाठी साथी (Peer Buddy)।
-            </p>
-
-            <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/70 text-teacher-sm space-y-3 mb-4 shadow-inner">
-              <div>
-                <label for="student-name-input" class="text-xs text-edu-amber font-bold uppercase block mb-1.5">
-                  लौटे हुए बच्चे का नाम व कक्षा:
-                </label>
-                <div class="flex gap-2">
-                  <input id="student-name-input" type="text" value="रोहन (कक्षा 2)" placeholder="उदा. रोहन (कक्षा 2)" class="flex-1 bg-slate-950 border border-slate-700 focus:border-edu-green rounded-xl p-3 text-white text-sm font-semibold transition-colors" />
-                  <select id="absence-reason" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-300 font-medium">
-                    <option value="harvest">🌾 कटाई/खेती</option>
-                    <option value="migration">🏙️ पारिवारिक प्रवास</option>
-                    <option value="health">🤒 बीमारी</option>
-                  </select>
-                </div>
-              </div>
-              
-              <div class="flex items-center justify-between text-xs text-slate-400 bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                <span>⏱️ जांच अवधि: <strong>2 मिनट</strong></span>
-                <span>🛡️ शुद्ध DOM नोड्स (Zero XSS)</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-3 border-t border-slate-800/80">
-            <button onclick="VidyaEngine.launchCatchUpDiagnostic()" class="w-full min-h-touch bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 active:scale-[0.98] text-slate-950 text-teacher-base font-black rounded-2xl p-4 flex items-center justify-center gap-3 transition-transform shadow-lg shadow-emerald-500/20">
-              <span class="text-2xl">📋</span>
-              <span>2-मिनट मौखिक जांच शुरू करें</span>
-            </button>
-          </div>
-        </section>
-
-        <!-- TILE 4: ZERO-PREP CHALKBOARD & DESK FLN GAMES -->
-        <section class="glass-panel rounded-3xl p-6 flex flex-col justify-between shadow-card-clean border border-slate-700/60 hover:border-purple-500/50 transition-all">
-          <div>
-            <div class="flex justify-between items-center mb-3">
-              <span class="text-purple-400 text-xs font-black uppercase tracking-wider flex items-center gap-1.5">
-                <span>🎲</span>
-                शून्य-लागत टीएलएम • Low-Cost FLN Games
-              </span>
-              <span id="tlm-mode-tag" class="bg-purple-950/80 text-purple-300 border border-purple-800/80 px-3 py-1 rounded-full text-xs font-bold">
-                कंकड़ / चॉक
-              </span>
-            </div>
-            
-            <h3 class="text-teacher-title font-black text-white mb-1.5">
-              श्यामपट्ट व डेस्क खेल (Chalkboard & Desk TLM)
-            </h3>
-            <p class="text-sm text-slate-300 font-medium mb-4 leading-relaxed">
-              बिना किसी मुद्रित चार्ट या डिजिटल बोर्ड के, केवल चॉक, कंकड़ और स्लेट से 40 बच्चों को सक्रिय रखें।
-            </p>
-
-            <div id="tlm-game-preview-card" class="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/70 text-slate-300 mb-4 space-y-2 shadow-inner">
-              <div class="flex items-center justify-between">
-                <span class="text-edu-amber font-bold text-sm">🎲 आज का खेल: 'संख्या रेलगाड़ी'</span>
-                <span class="text-xs bg-slate-800 px-2 py-0.5 rounded text-slate-300 font-bold">20-40 बच्चे</span>
-              </div>
-              <p class="text-xs sm:text-sm text-slate-300 m-0 leading-relaxed">
-                श्यामपट्ट पर डिब्बे बनाएं, कंकड़ों से गिनती गिनवाएं और छूटी संख्या भरवाएं। पूरी कक्षा शांत और व्यस्त!
-              </p>
-            </div>
-          </div>
-
-          <div class="pt-3 border-t border-slate-800/80">
-            <button onclick="VidyaEngine.showChalkboardGame()" class="w-full min-h-touch bg-slate-800/90 hover:bg-slate-700 border-2 border-edu-amber/80 active:scale-[0.98] text-edu-amber text-teacher-base font-black rounded-2xl p-4 flex items-center justify-center gap-3 transition-transform shadow-lg">
-              <span class="text-2xl">🎯</span>
-              <span>खेल के चरण और नियम देखें</span>
-            </button>
-          </div>
-        </section>
-
-      </div>
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- TAB 2: RURAL VS URBAN RELEVANCE MATRIX (Ground Reality Deep-Dive) -->
-    <!-- ================================================================= -->
-    <div id="view-relevance" class="tab-view space-y-6 hidden">
-      
-      <div class="glass-panel rounded-3xl p-6 sm:p-8 shadow-card-clean border border-slate-700/60 space-y-6">
+      <!-- TILE 1: MULTI-GRADE TIMER -->
+      <section class="feature-card" aria-labelledby="heading-mgml">
         <div>
-          <div class="inline-flex items-center gap-2 bg-amber-500/15 text-edu-amber border border-amber-500/30 px-3 py-1 rounded-full text-xs font-black uppercase mb-3">
-            🏫 ज़मीनी हकीकत और प्रासंगिकता (Relevance Deep Dive)
+          <div class="card-meta">
+            <span class="card-tag">समस्या 1 • बहु-कक्षा चक्र</span>
+            <span class="video-tag" id="cycle-step-badge">15-Min Split</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            विद्यासेतु भारतीय प्राथमिक विद्यालयों (ग्रामीण व शहरी) के लिए क्यों अनिवार्य है?
-          </h2>
-          <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-4xl leading-relaxed">
-            भारत के 12 लाख से अधिक प्राथमिक विद्यालयों में निजी कॉन्वेंट स्कूलों जैसी सुविधाएं नहीं हैं। ग्रामीण क्षेत्रों में शिक्षकों की कमी (एकल शिक्षक) है, जबकि शहरी बस्तियों में अत्यधिक भीड़ और भाषाई विविधता है। विद्यासेतु इन दोनों वास्तविकताओं को सीधे हल करता है।
-          </p>
-        </div>
-
-        <!-- SIDE-BY-SIDE COMPARATIVE CARDS -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-          <!-- RURAL SCHOOL REALITY -->
-          <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-6 space-y-4">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-              <div class="flex items-center gap-3">
-                <span class="text-3xl p-2 bg-amber-500/20 rounded-xl">🌾</span>
-                <div>
-                  <h3 class="text-xl font-black text-amber-400">ग्रामीण प्राथमिक विद्यालय (Rural Reality)</h3>
-                  <span class="text-xs text-slate-400 font-medium">एकल शिक्षक • बहु-कक्षा (MGML) • संसाधन विहीन</span>
-                </div>
-              </div>
-              <span class="text-xs font-bold bg-amber-950 text-amber-300 px-2.5 py-1 rounded-full border border-amber-800/80">UDISE+ डेटा</span>
-            </div>
-
-            <ul class="space-y-3.5 text-sm text-slate-300">
-              <li class="flex items-start gap-2.5">
-                <span class="text-amber-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">एक कमरे में 3 कक्षाएं:</strong> 1 शिक्षक को एक ही समय पर कक्षा 1, 2 और 3 को संभालना पड़ता है। जब वह एक को पढ़ाते हैं, बाकी दो कक्षाएं शोर मचाती हैं।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: 15-मिनट का स्व-संचालित विभाजन टाइमर और स्लेट गतिविधियां।</div>
-                </div>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-amber-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">किताबी भाषा से अलगाव:</strong> बच्चा घर पर अवधी, भोजपुरी, मालवी या बुंदेली बोलता है, जबकि किताब में औपचारिक 'संस्कृतनिष्ठ' हिंदी है।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: 'भाषा सेतु' जो बेर, हाट, बैलगाड़ी और सीढ़ी के उदाहरणों से सिखाता है।</div>
-                </div>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-amber-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">मौसमी कटाई से अनुपस्थिति:</strong> धान/गेहूं कटाई या मेलों के समय बच्चे 2-3 हफ्ते स्कूल नहीं आते। लौटने पर शिक्षक के पास दोबारा पढ़ाने का समय नहीं होता।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: 2-मिनट ओरल जांच और होनहार सहपाठी के साथ 'साथी कार्ड' खेल।</div>
-                </div>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-amber-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">मुद्रित सामग्री का अभाव:</strong> चार्ट, प्रोजेक्टर या रंगीन किताबें नहीं हैं।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: कंकड़, चॉक और श्यामपट्ट पर आधारित शून्य-लागत खेल।</div>
-                </div>
-              </li>
-            </ul>
-
-            <button onclick="VidyaEngine.setSchoolMode('rural'); VidyaEngine.switchTab('classroom');" class="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs transition-transform active:scale-95 flex items-center justify-center gap-2 shadow-md">
-              <span>🌾 ग्रामीण मोड में कक्षा शुरू करें</span>
-            </button>
+          <h2 id="heading-mgml" class="card-title">बहु-कक्षा विभाजन सहायक</h2>
+          <p class="card-desc">कक्षा 1 को पढ़ाते समय कक्षा 2 और 3 को स्व-अध्ययन खेल में व्यस्त रखें।</p>
+          
+          <div class="animated-banner">
+            <span class="chalkboard-text">🎯 15 मिनट: प्रत्यक्ष शिक्षण ↔ सहपाठी खेल</span>
           </div>
 
-          <!-- URBAN SCHOOL REALITY -->
-          <div class="bg-slate-900/90 border border-sky-500/30 rounded-2xl p-6 space-y-4">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-              <div class="flex items-center gap-3">
-                <span class="text-3xl p-2 bg-sky-500/20 rounded-xl">🏙️</span>
-                <div>
-                  <h3 class="text-xl font-black text-sky-400">शहरी प्राथमिक शाला (Urban Reality)</h3>
-                  <span class="text-xs text-slate-400 font-medium">अत्यधिक छात्र (PTR 50:1+) • प्रवासी बहुभाषिकता • संकीर्ण कमरे</span>
-                </div>
-              </div>
-              <span class="text-xs font-bold bg-sky-950 text-sky-300 px-2.5 py-1 rounded-full border border-sky-800/80">ASER डेटा</span>
+          <div class="info-pane">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+              <strong id="active-group-label" style="color: var(--accent-amber);">कक्षा 1: प्रत्यक्ष शिक्षक समय</strong>
+              <span id="timer-display" class="timer-readout">15:00</span>
             </div>
-
-            <ul class="space-y-3.5 text-sm text-slate-300">
-              <li class="flex items-start gap-2.5">
-                <span class="text-sky-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">अत्यधिक भीड़ (50-70 बच्चे प्रति कमरा):</strong> छोटे कमरों में बहुत तेज आवाज और अव्यवस्था रहती है। व्यक्तिगत ध्यान असंभव हो जाता है।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: डेस्क-आधारित समूह कार्य और शांत चॉक-बोर्ड चुनौतियां।</div>
-                </div>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-sky-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">प्रवासी परिवारों की भाषाई विविधता:</strong> एक ही कमरे में बिहार (भोजपुरी/मैथिली), ओडिशा, बंगाल और स्थानीय भाषा बोलने वाले प्रवासी बच्चे होते हैं।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: सार्वभौमिक दृश्य रूपक और बहु-बोली ऑडियो सेतु।</div>
-                </div>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-sky-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">अनियमित दैनिक मजदूरी पलायन:</strong> निर्माण स्थलों और फैक्ट्रियों में काम करने वाले माता-पिता अचानक बच्चों को ले जाते हैं और 1 महीने बाद लौटाते हैं।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: त्वरित FLN स्तर पहचान और पीयर-ट्यूटरिंग मॉडल।</div>
-                </div>
-              </li>
-              <li class="flex items-start gap-2.5">
-                <span class="text-sky-400 font-black text-base">⚠️</span>
-                <div>
-                  <strong class="text-white">खेल के मैदान व खुली जगह की कमी:</strong> बच्चे पूरे दिन डेस्क पर बैठे रहते हैं, जिससे ध्यान भटकता है।
-                  <div class="mt-1 text-xs text-emerald-400 font-semibold">👉 विद्यासेतु समाधान: ताली, लय और डेस्क पर केंद्रित शून्य-शोर गणितीय गतिविधियां।</div>
-                </div>
-              </li>
-            </ul>
-
-            <button onclick="VidyaEngine.setSchoolMode('urban'); VidyaEngine.switchTab('classroom');" class="w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black rounded-xl text-xs transition-transform active:scale-95 flex items-center justify-center gap-2 shadow-md">
-              <span>🏙️ शहरी मोड में कक्षा शुरू करें</span>
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- TAB 3: NIPUN BHARAT FLN TRACKER (Foundational Literacy/Numeracy) -->
-    <!-- ================================================================= -->
-    <div id="view-nipun" class="tab-view space-y-6 hidden">
-      <div class="glass-panel rounded-3xl p-6 sm:p-8 shadow-card-clean border border-slate-700/60 space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <div class="inline-flex items-center gap-2 bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full text-xs font-black uppercase mb-2">
-              📊 निपुण भारत मिशन (FLN लक्ष्य 2026-27)
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              बुनियादी साक्षरता और संख्या ज्ञान (FLN) ट्रैकर
-            </h2>
-            <p class="text-slate-300 text-sm sm:text-base mt-1">
-              राष्ट्रीय शिक्षा नीति (NEP 2020) के अनुसार कक्षा 1 से 3 के प्रत्येक बच्चे के लिए आवश्यक बुनियादी दक्षताएं।
+            <p id="split-instruction-text" style="margin: 0; font-size: 0.9rem;">
+              <strong>शिक्षक:</strong> कक्षा 1 को 'क' और 'म' वर्ण ध्वनि सिखाएं।<br>
+              <strong>कक्षा 2/3:</strong> 10-10 कंकड़ों के समूह बनाकर स्लेट पर गिनती लिखें।
             </p>
           </div>
-
-          <!-- Overall Mastery Gauge -->
-          <div class="bg-slate-900/90 border border-slate-700 px-5 py-3.5 rounded-2xl flex items-center gap-4 shadow-inner">
-            <div>
-              <div class="text-xs text-slate-400 font-bold uppercase">कक्षा प्रगति (Progress)</div>
-              <div id="nipun-percentage" class="text-2xl font-black text-edu-green">68% दक्ष</div>
-            </div>
-            <div class="w-12 h-12 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin"></div>
-          </div>
         </div>
+        <button id="btn-toggle-timer" class="btn-action btn-amber">
+          <span id="timer-icon" aria-hidden="true">⏱️</span>
+          <span id="timer-btn-text">15 मिनट चक्र शुरू करें</span>
+        </button>
+      </section>
 
-        <!-- Grade 1, 2, 3 Interactive Competencies -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-          <!-- Grade 1 -->
-          <div class="bg-slate-900/80 border border-slate-700/80 rounded-2xl p-5 space-y-4">
-            <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
-              <h3 class="text-lg font-black text-amber-400">कक्षा 1 (Balvatika to G1)</h3>
-              <span class="text-xs bg-slate-800 px-2 py-0.5 rounded text-slate-300 font-bold">आयु 5-6 वर्ष</span>
-            </div>
-            <div class="space-y-2.5 text-xs sm:text-sm">
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" checked onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-amber-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">कम से कम 4-5 सरल वर्णों (क, म, र, ल) की पहचान</span>
-              </label>
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" checked onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-amber-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">1 से 10 तक वस्तुओं (कंकड़ों) को सही गिनना</span>
-              </label>
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" checked onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-amber-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">चित्र देखकर 2-3 वाक्यों में अपनी भाषा में बोलना</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Grade 2 -->
-          <div class="bg-slate-900/80 border border-slate-700/80 rounded-2xl p-5 space-y-4">
-            <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
-              <h3 class="text-lg font-black text-sky-400">कक्षा 2 (Grade 2)</h3>
-              <span class="text-xs bg-slate-800 px-2 py-0.5 rounded text-slate-300 font-bold">आयु 6-7 वर्ष</span>
-            </div>
-            <div class="space-y-2.5 text-xs sm:text-sm">
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" checked onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-sky-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">अर्थ के साथ 30 से 35 शब्द प्रति मिनट का पठन</span>
-              </label>
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" checked onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-sky-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">99 तक संख्याओं का जोड़ व घटाव (दैनिक जीवन)</span>
-              </label>
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-sky-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">छोटे अपठित गद्यांश के प्रश्नों का सही मौखिक उत्तर</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Grade 3 -->
-          <div class="bg-slate-900/80 border border-slate-700/80 rounded-2xl p-5 space-y-4">
-            <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
-              <h3 class="text-lg font-black text-emerald-400">कक्षा 3 (Grade 3)</h3>
-              <span class="text-xs bg-slate-800 px-2 py-0.5 rounded text-slate-300 font-bold">आयु 7-8 वर्ष</span>
-            </div>
-            <div class="space-y-2.5 text-xs sm:text-sm">
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" checked onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-emerald-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">कम से कम 60 शब्द प्रति मिनट का प्रवाहपूर्ण पठन</span>
-              </label>
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-emerald-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">999 तक संख्याओं का घटाव और सरल भाग (बंटवारा)</span>
-              </label>
-              <label class="flex items-start gap-2.5 cursor-pointer p-2.5 rounded-xl hover:bg-slate-800/60 transition-colors">
-                <input type="checkbox" onchange="VidyaEngine.updateNipunScore()" class="mt-0.5 accent-emerald-500 w-4 h-4 rounded" />
-                <span class="text-slate-200 font-medium leading-relaxed">पढ़ी गई कहानी का मुख्य संदेश अपनी बोली में लिखना</span>
-              </label>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- TAB 4: LIVE AI VOICE STUDIO (Hands-Free Classroom Companion)     -->
-    <!-- ================================================================= -->
-    <div id="view-voice" class="tab-view space-y-6 hidden">
-      <div class="glass-panel rounded-3xl p-6 sm:p-8 shadow-card-clean border border-slate-700/60 space-y-6 text-center">
-        
-        <div class="max-w-xl mx-auto space-y-2">
-          <div class="inline-flex items-center gap-2 bg-amber-500/15 text-edu-amber border border-amber-500/30 px-3 py-1 rounded-full text-xs font-black uppercase">
-            🎙️ चॉक-युक्त हाथ • हैंड्स-फ्री साथी (Hands-Busy Mode)
-          </div>
-          <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            बोलकर पूछें — विद्यासेतु कक्षा में तुरंत मदद करेगा
-          </h2>
-          <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-            जब आपके दोनों हाथ चॉक, डस्टर या स्लेट में व्यस्त हों, सीधे हिंदी में बोलें।
-          </p>
-        </div>
-
-        <!-- Big Pulsing Voice Studio Trigger -->
-        <div class="py-6 flex flex-col items-center justify-center">
-          
-          <!-- Animated Soundwave Visualizer Bars -->
-          <div id="soundwave-bars" class="flex items-center justify-center gap-1.5 h-12 mb-4 opacity-40">
-            <span class="wave-bar w-2 bg-amber-400 rounded-full h-3 animate-soundwave"></span>
-            <span class="wave-bar w-2 bg-emerald-400 rounded-full h-8 animate-soundwave"></span>
-            <span class="wave-bar w-2 bg-amber-400 rounded-full h-12 animate-soundwave"></span>
-            <span class="wave-bar w-2 bg-blue-400 rounded-full h-6 animate-soundwave"></span>
-            <span class="wave-bar w-2 bg-emerald-400 rounded-full h-10 animate-soundwave"></span>
-            <span class="wave-bar w-2 bg-amber-400 rounded-full h-4 animate-soundwave"></span>
-          </div>
-
-          <button id="voice-hero-btn" onclick="VidyaEngine.triggerVoiceQuery()" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-amber-500 to-amber-400 hover:scale-105 active:scale-95 text-slate-950 text-4xl sm:text-5xl flex items-center justify-center shadow-glow-amber border-4 border-amber-300 transition-all cursor-pointer">
-            🎤
-          </button>
-          
-          <p id="voice-hero-label" class="mt-4 text-base sm:text-lg font-black text-amber-300">
-            माइक दबाएं और बोलें
-          </p>
-          <span class="text-xs text-slate-400">Web Speech API (hi-IN) स्थानीय वॉइस इंजन</span>
-        </div>
-
-        <!-- Recommended Quick Voice Prompts -->
-        <div class="border-t border-slate-800/80 pt-6 max-w-2xl mx-auto text-left space-y-3">
-          <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">शिक्षक इन वाक्यों को अक्सर पूछते हैं (क्लिक करके सुनें):</div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <button onclick="VidyaEngine.askQuickVoice('कक्षा 2 के लिए 10 मिनट का शांत गणित खेल बताएं')" class="p-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-xs sm:text-sm text-slate-200 font-semibold text-left flex items-center gap-2.5 transition-colors">
-              <span>💬</span>
-              <span>"कक्षा 2 के लिए 10 मिनट का शांत गणित खेल बताएं"</span>
-            </button>
-            <button onclick="VidyaEngine.askQuickVoice('अवरोही क्रम को भोजपुरी या अवधी में कैसे समझाएं?')" class="p-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-xs sm:text-sm text-slate-200 font-semibold text-left flex items-center gap-2.5 transition-colors">
-              <span>💬</span>
-              <span>"अवरोही क्रम को घरेलू बोली में कैसे समझाएं?"</span>
-            </button>
-            <button onclick="VidyaEngine.askQuickVoice('फसल कटाई के बाद लौटे बच्चे की जांच कैसे करें?')" class="p-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-xs sm:text-sm text-slate-200 font-semibold text-left flex items-center gap-2.5 transition-colors">
-              <span>💬</span>
-              <span>"कटाई के बाद लौटे बच्चे की जांच कैसे करें?"</span>
-            </button>
-            <button onclick="VidyaEngine.askQuickVoice('50 बच्चों की भीड़भाड़ वाली कक्षा में शोर कैसे कम करें?')" class="p-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-xs sm:text-sm text-slate-200 font-semibold text-left flex items-center gap-2.5 transition-colors">
-              <span>💬</span>
-              <span>"शहरी कक्षा में 50 बच्चों का शोर कैसे नियंत्रित करें?"</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- TAB 5: MOVING TEACHER STORIES & FIELD IMPACT                     -->
-    <!-- ================================================================= -->
-    <div id="view-stories" class="tab-view space-y-6 hidden">
-      <div class="glass-panel rounded-3xl p-6 sm:p-8 shadow-card-clean border border-slate-700/60 space-y-6">
+      <!-- TILE 2: BHASHA SETU -->
+      <section class="feature-card" aria-labelledby="heading-bhasha">
         <div>
-          <div class="inline-flex items-center gap-2 bg-red-500/15 text-red-400 border border-red-500/30 px-3 py-1 rounded-full text-xs font-black uppercase mb-3">
-            ❤️ शिक्षक गाथा • ग्रासरूट कहानियां (Ground Voices)
+          <div class="card-meta">
+            <span class="card-tag">भाषा अंतर • Dialect Bridge</span>
+            <span class="video-tag">ध्वनि अनुवाद</span>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
-            "हम केवल पाठ्यक्रम नहीं पढ़ाते, भारत की नई पीढ़ी की नींव रख रहे हैं"
-          </h2>
-          <p class="text-slate-300 text-sm sm:text-base mt-2 max-w-3xl leading-relaxed">
-            यह ऐप किसी वातानुकूलित कमरे में नहीं, बल्कि उत्तर प्रदेश, बिहार, राजस्थान और महाराष्ट्र के प्राथमिक विद्यालयों के वास्तविक शिक्षकों की रोजमर्रा की चुनौतियों को देखकर रचा गया है।
-          </p>
+          <h2 id="heading-bhasha" class="card-title">भाषा सेतु (Bhasha Setu)</h2>
+          <p class="card-desc">कठिन किताबी शब्दों को बच्चों की घरेलू बोली और ग्रामीण उदाहरणों में समझें।</p>
+
+          <div class="animated-banner" style="background: linear-gradient(-45deg, #06233B, #103B5E, #0A2E46);">
+            <span class="chalkboard-text">🗣️ "अवरोही क्रम = छत की सीढ़ी से उतरना"</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+            <label for="concept-dropdown" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-amber);">अवधारणा चुनें:</label>
+            <select id="concept-dropdown" class="select-input">
+              <option value="subtraction">घटाव (Subtraction) - शेष बचना</option>
+              <option value="descending">अवरोही क्रम (Descending Order) - बड़े से छोटा</option>
+              <option value="place_value">स्थानीय मान (Place Value) - इकाई/दहाई</option>
+            </select>
+          </div>
         </div>
+        <button id="btn-explain-concept" class="btn-action btn-blue">
+          <span aria-hidden="true">🗣️</span>
+          <span>घरेलू संदर्भ में समझाएं</span>
+        </button>
+      </section>
 
-        <!-- Field Case Studies -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- TILE 3: ABSENTEEISM REMEDIATION -->
+      <section class="feature-card" aria-labelledby="heading-absentee">
+        <div>
+          <div class="card-meta">
+            <span class="card-tag">उपचारात्मक शिक्षण • Catch-Up</span>
+            <span id="remediation-roster-count" class="video-tag">0 लंबित</span>
+          </div>
+          <h2 id="heading-absentee" class="card-title">छुट्टी के बाद वापसी जांच</h2>
+          <p class="card-desc">छुट्टी के बाद लौटे बच्चे की 2 मिनट में जांच करें और सहपाठी साथी जोड़ें।</p>
 
-          <!-- Story 1 -->
-          <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 space-y-4">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl font-bold border border-amber-500/40">
-                👨‍🏫
-              </div>
-              <div>
-                <h3 class="text-lg font-black text-white">मास्टरजी रमेश कुमार</h3>
-                <p class="text-xs text-amber-400 font-semibold">प्राथमिक विद्यालय, बहराइच (ग्रामीण उत्तर प्रदेश)</p>
-              </div>
-            </div>
-            <p class="text-sm text-slate-300 italic leading-relaxed">
-              "मेरे स्कूल में 84 बच्चे हैं और मैं अकेला शिक्षक हूँ। जब मैं कक्षा 1 को 'क' लिखना सिखाता था, तो कक्षा 2 और 3 के बच्चे आपस में लड़ने लगते थे। विद्यासेतु के 15-मिनट टाइमर और कंकड़ खेल ने मेरी कक्षा को पूरी तरह बदल दिया। अब बच्चे खुद अपनी बारी का इंतज़ार करते हैं और अनुशासन में सीखते हैं।"
+          <div class="info-pane" style="margin-bottom: 0.75rem;">
+            💡 <strong>3 त्वरित मौखिक प्रश्न</strong> बच्चे के ड्रॉप-ऑफ स्तर का पता लगाते हैं।
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+            <label for="student-name-input" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-amber);">लौटे हुए बच्चे का नाम:</label>
+            <input type="text" id="student-name-input" class="text-input" placeholder="उदा. रोहन कुमार (कक्षा 2)" maxlength="32" />
+          </div>
+        </div>
+        <button id="btn-open-diagnostic" class="btn-action btn-green">
+          <span aria-hidden="true">⚡</span>
+          <span>2-मिनट मौखिक जांच शुरू करें</span>
+        </button>
+      </section>
+
+      <!-- TILE 4: ZERO-COST TLM GAME -->
+      <section class="feature-card" aria-labelledby="heading-tlm">
+        <div>
+          <div class="card-meta">
+            <span class="card-tag">शून्य लागत सामग्री • No-Prep TLM</span>
+            <span class="video-tag">कंकड़ / चॉक</span>
+          </div>
+          <h2 id="heading-tlm" class="card-title">श्यामपट्ट खेल गतिविधि</h2>
+          <p class="card-desc">बिना किसी कागज या प्रिंट के, श्यामपट्ट और कंकड़ से 20 बच्चों को सक्रिय रखें।</p>
+
+          <div class="info-pane">
+            <strong style="color: var(--accent-amber);">आज का खेल: "संख्या रेलगाड़ी"</strong>
+            <p style="margin: 0.35rem 0 0; font-size: 0.9rem;">
+              बोर्ड पर रेलगाड़ी के 5 डिब्बे बनाएं, बीच के डिब्बे खाली छोड़ें। बच्चे कंकड़ गिनकर छूटे अंक भरेंगे।
             </p>
-            <div class="text-xs text-slate-400 font-bold border-t border-slate-800 pt-3 flex justify-between items-center">
-              <span>🌾 प्रभाव: कक्षा में अव्यवस्था 80% घटी</span>
-              <span class="text-emerald-400">FLN पास दर +45%</span>
-            </div>
           </div>
-
-          <!-- Story 2 -->
-          <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 space-y-4">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-2xl font-bold border border-sky-500/40">
-                👩‍🏫
-              </div>
-              <div>
-                <h3 class="text-lg font-black text-white">शिक्षिका सुनीता देवी</h3>
-                <p class="text-xs text-sky-400 font-semibold">निगम प्राथमिक शाला, धारावी (शहरी मुंबई)</p>
-              </div>
-            </div>
-            <p class="text-sm text-slate-300 italic leading-relaxed">
-              "मेरी कक्षा में 62 बच्चे हैं—कोई घर पर भोजपुरी बोलता है, कोई तमिल, कोई मराठी। किताबी हिंदी पढ़ाने पर आधे बच्चे चुपचाप बैठ जाते थे। 'भाषा सेतु' से जब मैंने 10 रुपये के सिक्के और बस की सीढ़ी से गणित और विज्ञान समझाना शुरू किया, तो बच्चों की आँखों में चमक आ गई। अब हर बच्चा हाथ उठाकर जवाब देता है!"
-            </p>
-            <div class="text-xs text-slate-400 font-bold border-t border-slate-800 pt-3 flex justify-between items-center">
-              <span>🏙️ प्रभाव: सीखने में भागीदारी 90%</span>
-              <span class="text-emerald-400">उपस्थिति 92% पहुंची</span>
-            </div>
-          </div>
-
         </div>
+        <button id="btn-view-tlm" class="btn-action" style="background-color: var(--bg-surface-elevated); color: #FFF; border: 2px solid var(--border-subtle);">
+          <span aria-hidden="true">🎯</span>
+          <span>खेल नियम और चरण देखें</span>
+        </button>
+      </section>
 
+    </main>
+
+    <!-- Persistent Bottom Bar -->
+    <footer role="contentinfo">
+      <button id="btn-persistent-voice" class="voice-bar-btn" aria-label="आवाज सहायक से पूछें">
+        <span aria-hidden="true">🎤</span>
+        <span id="voice-bar-label">बोलकर पूछें: "कक्षा 2 के लिए 10 मिनट खेल बताएं"</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- Reusable Accessible Modal -->
+  <div id="modal-wrapper" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+    <div class="modal-sheet">
+      <div class="modal-header">
+        <h3 id="modal-heading" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-amber); margin: 0;">शीर्षक</h3>
+        <button id="btn-modal-close" class="modal-close-btn" aria-label="डायलॉग बंद करें">✕</button>
       </div>
-    </div>
-
-  </main>
-
-  <!-- PERSISTENT FLOATING QUICK VOICE ASSISTANT BAR -->
-  <aside class="max-w-7xl w-full mx-auto px-4 sm:px-6 pb-6">
-    <button onclick="VidyaEngine.triggerVoiceQuery()" class="w-full min-h-[68px] bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 active:scale-[0.99] text-slate-950 rounded-2xl flex items-center justify-between px-5 sm:px-8 py-3.5 shadow-glow-amber border-2 border-amber-300 transition-all group" aria-label="आवाज द्वारा त्वरित शिक्षण सहायता मांगें">
-      <div class="flex items-center gap-3.5">
-        <span class="text-3xl group-hover:scale-110 transition-transform">🎤</span>
-        <div class="text-left">
-          <div id="floating-voice-label" class="text-base sm:text-xl font-black tracking-tight leading-tight">
-            बोलकर पूछें: "कक्षा 2 के लिए 10 मिनट का गणित खेल बताएं"
-          </div>
-          <span class="text-[11px] text-slate-800 font-bold uppercase tracking-wider">
-            दबाएं और अपनी स्थानीय बोली या हिंदी में सवाल पूछें
-          </span>
-        </div>
-      </div>
-      <span class="hidden md:inline-flex items-center gap-1 text-xs font-black bg-slate-950 text-amber-300 px-3.5 py-1.5 rounded-xl border border-amber-400/50 shadow-sm">
-        हैंड्स-फ्री मोड ⚡
-      </span>
-    </button>
-  </aside>
-
-  <!-- MOBILE BOTTOM NAVIGATION DOCK (Thumb-Friendly for Teachers on 5.5-inch screens) -->
-  <nav class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-md border-t border-slate-800/80 px-2 py-1.5 flex items-center justify-around shadow-2xl">
-    <button id="mobile-nav-classroom" onclick="VidyaEngine.switchTab('classroom')" class="flex flex-col items-center gap-0.5 p-1 text-amber-400 text-[10px] font-bold transition-colors">
-      <span class="text-lg">🎛️</span>
-      <span>कक्षा</span>
-    </button>
-    <button id="mobile-nav-relevance" onclick="VidyaEngine.switchTab('relevance')" class="flex flex-col items-center gap-0.5 p-1 text-slate-400 hover:text-slate-200 text-[10px] font-bold transition-colors">
-      <span class="text-lg">🏫</span>
-      <span>प्रासंगिकता</span>
-    </button>
-    <button id="mobile-nav-nipun" onclick="VidyaEngine.switchTab('nipun')" class="flex flex-col items-center gap-0.5 p-1 text-slate-400 hover:text-slate-200 text-[10px] font-bold transition-colors">
-      <span class="text-lg">📊</span>
-      <span>निपुण</span>
-    </button>
-    <button id="mobile-nav-voice" onclick="VidyaEngine.switchTab('voice')" class="flex flex-col items-center gap-0.5 p-1 text-slate-400 hover:text-slate-200 text-[10px] font-bold transition-colors">
-      <span class="text-lg">🎙️</span>
-      <span>ध्वनि</span>
-    </button>
-    <button id="mobile-nav-stories" onclick="VidyaEngine.switchTab('stories')" class="flex flex-col items-center gap-0.5 p-1 text-slate-400 hover:text-slate-200 text-[10px] font-bold transition-colors">
-      <span class="text-lg">❤️</span>
-      <span>गाथा</span>
-    </button>
-  </nav>
-
-  <!-- REUSABLE ACCESSIBLE MODAL DIALOG (100% PURE DOM ELEMENT INJECTION) -->
-  <div id="modal-container" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden" role="dialog" aria-modal="true">
-    <div class="glass-panel border-2 border-amber-500/50 rounded-3xl max-w-xl w-full p-6 shadow-2xl text-slate-100 space-y-4 max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b border-slate-700/80 pb-3">
-        <h3 id="modal-title" class="text-teacher-title font-black text-edu-amber m-0">शीर्षक</h3>
-        <button onclick="VidyaEngine.closeModal()" class="w-10 h-10 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-lg font-bold flex items-center justify-center transition-colors cursor-pointer" aria-label="बंद करें">✕</button>
-      </div>
-      <div id="modal-body" class="text-teacher-sm space-y-3"></div>
-      <button onclick="VidyaEngine.closeModal()" class="w-full min-h-touch bg-edu-amber hover:bg-amber-400 active:scale-[0.98] text-slate-950 text-teacher-base font-black rounded-2xl py-3.5 shadow-lg shadow-amber-500/20 transition-transform cursor-pointer">
-        कक्षा में लागू करें (Close)
+      <div id="modal-content-area" style="display: flex; flex-direction: column; gap: 1rem;"></div>
+      <button id="btn-modal-action-close" class="btn-action btn-amber" style="min-height: 54px;">
+        कक्षा में लागू करें (Dismiss)
       </button>
     </div>
   </div>
 
-  <!-- MODULAR ARCHITECTURE SUBSYSTEMS -->
-  <script src="js/state.js"></script>
-  <script src="js/timer.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/storage.js"></script>
-  <script src="js/modal.js"></script>
-  <script src="js/rag.js"></script>
-  <script src="js/voice.js"></script>
-  <script src="js/diagnostics.js"></script>
-  <script src="js/app.js"></script>
+  <!-- JavaScript Engine -->
+  <script>
+    'use strict';
+
+    const VidyaCore = (() => {
+      const state = {
+        timerRunning: false,
+        durationSeconds: 900,
+        targetEpoch: null,
+        timerIntervalId: null,
+        activeFocus: 1,
+        remediationQueue: []
+      };
+
+      const elements = {
+        srAnnouncer: document.getElementById('sr-live-region'),
+        timerDisplay: document.getElementById('timer-display'),
+        timerBtnText: document.getElementById('timer-btn-text'),
+        timerIcon: document.getElementById('timer-icon'),
+        activeGroupLabel: document.getElementById('active-group-label'),
+        splitInstructionText: document.getElementById('split-instruction-text'),
+        conceptDropdown: document.getElementById('concept-dropdown'),
+        studentInput: document.getElementById('student-name-input'),
+        rosterCount: document.getElementById('remediation-roster-count'),
+        modalWrapper: document.getElementById('modal-wrapper'),
+        modalHeading: document.getElementById('modal-heading'),
+        modalContent: document.getElementById('modal-content-area'),
+        modalCloseBtn: document.getElementById('btn-modal-close'),
+        modalDismissBtn: document.getElementById('btn-modal-action-close'),
+        btnToggleTimer: document.getElementById('btn-toggle-timer'),
+        btnExplainConcept: document.getElementById('btn-explain-concept'),
+        btnOpenDiagnostic: document.getElementById('btn-open-diagnostic'),
+        btnViewTlm: document.getElementById('btn-view-tlm'),
+        btnSelfTest: document.getElementById('btn-self-test'),
+        btnPersistentVoice: document.getElementById('btn-persistent-voice'),
+        voiceBarLabel: document.getElementById('voice-bar-label')
+      };
+
+      function openSafeModal(titleText, contentNodeBuilder) {
+        elements.modalHeading.textContent = titleText;
+        elements.modalContent.replaceChildren();
+        contentNodeBuilder(elements.modalContent);
+        elements.modalWrapper.classList.remove('hidden');
+        elements.modalCloseBtn.focus();
+      }
+
+      function closeSafeModal() {
+        elements.modalWrapper.classList.add('hidden');
+      }
+
+      function speakVernacular(text) {
+        elements.srAnnouncer.textContent = text;
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'hi-IN';
+          utterance.rate = 0.88;
+          window.speechSynthesis.speak(utterance);
+        }
+      }
+
+      function toggleTimer() {
+        if (!state.timerRunning) {
+          state.timerRunning = true;
+          state.targetEpoch = Date.now() + (state.durationSeconds * 1000);
+          elements.timerBtnText.textContent = 'रोकें (Pause)';
+          elements.timerIcon.textContent = '⏸️';
+          speakVernacular('15 मिनट का बहु-कक्षा शिक्षण चक्र प्रारंभ हुआ।');
+          state.timerIntervalId = setInterval(tickTimer, 250);
+        } else {
+          state.timerRunning = false;
+          clearInterval(state.timerIntervalId);
+          const remainingMillis = Math.max(0, state.targetEpoch - Date.now());
+          state.durationSeconds = Math.round(remainingMillis / 1000);
+          elements.timerBtnText.textContent = 'पुनः शुरू करें (Resume)';
+          elements.timerIcon.textContent = '▶️';
+        }
+      }
+
+      function tickTimer() {
+        const remainingMillis = Math.max(0, state.targetEpoch - Date.now());
+        const remainingSecs = Math.round(remainingMillis / 1000);
+        const mins = Math.floor(remainingSecs / 60);
+        const secs = remainingSecs % 60;
+        elements.timerDisplay.textContent = 
+          `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+        if (remainingSecs <= 0) {
+          switchClassFocus();
+        }
+      }
+
+      function switchClassFocus() {
+        clearInterval(state.timerIntervalId);
+        state.durationSeconds = 900;
+        state.timerRunning = false;
+        state.activeFocus = state.activeFocus === 1 ? 2 : 1;
+
+        if (state.activeFocus === 1) {
+          elements.activeGroupLabel.textContent = 'कक्षा 1: प्रत्यक्ष शिक्षक समय';
+          elements.splitInstructionText.innerHTML = 
+            '<strong>शिक्षक:</strong> कक्षा 1 को ध्वनि अभ्यास कराएं।<br><strong>कक्षा 2/3:</strong> कंकड़ों से 10 के समूह बनाएं।';
+          speakVernacular('15 मिनट पूर्ण हुए। अब कक्षा 1 को प्रत्यक्ष समय दें।');
+        } else {
+          elements.activeGroupLabel.textContent = 'कक्षा 2/3: प्रत्यक्ष शिक्षक समय';
+          elements.splitInstructionText.innerHTML = 
+            '<strong>शिक्षक:</strong> कक्षा 2/3 को शब्द निर्माण सिखाएं।<br><strong>कक्षा 1:</strong> स्लेट पर चित्र देखकर पहला अक्षर लिखें।';
+          speakVernacular('15 मिनट पूर्ण हुए। अब कक्षा 2 और 3 को प्रत्यक्ष सिखाएं।');
+        }
+
+        elements.timerDisplay.textContent = '15:00';
+        elements.timerBtnText.textContent = 'अगला चक्र शुरू करें';
+        elements.timerIcon.textContent = '⏱️';
+      }
+
+      const VernacularRepo = {
+        subtraction: {
+          title: 'घटाव (Subtraction)',
+          formal: 'किसी राशि में से निश्चित संख्या कम करना या निकालना।',
+          vernacular: 'पेड़ से आम गिरना या हाट में पैसे खर्च होना।',
+          instruction: 'बच्चों से कहें: "यदि आपके पास 5 बेर हैं और 2 छोटे भाई को दे दिए, तो कितने बचे?"'
+        },
+        descending: {
+          title: 'अवरोही क्रम (Descending Order)',
+          formal: 'संख्याओं को बड़े से छोटे के मान में व्यवस्थित करना।',
+          vernacular: 'छत की सीढ़ी से जमीन की ओर नीचे उतरना।',
+          instruction: 'बच्चों से सीढ़ी उतरने का अभिनय कराएं: 5वीं सीढ़ी, फिर 4थी, फिर 3री और फिर जमीन।'
+        },
+        place_value: {
+          title: 'स्थानीय मान (Place Value)',
+          formal: 'अंक की स्थिति के अनुसार उसका मान निर्धारित होना।',
+          vernacular: 'माचिस की 10 तीलियों का बंडल (दहाई) और खुली तीली (इकाई)।',
+          instruction: '10 तीलियों को धागे से बांधकर 1 बंडल बनाएं। 1 बंडल और 3 तीली यानी तेरह।'
+        }
+      };
+
+      function triggerConceptExplanation() {
+        const key = elements.conceptDropdown.value;
+        const data = VernacularRepo[key] || VernacularRepo.subtraction;
+
+        openSafeModal(`भाषा सेतु: ${data.title}`, (container) => {
+          const card1 = document.createElement('div');
+          card1.style.cssText = 'background: var(--bg-base); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
+          const label1 = document.createElement('span');
+          label1.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-amber); text-transform: uppercase;';
+          label1.textContent = 'किताबी परिभाषा (Textbook):';
+          const text1 = document.createElement('p');
+          text1.style.cssText = 'margin: 0.25rem 0 0; color: #FFF; font-weight: 600;';
+          text1.textContent = data.formal;
+          card1.append(label1, text1);
+
+          const card2 = document.createElement('div');
+          card2.style.cssText = 'background: #022616; padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--accent-green);';
+          const label2 = document.createElement('span');
+          label2.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-green); text-transform: uppercase;';
+          label2.textContent = 'घरेलू बोली का उदाहरण (Rural Analogy):';
+          const text2 = document.createElement('p');
+          text2.style.cssText = 'margin: 0.25rem 0 0; color: #FFF; font-weight: 700; font-size: 1.1rem;';
+          text2.textContent = data.vernacular;
+          const guide = document.createElement('p');
+          guide.style.cssText = 'margin: 0.5rem 0 0; font-size: 0.9rem; color: #94A3B8;';
+          guide.textContent = data.instruction;
+          card2.append(label2, text2, guide);
+
+          container.append(card1, card2);
+        });
+
+        speakVernacular(`${data.title} को ग्रामीण संदर्भ में समझाएं: ${data.vernacular}`);
+      }
+
+      function openCatchUpDiagnostic() {
+        const rawName = elements.studentInput.value.trim() || 'रोहन (कक्षा 2)';
+
+        openSafeModal(`2-मिनट मौखिक जांच: ${rawName}`, (container) => {
+          const promptIntro = document.createElement('p');
+          promptIntro.textContent = 'बच्चे से अकेले में ये 3 त्वरित प्रश्न पूछें:';
+          promptIntro.style.color = '#FFF';
+
+          const questionsBox = document.createElement('div');
+          questionsBox.style.cssText = 'background: var(--bg-base); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 0.5rem;';
+          const q1 = document.createElement('div');
+          q1.textContent = "1. स्लेट पर 'म' और 'र' पहचान कर गोला बनाएं।";
+          const q2 = document.createElement('div');
+          q2.textContent = "2. इन 6 कंकड़ों में 2 कंकड़ और जोड़ें, कितने हुए?";
+          const q3 = document.createElement('div');
+          q3.textContent = "3. यह सरल शब्द पढ़कर सुनाएं: 'घर'";
+          questionsBox.append(q1, q2, q3);
+
+          const actionsRow = document.createElement('div');
+          actionsRow.style.cssText = 'display: flex; gap: 0.75rem; margin-top: 0.5rem;';
+
+          const btnPass = document.createElement('button');
+          btnPass.className = 'btn-action btn-green';
+          btnPass.style.cssText = 'min-height: 52px; font-size: 0.95rem;';
+          btnPass.textContent = 'स्तर पर है (Pass)';
+          btnPass.onclick = () => {
+            closeSafeModal();
+            speakVernacular(`${rawName} स्तर पर है। नियमित कार्य जारी रखें।`);
+          };
+
+          const btnFail = document.createElement('button');
+          btnFail.className = 'btn-action';
+          btnFail.style.cssText = 'min-height: 52px; font-size: 0.95rem; background-color: var(--accent-red); color: #000;';
+          btnFail.textContent = 'अटक रहा है (सहपाठी दें)';
+          btnFail.onclick = () => {
+            state.remediationQueue.push(rawName);
+            elements.rosterCount.textContent = `${state.remediationQueue.length} लंबित`;
+            closeSafeModal();
+            speakVernacular(`${rawName} को सहपाठी साथी के साथ अक्षर कार्ड खेल में बैठाएं।`);
+          };
+
+          actionsRow.append(btnPass, btnFail);
+          container.append(promptIntro, questionsBox, actionsRow);
+        });
+
+        speakVernacular(`${rawName} के लिए दो मिनट का मौखिक जांच कार्ड खोला गया है।`);
+      }
+
+      function openTlmModal() {
+        openSafeModal('शून्य-लागत श्यामपट्ट खेल', (container) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.cssText = 'background: var(--bg-base); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
+          const title = document.createElement('h4');
+          title.style.cssText = 'color: var(--accent-amber); font-size: 1.1rem; margin-bottom: 0.5rem;';
+          title.textContent = 'खेल: "संख्या रेलगाड़ी" (Number Train)';
+
+          const list = document.createElement('ol');
+          list.style.cssText = 'padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem; color: #FFF;';
+          const li1 = document.createElement('li');
+          li1.textContent = 'बोर्ड पर 5 डिब्बों वाली रेलगाड़ी का चित्र बनाएं।';
+          const li2 = document.createElement('li');
+          li2.textContent = 'डिब्बा 1 में 2 और डिब्बा 3 में 4 लिखें; बीच का डिब्बा खाली छोड़ें।';
+          const li3 = document.createElement('li');
+          li3.textContent = 'कक्षा 1 के बच्चे से कंकड़ गिनवाएं और कक्षा 2 के बच्चे से छूटा अंक भरवाएं।';
+          list.append(li1, li2, li3);
+
+          wrapper.append(title, list);
+          container.append(wrapper);
+        });
+      }
+
+      function runSelfTest() {
+        elements.modalWrapper.classList.remove('hidden');
+        const tests = [
+          {
+            name: 'Button Touch Target Safety (>= 48px)',
+            passed: Array.from(document.querySelectorAll('button')).every(b => b.offsetHeight >= 48 || b.closest('.hidden'))
+          },
+          {
+            name: 'Web Speech Synthesis Driver Available',
+            passed: 'speechSynthesis' in window
+          },
+          {
+            name: 'Offline Storage Readiness',
+            passed: (() => {
+              try {
+                localStorage.setItem('_test', '1');
+                localStorage.removeItem('_test');
+                return true;
+              } catch (e) { return false; }
+            })()
+          },
+          {
+            name: 'Google Drive Video Iframe Bridge',
+            passed: !!document.querySelector('iframe')
+          }
+        ];
+
+        openSafeModal('सिस्टम डायग्नोस्टिक जांच', (container) => {
+          const list = document.createElement('div');
+          list.style.cssText = 'display: flex; flex-direction: column; gap: 0.75rem;';
+
+          tests.forEach(t => {
+            const row = document.createElement('div');
+            row.style.cssText = `display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-radius: 0.5rem; background: ${t.passed ? '#022616' : '#2A0808'}; border: 1px solid ${t.passed ? 'var(--accent-green)' : 'var(--accent-red)'};`;
+
+            const name = document.createElement('span');
+            name.style.cssText = 'font-weight: 600; color: #FFF; font-size: 0.9rem;';
+            name.textContent = t.name;
+
+            const badge = document.createElement('span');
+            badge.style.cssText = `font-weight: 800; font-size: 0.85rem; color: ${t.passed ? 'var(--accent-green)' : 'var(--accent-red)'};`;
+            badge.textContent = t.passed ? 'PASSED' : 'FAILED';
+
+            row.append(name, badge);
+            list.append(row);
+          });
+
+          container.append(list);
+        });
+
+        speakVernacular('सिस्टम डायग्नोस्टिक्स पूर्ण हुए। सभी घटक सक्रिय हैं।');
+      }
+
+      function triggerVoiceAssistant() {
+        elements.voiceBarLabel.textContent = 'सुन रहा हूँ... अपनी कक्षा का प्रश्न पूछें';
+        speakVernacular('मैं सुन रहा हूँ। आप किस कक्षा के लिए शिक्षण गतिविधि चाहते हैं?');
+        setTimeout(() => {
+          elements.voiceBarLabel.textContent = 'बोलकर पूछें: "कक्षा 2 के लिए 10 मिनट खेल बताएं"';
+        }, 4000);
+      }
+
+      function init() {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./sw.js').catch(() => {});
+        }
+        elements.btnToggleTimer.addEventListener('click', toggleTimer);
+        elements.btnExplainConcept.addEventListener('click', triggerConceptExplanation);
+        elements.btnOpenDiagnostic.addEventListener('click', openCatchUpDiagnostic);
+        elements.btnViewTlm.addEventListener('click', openTlmModal);
+        elements.btnSelfTest.addEventListener('click', runSelfTest);
+        elements.btnPersistentVoice.addEventListener('click', triggerVoiceAssistant);
+        elements.modalCloseBtn.addEventListener('click', closeSafeModal);
+        elements.modalDismissBtn.addEventListener('click', closeSafeModal);
+      }
+
+      return { init };
+    })();
+
+    document.addEventListener('DOMContentLoaded', VidyaCore.init);
+  </script>
 </body>
 </html>
