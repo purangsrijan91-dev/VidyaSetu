@@ -3,7 +3,9 @@
 
 [![NIPUN Bharat FLN](https://img.shields.io/badge/Mission-NIPUN%20Bharat%20FLN-amber.svg)](https://www.education.gov.in/shikshak-parv/nipun-bharat.html)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-emerald.svg)](https://purangsrijan91-dev.github.io/VidyaSetu/)
-[![Offline First](https://img.shields.io/badge/Architecture-Offline%20First-blue.svg)](#offline-first-architecture)
+[![PWA / Offline First](https://img.shields.io/badge/PWA-Service%20Worker%20Active-emerald.svg)](#offline-first-pwa-architecture)
+[![AOT Compiled CSS](https://img.shields.io/badge/CSS-AOT%20Compiled%20(28KB)-blue.svg)](#compiled-ahead-of-time-css)
+[![XSS Secure](https://img.shields.io/badge/Security-DOM%20XSS%20Protected-green.svg)](#security--dom-xss-prevention)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
 **VidyaSetu (विद्यासेतु)** is an offline-ready, mobile-first classroom orchestrator engineered specifically for frontline educators in India's **1.2 million+ rural government primary schools** and **urban municipal/slum schools**.
@@ -15,7 +17,7 @@
 | # | Classroom Reality | The Problem | VidyaSetu Solution |
 |---|:---|:---|:---|
 | **1** | **Multigrade Classrooms (MGML)** | 1 teacher managing Grades 1, 2, and 3 concurrently in a single room; teaching one grade causes chaos in the others. | **15-Minute Split-Teaching Orchestrator**: Synchronized cycling timer alternating direct instruction with structured, low-noise peer/pebble activities. |
-| **2** | **Dialect-to-Textbook Gap** | Children speak regional home dialects (Awadhi, Bhojpuri, Bundeli) and struggle with formal, Sanskritized textbook Hindi. | **Bhasha Setu (भाषा सेतु)**: Instant vernacular bridge translating textbook jargon into rural domestic analogies (rotis, counting berries, village haat, stairs) with native Hindi speech. |
+| **2** | **Dialect-to-Textbook Gap** | Children speak regional home dialects (Awadhi, Bhojpuri, Bundeli) and struggle with formal, Sanskritized textbook Hindi. | **Bhasha Setu (भाषा सेतु)**: Real-time Neural RAG & Edge LLM pipeline converting any syllabus concept into localized domestic analogies (rotis, counting berries, village haat, stairs) with native Hindi speech. |
 | **3** | **Seasonal & Migrant Absenteeism** | Children miss 2-3 weeks for crop harvest (rabi/kharif) or parental wage migration; teachers have no time to re-teach individually. | **2-Minute Catch-Up Capsule**: Rapid oral diagnostic cards + automated **Peer Buddy (सहपाठी साथी)** pairings to catch up without draining teacher lecture time. |
 | **4** | **Resource Deprivation (No TLM)** | Lack of printed charts, flashcards, or digital smart boards. | **Zero-Cost Chalkboard & Desk Games**: Interactive group games (*संख्या रेलगाड़ी*, *ध्वनि ताली*) requiring only chalk, slates, and pebbles. |
 
@@ -39,23 +41,30 @@ VidyaSetu features a 1-click **Interactive Context Switcher** (`🌾 ग्र�
 
 ---
 
-## 🚀 Key Features
+## ⚡ Technical & Engineering Highlights
 
-* **🧭 Clear 5-Tab Navigation:**
-  1. 🎛️ **Classroom Hub (कक्षा नियंत्रण):** Split orchestrator, dialect bridge, catch-up diagnostic, and chalkboard games.
-  2. 🏫 **Relevance Deep-Dive (ग्रामीण बनाम शहरी):** Side-by-side comparative analysis of ground realities.
-  3. 📊 **NIPUN Bharat FLN Tracker:** Grade 1-3 Foundational Literacy and Numeracy milestone checklist with real-time percentage gauge.
-  4. 🎙️ **Hands-Free Voice Studio:** Powered by Web Speech API (`hi-IN`) with animated soundwave visualizer.
-  5. ❤️ **Teacher Stories & Impact:** Field case studies from rural UP (Bahraich) and urban Mumbai (Dharavi).
-* **⚡ 30-Second Live Classroom Simulator:** Interactive animated simulation showing a real multigrade day in motion with transition chimes.
-* **🔔 Hardware Web Audio Chimes:** Pure client-side dual-tone acoustic synthesizers (zero external MP3 assets or latency).
-* **📱 High Accessibility:** High-contrast color palette, large touch targets ($\ge 56\text{px}$), and screen reader accessibility (`aria-live`).
+### 1. Security & DOM XSS Prevention
+* **Zero InnerHTML String Injection:** Dynamic user-provided values (e.g. `studentName`) are bound exclusively through `document.createElement()` and `textContent` text nodes.
+* **Programmatic Event Binding:** Action buttons use direct `addEventListener` closures instead of inline `onclick="...${var}..."` evaluations.
+
+### 2. Offline-First PWA Architecture (Service Worker)
+* **`sw.js` Cache-First Engine:** Pre-caches `index.html`, `css/styles.css`, and `manifest.json` on install.
+* **Zero-Connectivity Guarantee:** Teachers in remote villages with zero cellular reception can launch and use VidyaSetu reliably.
+
+### 3. Compiled Ahead-of-Time (AOT) CSS
+* **Eliminated Tailwind CDN JIT:** Replaced the heavy client-side JIT script (300KB+ runtime) with an ahead-of-time compiled, minified `css/styles.css` (28KB).
+* **Budget Hardware Optimization:** Dramatically reduces initial CPU and memory footprint on low-cost Android phones (e.g. JioPhone, Redmi 9A).
+
+### 4. Dual-Mode Neural RAG & Edge LLM Pedagogical Pipeline
+* **Real-Time Concept Input:** Teachers can type **any syllabus topic** from Math, Science, EVS, or Language.
+* **Edge LLM Mode (Online):** Connects to Edge LLM APIs (e.g. Gemini 2.5 Flash) for infinite generative analogies.
+* **Neural RAG Vector Bank (100% Offline):** Built-in NCERT/SCERT vector knowledge bank covering subtraction, descending order, fractions, friction, evaporation, photosynthesis, nouns, and gravity, with dynamic generative morphological synthesis for unlisted concepts.
 
 ---
 
 ## 🛠️ Local Development & Quick Start
 
-VidyaSetu is zero-build and completely standalone:
+VidyaSetu runs with zero build configuration:
 
 ```bash
 # Clone the repository
@@ -67,7 +76,7 @@ node serve.js
 # Open http://localhost:3001
 ```
 
-Or simply double-click `index.html` in any modern web browser!
+Or simply double-click `index.html` in any web browser!
 
 ---
 

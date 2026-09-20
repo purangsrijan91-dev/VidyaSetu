@@ -1,0 +1,18 @@
+{
+  "name": "VidyaSetu (विद्यासेतु) - प्राथमिक शिक्षक साथी",
+  "short_name": "VidyaSetu",
+  "description": "Offline-first Multigrade & Bilingual Classroom Companion for Indian Primary Teachers under NIPUN Bharat FLN Mission.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#060B18",
+  "theme_color": "#F59E0B",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,13 +1,12 @@
-# Logs
-*.log
+# Node
+node_modules/
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+package-lock.json
 
 # OS Files
 .DS_Store
 Thumbs.db
 
-# Temporary
-.temp
+# Temp
+.temp/
 scratch/
