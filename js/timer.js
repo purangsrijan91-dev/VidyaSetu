@@ -6,7 +6,9 @@
 
 const TimerEngine = (() => {
   let intervalId = null;
+  let startTime = null;
   let targetEndTime = null;
+  let totalDurationSeconds = 900;
   let onCycleCompleteCallback = null;
 
   function init(onCycleComplete) {
@@ -27,6 +29,8 @@ const TimerEngine = (() => {
 
   function start(durationSeconds = 900) {
     const now = Date.now();
+    startTime = now;
+    totalDurationSeconds = durationSeconds;
     targetEndTime = now + (durationSeconds * 1000);
 
     StateStore.setState({
@@ -44,14 +48,16 @@ const TimerEngine = (() => {
     const currentState = StateStore.getState();
     if (!currentState.timerRunning) return;
 
-    // Calculate exact true remaining seconds
+    // Calculate exact true remaining seconds via timestamp comparison (Date.now() - startTime)
     const now = Date.now();
-    const remainingSeconds = targetEndTime ? Math.max(0, Math.ceil((targetEndTime - now) / 1000)) : currentState.secondsRemaining;
+    const elapsedSeconds = startTime ? Math.floor((now - startTime) / 1000) : 0;
+    const remainingSeconds = Math.max(0, totalDurationSeconds - elapsedSeconds);
 
     if (intervalId) {
       clearInterval(intervalId);
       intervalId = null;
     }
+    startTime = null;
     targetEndTime = null;
 
     StateStore.setState({
@@ -77,20 +83,22 @@ const TimerEngine = (() => {
 
   function syncDeltaTick() {
     const currentState = StateStore.getState();
-    if (!currentState.timerRunning || !targetEndTime) return;
+    if (!currentState.timerRunning || !startTime) return;
 
+    // True Delta-Time Clock: Elapsed seconds calculated from timestamp difference (Date.now() - startTime)
     const now = Date.now();
-    const remainingMs = targetEndTime - now;
-    const remainingSecs = Math.max(0, Math.ceil(remainingMs / 1000));
+    const elapsedSeconds = Math.floor((now - startTime) / 1000);
+    const remainingSecs = Math.max(0, totalDurationSeconds - elapsedSeconds);
 
     StateStore.setState({ secondsRemaining: remainingSecs });
 
-    if (remainingMs <= 0) {
+    if (remainingSecs <= 0 || (targetEndTime && now >= targetEndTime)) {
       // 15-Minute Cycle Finished
       if (intervalId) {
         clearInterval(intervalId);
         intervalId = null;
       }
+      startTime = null;
       targetEndTime = null;
       StateStore.setState({
         timerRunning: false,

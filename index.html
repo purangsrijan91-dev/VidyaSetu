@@ -21,9 +21,13 @@
     // Offline Service Worker Registration for Instant Zero-Connectivity Launch
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
+        navigator.serviceWorker.register('./service-worker.js')
           .then((reg) => console.log('[VidyaSetu PWA] Offline Service Worker active, scope:', reg.scope))
-          .catch((err) => console.warn('[VidyaSetu PWA] SW registration notice:', err));
+          .catch(() => {
+            navigator.serviceWorker.register('./sw.js')
+              .then((reg) => console.log('[VidyaSetu PWA] Fallback SW active, scope:', reg.scope))
+              .catch((err) => console.warn('[VidyaSetu PWA] SW registration notice:', err));
+          });
       });
     }
   </script>
@@ -364,7 +368,7 @@
           </div>
 
           <div class="pt-3 border-t border-slate-800">
-            <button onclick="VidyaEngine.launchCatchUpDiagnosticSecure()" class="w-full min-h-touch bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 active:scale-[0.98] text-slate-950 text-teacher-base font-black rounded-2xl p-3 sm:p-4 flex items-center justify-center gap-3 transition-transform shadow-lg">
+            <button onclick="VidyaEngine.launchCatchUpDiagnostic()" class="w-full min-h-touch bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 active:scale-[0.98] text-slate-950 text-teacher-base font-black rounded-2xl p-3 sm:p-4 flex items-center justify-center gap-3 transition-transform shadow-lg">
               <span class="text-2xl">📋</span>
               <span>2-मिनट मौखिक जांच शुरू करें</span>
             </button>

@@ -374,8 +374,8 @@ const AppController = (() => {
     AudioEngine.speakHindi(`${data.analogy}। ${data.script}`);
   }
 
-  // 100% Pure DOM Construction for Catch-Up Diagnostic
-  function openCatchUpDiagnostic() {
+  // 100% Pure DOM Construction for Catch-Up Diagnostic (Immune to DOM XSS)
+  function launchCatchUpDiagnostic() {
     const inputEl = document.getElementById('student-name-input');
     const rawStudentName = inputEl ? inputEl.value.trim() : '';
     const studentName = rawStudentName || 'रोहन (कक्षा 2)';
@@ -691,7 +691,8 @@ const AppController = (() => {
     clearConceptInput,
     generatePedagogicalAnalogy,
     generateAnalogyFromQuery,
-    openCatchUpDiagnostic,
+    launchCatchUpDiagnostic,
+    openCatchUpDiagnostic: launchCatchUpDiagnostic,
     recordRemediation,
     showTLMGame,
     triggerVoiceQuery: () => VoiceAssistant.startListening(),
@@ -755,7 +756,8 @@ const VidyaEngine = {
   selectConceptChip: (c) => AppController.selectConceptChip(c),
   clearConceptInput: () => AppController.clearConceptInput(),
   generatePedagogicalAnalogy: () => AppController.generatePedagogicalAnalogy(),
-  launchCatchUpDiagnosticSecure: () => AppController.openCatchUpDiagnostic(),
+  launchCatchUpDiagnostic: () => AppController.launchCatchUpDiagnostic(),
+  launchCatchUpDiagnosticSecure: () => AppController.launchCatchUpDiagnostic(),
   showChalkboardGame: () => AppController.showTLMGame(),
   triggerVoiceQuery: () => AppController.triggerVoiceQuery(),
   askQuickVoice: (q) => AppController.askQuickVoice(q),
@@ -766,6 +768,16 @@ const VidyaEngine = {
   speakHindi: (txt) => AudioEngine.speakHindi(txt),
   closeModal: () => AppController.closeModal()
 };
+
+// Global direct function bindings for browser window scope
+if (typeof window !== 'undefined') {
+  window.VidyaEngine = VidyaEngine;
+  window.launchCatchUpDiagnostic = () => AppController.launchCatchUpDiagnostic();
+  window.runSelfDiagnostics = () => AppController.runDiagnostics();
+}
+if (typeof globalThis !== 'undefined') {
+  globalThis.VidyaEngine = VidyaEngine;
+}
 
 // Auto-boot on DOM ready
 if (typeof document !== 'undefined') {

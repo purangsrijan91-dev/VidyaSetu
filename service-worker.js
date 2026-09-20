@@ -1,4 +1,4 @@
-// VidyaSetu Service Worker - Zero-Connectivity Offline Engine (sw.js)
+// VidyaSetu Service Worker - Zero-Connectivity Offline Engine (service-worker.js)
 const CACHE_NAME = 'vidyasetu-v3';
 const CORE_ASSETS = [
   './',
