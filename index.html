@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html lang="hi" class="h-full bg-slate-950">
+<html lang="hi" class="h-full bg-slate-50">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src https://drive.google.com; media-src 'self' blob:; img-src 'self' https: data:;" />
-  <meta name="theme-color" content="#0F172A" />
+  <meta name="theme-color" content="#071D49" />
   <meta name="description" content="VidyaSetu: NIPUN Bharat Multigrade Classroom Copilot for Indian Primary Teachers." />
-  <title>VidyaSetu (विद्यासेतु) • प्राथमिक कक्षा साथी</title>
+  <title>VidyaSetu (विद्यासेतु) • प्राथमिक कक्षा साथी | Emeritus Style</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
 
   <style>
     :root {
-      --bg-base: #070D18;
-      --bg-surface: #101B30;
-      --bg-surface-elevated: #192845;
-      --border-subtle: #243B63;
-      --border-focus: #F59E0B;
-      --text-primary: #FFFFFF;
-      --text-secondary: #CBD5E1;
-      --accent-amber: #F59E0B;
-      --accent-green: #10B981;
-      --accent-blue: #38BDF8;
-      --accent-red: #F87171;
-      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", sans-serif;
+      --bg-base: #F8F9FA;
+      --bg-surface: #FFFFFF;
+      --bg-surface-elevated: #F1F5F9;
+      --border-subtle: #E2E8F0;
+      --border-focus: #00BE6D;
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --accent-emeritus-green: #00BE6D;
+      --accent-emeritus-green-dark: #00824B;
+      --accent-emeritus-green-light: #E6F9F0;
+      --accent-emeritus-navy: #003388;
+      --accent-emeritus-navy-dark: #071D49;
+      --accent-emeritus-navy-light: #EEF4FF;
+      --accent-amber: #D97706;
+      --accent-amber-light: #FEF3C7;
+      --accent-red: #DC2626;
+      --accent-red-light: #FEE2E2;
+      --font-stack: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans Devanagari", sans-serif;
     }
 
     *, *::before, *::after {
@@ -33,7 +40,7 @@
     }
 
     html, body {
-      height: 100%;
+      min-height: 100%;
       background-color: var(--bg-base);
       color: var(--text-primary);
       font-family: var(--font-stack);
@@ -45,8 +52,8 @@
     }
 
     :focus-visible {
-      outline: 4px solid var(--border-focus) !important;
-      outline-offset: 3px !important;
+      outline: 3px solid var(--accent-emeritus-green) !important;
+      outline-offset: 2px !important;
     }
 
     .sr-only {
@@ -61,34 +68,46 @@
       border: 0;
     }
 
-    .layout-wrapper {
-      min-height: 100%;
+    /* Top Trust Announcement Banner */
+    .top-trust-bar {
+      background-color: var(--accent-emeritus-navy-dark);
+      color: #FFFFFF;
+      padding: 0.45rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
       display: flex;
-      flex-direction: column;
-      padding: 1rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      gap: 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    @media (min-width: 768px) {
-      .layout-wrapper {
-        padding: 2rem;
-      }
+    .top-trust-bar span.pill {
+      background: var(--accent-emeritus-green);
+      color: #FFFFFF;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.15rem 0.5rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    /* Top Navigation */
+    /* Top Navigation (Emeritus White Header) */
     header {
-      background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(16,27,48,0.85) 100%);
-      border: 2px solid var(--border-subtle);
-      border-radius: 1.5rem;
-      padding: 1.25rem 1.5rem;
+      background-color: #FFFFFF;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-      box-shadow: 0 12px 30px -10px rgba(0,0,0,0.7);
+      box-shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 50;
     }
 
     .brand-group {
@@ -97,72 +116,204 @@
       gap: 1rem;
     }
 
-    .status-pulse {
-      width: 1.1rem;
-      height: 1.1rem;
-      border-radius: 50%;
-      background-color: var(--accent-green);
-      box-shadow: 0 0 16px var(--accent-green);
-      animation: gentlePulse 2.5s infinite;
-    }
-
-    @keyframes gentlePulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(0.85); opacity: 0.6; }
+    .brand-logo-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent-emeritus-navy) 0%, var(--accent-emeritus-navy-dark) 100%);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 900;
+      box-shadow: 0 4px 10px rgba(0, 51, 136, 0.25);
     }
 
     .app-title {
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       font-weight: 900;
+      color: var(--accent-emeritus-navy-dark);
       letter-spacing: -0.02em;
+      line-height: 1.1;
     }
 
     .app-subtitle {
-      font-size: 0.82rem;
-      color: var(--accent-amber);
-      font-weight: 700;
+      font-size: 0.78rem;
+      color: var(--accent-emeritus-green-dark);
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
 
-    /* Hero Video Section */
-    .hero-video-panel {
-      background-color: var(--bg-surface);
-      border: 2px solid var(--border-subtle);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.6);
+    .nav-links-desktop {
+      display: none;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    @media (min-width: 960px) {
+      .nav-links-desktop { display: flex; }
+    }
+
+    .nav-links-desktop a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    .nav-links-desktop a:hover {
+      color: var(--accent-emeritus-navy);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .layout-wrapper {
+      min-height: 100%;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      padding: 1.25rem 1rem;
+      max-width: 1240px;
+      margin: 0 auto;
+      gap: 2rem;
     }
 
-    .video-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+    @media (min-width: 768px) {
+      .layout-wrapper {
+        padding: 2rem;
+      }
     }
 
-    .video-tag {
-      background: var(--bg-surface-elevated);
+    /* Hero Section (Emeritus Executive Style) */
+    .hero-container {
+      background-color: #FFFFFF;
       border: 1px solid var(--border-subtle);
-      color: var(--accent-amber);
+      border-radius: 1.5rem;
+      padding: 1.75rem;
+      box-shadow: 0 10px 30px -5px rgba(0,0,0,0.05);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (min-width: 920px) {
+      .hero-container {
+        grid-template-columns: 1.15fr 0.85fr;
+        padding: 2.5rem;
+      }
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-emeritus-green-light);
+      border: 1px solid #A7F3D0;
+      color: var(--accent-emeritus-green-dark);
       padding: 0.35rem 0.85rem;
       border-radius: 9999px;
       font-size: 0.8rem;
       font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+      font-weight: 900;
+      color: var(--accent-emeritus-navy-dark);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title .text-gradient {
+      color: var(--accent-emeritus-green);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Search & Filter Mockup (Emeritus Search Bar) */
+    .hero-search-box {
+      background: var(--bg-surface-elevated);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 1rem;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (min-width: 600px) {
+      .hero-search-box {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    .search-select {
+      flex: 1;
+      min-height: 48px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: inherit;
+    }
+
+    .btn-search {
+      min-height: 48px;
+      background: var(--accent-emeritus-green);
+      color: #FFFFFF;
+      font-size: 0.95rem;
+      font-weight: 800;
+      padding: 0.65rem 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.15s ease;
+    }
+    .btn-search:hover {
+      background: var(--accent-emeritus-green-dark);
+    }
+
+    /* Video Frame in Hero */
+    .hero-video-box {
+      position: relative;
+      width: 100%;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 2px solid var(--border-subtle);
+      background-color: #000;
+      box-shadow: 0 16px 36px -8px rgba(7, 29, 73, 0.15);
     }
 
     .video-container {
       position: relative;
       width: 100%;
       padding-top: 56.25%; /* 16:9 Aspect Ratio */
-      border-radius: 1rem;
-      overflow: hidden;
-      border: 2px solid var(--border-subtle);
-      background-color: #000;
     }
 
     .video-container iframe {
@@ -174,43 +325,42 @@
       border: none;
     }
 
-    /* Guided Tour Banner & Highlights */
-    .tour-highlight {
-      outline: 4px solid var(--accent-amber) !important;
-      outline-offset: 6px !important;
-      box-shadow: 0 0 35px rgba(245, 158, 11, 0.5) !important;
-      transform: translateY(-4px) scale(1.01) !important;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-      z-index: 20;
+    .video-floating-badge {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 0.75rem;
+      background: rgba(7, 29, 73, 0.88);
+      backdrop-filter: blur(8px);
+      color: #FFFFFF;
+      padding: 0.35rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
-    .tour-banner {
-      position: sticky;
-      top: 1rem;
-      z-index: 90;
-      background: linear-gradient(135deg, #102341 0%, #0F172A 100%);
-      border: 2px solid var(--accent-amber);
+    /* Quick Interactive Launcher (Classroom Complexity Walkthrough) */
+    .tour-launcher-section {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
       border-radius: 1.25rem;
       padding: 1.25rem 1.5rem;
-      box-shadow: 0 20px 45px -10px rgba(0,0,0,0.85);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03);
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      animation: tourSlideDown 0.35s ease;
-    }
-
-    @keyframes tourSlideDown {
-      from { opacity: 0; transform: translateY(-16px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .tour-step-pill {
       background: var(--bg-surface-elevated);
-      border: 1px solid var(--border-subtle);
-      color: #FFF;
+      border: 1.5px solid var(--border-subtle);
+      color: var(--text-primary);
       padding: 0.5rem 1rem;
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
       display: inline-flex;
@@ -220,18 +370,112 @@
       min-height: 48px;
     }
     .tour-step-pill:hover {
-      border-color: var(--accent-amber);
-      transform: translateY(-1px);
+      border-color: var(--accent-emeritus-green);
+      background: var(--accent-emeritus-green-light);
+      color: var(--accent-emeritus-green-dark);
     }
     .tour-step-pill.active {
-      background: var(--accent-amber);
-      color: #000;
-      border-color: var(--accent-amber);
-      font-weight: 900;
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+      background: var(--accent-emeritus-green);
+      color: #FFFFFF;
+      border-color: var(--accent-emeritus-green);
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(0, 190, 109, 0.35);
     }
 
-    /* Dashboard Grid */
+    /* Stats & Impact Metrics Bar */
+    .stats-strip {
+      background: var(--accent-emeritus-navy-dark);
+      border-radius: 1.25rem;
+      padding: 1.5rem 2rem;
+      color: #FFFFFF;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      box-shadow: 0 10px 25px rgba(7, 29, 73, 0.12);
+    }
+
+    @media (min-width: 800px) {
+      .stats-strip {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-item {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent-emeritus-green);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: #CBD5E1;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Guided Tour Banner (Emeritus Executive Navy) */
+    .tour-banner {
+      position: sticky;
+      top: 5rem;
+      z-index: 90;
+      background: linear-gradient(135deg, var(--accent-emeritus-navy-dark) 0%, #0B2556 100%);
+      border: 2px solid var(--accent-emeritus-green);
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 20px 45px -10px rgba(0,0,0,0.35);
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      animation: tourSlideDown 0.3s ease;
+    }
+
+    @keyframes tourSlideDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tour-highlight {
+      outline: 4px solid var(--accent-emeritus-green) !important;
+      outline-offset: 6px !important;
+      box-shadow: 0 0 35px rgba(0, 190, 109, 0.45) !important;
+      transform: translateY(-4px) scale(1.01) !important;
+      transition: all 0.3s ease !important;
+      z-index: 20;
+    }
+
+    /* Section Header */
+    .section-head {
+      margin-bottom: 0.25rem;
+    }
+
+    .section-pretitle {
+      color: var(--accent-emeritus-green-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: var(--accent-emeritus-navy-dark);
+      letter-spacing: -0.02em;
+    }
+
+    /* Dashboard Grid (Emeritus Course Cards Style) */
     .dashboard-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -246,22 +490,23 @@
 
     .feature-card {
       background-color: var(--bg-surface);
-      border: 2px solid var(--border-subtle);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 1.25rem;
+      padding: 1.75rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 1.25rem;
-      box-shadow: 0 15px 30px -10px rgba(0,0,0,0.5);
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 8px 24px -4px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       position: relative;
       overflow: hidden;
     }
 
     .feature-card:hover {
-      border-color: #3B5B8E;
-      transform: translateY(-2px);
+      border-color: var(--accent-emeritus-green);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 32px -6px rgba(0,0,0,0.08);
     }
 
     .card-meta {
@@ -276,13 +521,26 @@
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--accent-amber);
+      color: var(--accent-emeritus-navy);
+      background: var(--accent-emeritus-navy-light);
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .video-tag {
+      background: var(--accent-emeritus-green-light);
+      border: 1px solid #A7F3D0;
+      color: var(--accent-emeritus-green-dark);
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 800;
     }
 
     .card-title {
       font-size: 1.45rem;
       font-weight: 800;
-      color: #FFF;
+      color: var(--accent-emeritus-navy-dark);
       line-height: 1.3;
       margin-bottom: 0.5rem;
     }
@@ -291,30 +549,32 @@
       font-size: 0.98rem;
       color: var(--text-secondary);
       margin-bottom: 0.75rem;
+      line-height: 1.5;
     }
 
     .info-pane {
-      background-color: var(--bg-base);
+      background-color: var(--bg-surface-elevated);
       border: 1px solid var(--border-subtle);
-      border-radius: 1rem;
+      border-radius: 0.85rem;
       padding: 1rem;
       font-size: 0.92rem;
       color: var(--text-secondary);
     }
 
-    /* Animated Visual Floating Banner */
+    /* Animated Visual Chalkboard Banner */
     .animated-banner {
       width: 100%;
-      height: 110px;
+      height: 100px;
       border-radius: 0.75rem;
-      background: linear-gradient(-45deg, #102341, #1C355E, #0A1C36, #162E52);
+      background: linear-gradient(-45deg, #071D49, #003388, #0B2556, #0044AA);
       background-size: 400% 400%;
       animation: gradientShift 10s ease infinite;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px dashed var(--border-subtle);
-      margin-bottom: 0.5rem;
+      border: 1px dashed rgba(255,255,255,0.25);
+      margin-bottom: 0.75rem;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
     }
 
     @keyframes gradientShift {
@@ -328,15 +588,18 @@
       font-weight: bold;
       letter-spacing: 0.05em;
       font-size: 1rem;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      text-align: center;
+      padding: 0 1rem;
     }
 
-    /* Primary Action Buttons (Minimum 64px) */
+    /* Primary Action Buttons (Minimum 64px Touch Target) */
     .btn-action {
       width: 100%;
       min-height: 64px;
       padding: 1rem 1.25rem;
-      border-radius: 1rem;
-      font-size: 1.15rem;
+      border-radius: 0.85rem;
+      font-size: 1.1rem;
       font-weight: 800;
       cursor: pointer;
       display: flex;
@@ -344,55 +607,95 @@
       justify-content: center;
       gap: 0.75rem;
       border: none;
-      transition: transform 0.1s ease, filter 0.2s ease;
-      box-shadow: 0 10px 20px -5px rgba(0,0,0,0.4);
+      transition: transform 0.1s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      font-family: inherit;
     }
     .btn-action:active {
       transform: scale(0.98);
     }
 
-    .btn-amber { background-color: var(--accent-amber); color: #000; }
-    .btn-blue { background-color: var(--accent-blue); color: #061B2E; }
-    .btn-green { background-color: var(--accent-green); color: #022616; }
+    .btn-green {
+      background-color: var(--accent-emeritus-green);
+      color: #FFFFFF;
+    }
+    .btn-green:hover {
+      background-color: var(--accent-emeritus-green-dark);
+      box-shadow: 0 6px 20px rgba(0, 190, 109, 0.3);
+    }
+
+    .btn-navy {
+      background-color: var(--accent-emeritus-navy);
+      color: #FFFFFF;
+    }
+    .btn-navy:hover {
+      background-color: var(--accent-emeritus-navy-dark);
+      box-shadow: 0 6px 20px rgba(0, 51, 136, 0.3);
+    }
+
+    .btn-amber {
+      background-color: var(--accent-emeritus-green);
+      color: #FFFFFF;
+    }
+    .btn-amber:hover {
+      background-color: var(--accent-emeritus-green-dark);
+    }
+
+    .btn-blue {
+      background-color: var(--accent-emeritus-navy);
+      color: #FFFFFF;
+    }
+    .btn-blue:hover {
+      background-color: var(--accent-emeritus-navy-dark);
+    }
 
     .select-input, .text-input {
       width: 100%;
       min-height: 52px;
-      background: var(--bg-base);
-      border: 2px solid var(--border-subtle);
-      border-radius: 0.75rem;
-      color: #FFF;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 0.65rem;
+      color: var(--text-primary);
       padding: 0.75rem 1rem;
       font-size: 1rem;
       font-family: inherit;
+      transition: border-color 0.15s ease;
+    }
+    .select-input:focus, .text-input:focus {
+      border-color: var(--accent-emeritus-green);
+      outline: none;
     }
 
-    /* Bottom Voice Bar */
+    /* Bottom Voice Bar (Emeritus Executive Navy) */
     .voice-bar-btn {
       width: 100%;
-      min-height: 76px;
-      background: linear-gradient(135deg, var(--accent-amber) 0%, #FBBF24 100%);
-      border: 4px solid #FDE68A;
-      border-radius: 1.5rem;
-      color: #000;
-      font-size: 1.3rem;
-      font-weight: 900;
+      min-height: 72px;
+      background: linear-gradient(135deg, var(--accent-emeritus-navy-dark) 0%, #0B2556 100%);
+      border: 2px solid #38BDF8;
+      border-radius: 1.25rem;
+      color: #FFFFFF;
+      font-size: 1.2rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1rem;
       cursor: pointer;
-      box-shadow: 0 15px 35px rgba(245, 158, 11, 0.35);
-      transition: transform 0.15s ease;
+      box-shadow: 0 12px 30px rgba(7, 29, 73, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      font-family: inherit;
     }
     .voice-bar-btn:active { transform: scale(0.99); }
+    .voice-bar-btn:hover {
+      box-shadow: 0 16px 36px rgba(7, 29, 73, 0.35);
+    }
 
     /* Modal Backdrop */
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background-color: rgba(5, 10, 20, 0.85);
-      backdrop-filter: blur(4px);
+      background-color: rgba(7, 29, 73, 0.75);
+      backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -402,9 +705,9 @@
     .modal-backdrop.hidden, .hidden { display: none !important; }
 
     .modal-sheet {
-      background-color: var(--bg-surface);
-      border: 3px solid var(--border-focus);
-      border-radius: 1.5rem;
+      background-color: #FFFFFF;
+      border: 2px solid var(--border-subtle);
+      border-radius: 1.25rem;
       width: 100%;
       max-width: 600px;
       max-height: 90vh;
@@ -413,14 +716,15 @@
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+      color: var(--text-primary);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid var(--border-subtle);
+      border-bottom: 1.5px solid var(--border-subtle);
       padding-bottom: 0.75rem;
     }
 
@@ -429,10 +733,10 @@
       height: 48px;
       background: var(--bg-surface-elevated);
       border: 1px solid var(--border-subtle);
-      color: #FFF;
+      color: var(--text-primary);
       font-size: 1.25rem;
       font-weight: bold;
-      border-radius: 0.75rem;
+      border-radius: 0.5rem;
       cursor: pointer;
     }
 
@@ -440,7 +744,44 @@
       font-size: 1.75rem;
       font-weight: 900;
       font-family: ui-monospace, SFMono-Regular, monospace;
-      color: var(--accent-green);
+      color: var(--accent-emeritus-green-dark);
+    }
+
+    /* Emeritus Footer */
+    footer.site-footer {
+      background-color: var(--accent-emeritus-navy-dark);
+      color: #FFFFFF;
+      padding: 2.5rem 1.5rem 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 2rem;
+    }
+
+    .footer-content {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-content {
+        grid-template-columns: 1.5fr 1fr 1fr;
+      }
+    }
+
+    .footer-bottom {
+      max-width: 1240px;
+      margin: 2rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+      color: #94A3B8;
     }
   </style>
 </head>
@@ -448,68 +789,115 @@
 
   <div id="sr-live-region" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 
+  <!-- Emeritus-Style Top Trust Announcement -->
+  <div class="top-trust-bar">
+    <span class="pill">NIPUN Bharat</span>
+    <span>प्राथमिक शिक्षा सशक्तिकरण • Aligned with NEP 2020, NCERT & DIET Guidelines • 100% Offline PWA</span>
+  </div>
+
+  <!-- Emeritus White Header -->
+  <header role="banner">
+    <div class="brand-group">
+      <div class="brand-logo-badge" aria-hidden="true">🎓</div>
+      <div>
+        <h1 class="app-title">VidyaSetu (विद्यासेतु)</h1>
+        <p class="app-subtitle">NIPUN Bharat Primary Teacher Copilot</p>
+      </div>
+    </div>
+
+    <!-- Desktop Navigation Links (Emeritus Header Style) -->
+    <nav class="nav-links-desktop" aria-label="मुख्य नेविगेशन">
+      <a href="#solvers-section">कक्षा समाधान (Solvers)</a>
+      <a href="#video-section">ग्राउंड वीडियो (Field Video)</a>
+      <a href="#heading-bhasha">भाषा सेतु (Dialect)</a>
+      <a href="#heading-absentee">2-मिनट जांच (Catch-Up)</a>
+    </nav>
+
+    <div class="header-actions">
+      <button id="btn-start-tour" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1.25rem; width: auto;">
+        🎬 सजीव डेमो (Live Tour)
+      </button>
+      <button id="btn-self-test" class="btn-action" style="background: #FFFFFF; color: var(--accent-emeritus-navy); border: 1.5px solid var(--accent-emeritus-navy); min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1rem; width: auto;">
+        जांचें (Self-Test)
+      </button>
+    </div>
+  </header>
+
   <div class="layout-wrapper">
-    <!-- Top Nav -->
-    <header role="banner">
-      <div class="brand-group">
-        <div class="status-pulse" aria-hidden="true"></div>
-        <div>
-          <h1 class="app-title">VidyaSetu (विद्यासेतु)</h1>
-          <p class="app-subtitle">NIPUN Bharat Primary Teacher Copilot</p>
-        </div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-        <button id="btn-start-tour" class="btn-action btn-amber" style="min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1.15rem; width: auto;">
-          🎬 सजीव डेमो (Live Tour)
-        </button>
-        <button id="btn-self-test" class="btn-action" style="background: var(--bg-surface-elevated); color: #FFF; border: 1px solid var(--border-subtle); min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1rem; width: auto;">
-          जांचें (Self-Test)
-        </button>
-      </div>
-    </header>
 
-    <!-- Section: Field Video Documentation -->
-    <section class="hero-video-panel" aria-labelledby="video-title">
-      <div class="video-header">
-        <div>
-          <span class="video-tag">ग्राउंड रियलिटी • Classroom Complexity</span>
-          <h2 id="video-title" style="font-size: 1.25rem; font-weight: 800; margin-top: 0.25rem; color: #FFF;">
-            ग्रामीण व अल्प-संसाधन कक्षाओं की चुनौतियाँ और विद्यासेतु समाधान
-          </h2>
+    <!-- HERO SECTION (Emeritus Executive Layout) -->
+    <section class="hero-container" aria-labelledby="hero-heading">
+      <div>
+        <div class="hero-tag">
+          <span>🌿</span>
+          <span>Emeritus Pedagogy Framework • बहु-कक्षा साथी</span>
         </div>
-        <span style="font-size: 0.85rem; color: var(--accent-amber);">90-Sec Overview</span>
-      </div>
-      <div class="video-container">
-        <iframe 
-          src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview" 
-          allow="autoplay; encrypted-media" 
-          title="Classroom Complexity in Indian Primary Schools">
-        </iframe>
+        <h2 id="hero-heading" class="hero-title">
+          सिखाएं। <span class="text-gradient">भारत के हर प्राथमिक शिक्षक के साथ।</span>
+        </h2>
+        <p class="hero-desc">
+          अल्प-संसाधन प्राथमिक विद्यालयों की 3 प्रमुख चुनौतियों—<strong>2-3 कक्षाएं संयुक्त</strong>, <strong>घरेलू बोली बनाम किताबी भाषा का अंतर</strong>, और <strong>फसल कटाई के बाद अनुपस्थिति</strong> का त्वरित, व्यावहारिक समाधान।
+        </p>
+
+        <!-- Emeritus Category Quick-Filter Bar -->
+        <div class="hero-search-box">
+          <select id="hero-category-select" class="search-select" aria-label="चुनौती चुनें">
+            <option value="all">🎯 सभी 3 कक्षा जटिलताएं देखें (All Challenges)</option>
+            <option value="mgml">1️⃣ 2-3 कक्षाएं संयुक्त (MGML Split Teaching)</option>
+            <option value="bhasha">2️⃣ घरेलू बोली अंतर (Bhasha Setu Dialect Bridge)</option>
+            <option value="absentee">3️⃣ अनुपस्थिति व लर्निंग गैप (2-Min Catch-Up)</option>
+          </select>
+          <button id="btn-hero-explore" class="btn-search">
+            <span>समाधान देखें</span>
+            <span>➔</span>
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">
+          <span>✓ 100% ऑफ़लाइन PWA</span>
+          <span>✓ शून्य-लागत TLM</span>
+          <span>✓ अवधी/भोजपुरी/बुंदेली सहायता</span>
+        </div>
       </div>
 
-      <!-- Quick Interactive Solution Walkthrough Launcher -->
-      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 1rem; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-          <strong style="color: var(--accent-amber); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>🧭</span>
-            <span>कक्षा जटिलता समाधान नेविगेशन (Classroom Complexity Walkthrough):</span>
-          </strong>
-          <span style="font-size: 0.8rem; color: var(--text-secondary);">3 मुख्य समस्याओं का लाइव समाधान देखें</span>
+      <!-- Hero Video Box (Field Documentation) -->
+      <div id="video-section" class="hero-video-box">
+        <div class="video-container">
+          <iframe 
+            src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview" 
+            allow="autoplay; encrypted-media" 
+            title="Classroom Complexity in Indian Primary Schools">
+          </iframe>
         </div>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <button id="btn-pill-step-1" class="tour-step-pill">
-            1️⃣ 2-3 कक्षाएं संयुक्त (MGML Split)
-          </button>
-          <button id="btn-pill-step-2" class="tour-step-pill">
-            2️⃣ घरेलू बोली अंतर (Bhasha Setu)
-          </button>
-          <button id="btn-pill-step-3" class="tour-step-pill">
-            3️⃣ अनुपस्थिति रिकवरी (2-Min Catch-Up)
-          </button>
-          <button id="btn-pill-step-all" class="tour-step-pill active">
-            ▶️ पूरा सजीव डेमो शुरू करें (Full Tour)
-          </button>
+        <div class="video-floating-badge">
+          <span>📹</span>
+          <span>ग्राउंड रियलिटी • 90-Sec Field Documentation</span>
         </div>
+      </div>
+    </section>
+
+    <!-- Quick Classroom Complexity Walkthrough Launcher -->
+    <section class="tour-launcher-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+        <strong style="color: var(--accent-emeritus-navy-dark); font-size: 0.98rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>🧭</span>
+          <span>कक्षा जटिलता समाधान नेविगेशन (Classroom Complexity Walkthrough):</span>
+        </strong>
+        <span style="font-size: 0.82rem; color: var(--text-muted);">क्लिक करके लाइव समाधान देखें</span>
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <button id="btn-pill-step-1" class="tour-step-pill">
+          1️⃣ 2-3 कक्षाएं संयुक्त (MGML Split)
+        </button>
+        <button id="btn-pill-step-2" class="tour-step-pill">
+          2️⃣ घरेलू बोली अंतर (Bhasha Setu)
+        </button>
+        <button id="btn-pill-step-3" class="tour-step-pill">
+          3️⃣ अनुपस्थिति रिकवरी (2-Min Catch-Up)
+        </button>
+        <button id="btn-pill-step-all" class="tour-step-pill active">
+          ▶️ पूरा सजीव डेमो शुरू करें (Full Tour)
+        </button>
       </div>
     </section>
 
@@ -518,30 +906,30 @@
       <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
         <div style="flex: 1;">
           <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-            <span id="tour-step-badge" style="background: var(--accent-amber); color: #000; font-size: 0.75rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+            <span id="tour-step-badge" style="background: var(--accent-emeritus-green); color: #FFFFFF; font-size: 0.75rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 9999px;">
               चुनौती 1 / 3
             </span>
-            <h3 id="tour-step-title" style="font-size: 1.15rem; font-weight: 900; color: #FFF; margin: 0;">
+            <h3 id="tour-step-title" style="font-size: 1.15rem; font-weight: 900; color: #FFFFFF; margin: 0;">
               2-3 कक्षाएं एक साथ (Multi-Grade MGML)
             </h3>
           </div>
           <p id="tour-problem-text" style="font-size: 0.88rem; color: #CBD5E1; margin: 0.25rem 0; font-style: italic;"></p>
-          <p id="tour-solution-text" style="font-size: 0.95rem; color: #FACC15; font-weight: 700; margin: 0.25rem 0 0;"></p>
+          <p id="tour-solution-text" style="font-size: 0.95rem; color: #FDE047; font-weight: 700; margin: 0.25rem 0 0;"></p>
         </div>
-        <button id="btn-close-tour" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); color: #FFF; width: 48px; height: 48px; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; cursor: pointer;" aria-label="डेमो बंद करें">✕</button>
+        <button id="btn-close-tour" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #FFF; width: 48px; height: 48px; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; cursor: pointer;" aria-label="डेमो बंद करें">✕</button>
       </div>
 
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.5rem; margin-top: 0.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.5rem; margin-top: 0.5rem;">
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-          <button id="btn-tour-action" class="btn-action btn-amber" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+          <button id="btn-tour-action" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
             ⚡ लाइव चलाएं (Execute)
           </button>
-          <button id="btn-tour-read-aloud" class="btn-action btn-blue" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+          <button id="btn-tour-read-aloud" class="btn-action btn-navy" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
             🔊 बोलकर समझें
           </button>
         </div>
         <div style="display: flex; gap: 0.5rem;">
-          <button id="btn-tour-prev" class="btn-action" style="background: var(--bg-surface-elevated); color: #FFF; border: 1px solid var(--border-subtle); min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+          <button id="btn-tour-prev" class="btn-action" style="background: rgba(255,255,255,0.15); color: #FFF; border: 1px solid rgba(255,255,255,0.25); min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
             ◀ पिछला
           </button>
           <button id="btn-tour-next" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
@@ -551,7 +939,33 @@
       </div>
     </div>
 
-    <!-- Main Workspace Tiles -->
+    <!-- Emeritus-Style Impact Metrics Strip -->
+    <section class="stats-strip" aria-label="प्रभाव आंकड़े">
+      <div class="stat-item">
+        <span class="stat-num">15 मिनट</span>
+        <span class="stat-label">चक्रीय बहु-कक्षा चक्र</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">3 बोलियां</span>
+        <span class="stat-label">अवधी, भोजपुरी, बुंदेली सेतु</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2 मिनट</span>
+        <span class="stat-label">मौखिक वापसी जांच व साथी</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">शून्य-इंटरनेट ऑफ़लाइन PWA</span>
+      </div>
+    </section>
+
+    <!-- SECTION TITLE: CLASSROOM SOLVERS -->
+    <div id="solvers-section" class="section-head">
+      <span class="section-pretitle">EXPLORE CLASSROOM SOLVERS</span>
+      <h2 class="section-title">विद्यासेतु शिक्षण मॉड्यूल</h2>
+    </div>
+
+    <!-- MAIN DASHBOARD GRID (Emeritus Program Cards Style) -->
     <main class="dashboard-grid" role="main">
 
       <!-- TILE 1: MULTI-GRADE TIMER -->
@@ -561,7 +975,7 @@
             <span class="card-tag">समस्या 1 • बहु-कक्षा चक्र</span>
             <span class="video-tag" id="cycle-step-badge">15-Min Split</span>
           </div>
-          <h2 id="heading-mgml" class="card-title">बहु-कक्षा विभाजन सहायक</h2>
+          <h3 id="heading-mgml" class="card-title">बहु-कक्षा विभाजन सहायक</h3>
           <p class="card-desc">कक्षा 1 को पढ़ाते समय कक्षा 2 और 3 को स्व-अध्ययन खेल में व्यस्त रखें।</p>
           
           <div class="animated-banner">
@@ -570,16 +984,16 @@
 
           <div class="info-pane">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-              <strong id="active-group-label" style="color: var(--accent-amber);">कक्षा 1: प्रत्यक्ष शिक्षक समय</strong>
+              <strong id="active-group-label" style="color: var(--accent-emeritus-navy);">कक्षा 1: प्रत्यक्ष शिक्षक समय</strong>
               <span id="timer-display" class="timer-readout">15:00</span>
             </div>
-            <p id="split-instruction-text" style="margin: 0; font-size: 0.9rem;">
+            <p id="split-instruction-text" style="margin: 0; font-size: 0.9rem; color: var(--text-secondary);">
               <strong>शिक्षक:</strong> कक्षा 1 को 'क' और 'म' वर्ण ध्वनि सिखाएं।<br>
               <strong>कक्षा 2/3:</strong> 10-10 कंकड़ों के समूह बनाकर स्लेट पर गिनती लिखें।
             </p>
           </div>
         </div>
-        <button id="btn-toggle-timer" class="btn-action btn-amber">
+        <button id="btn-toggle-timer" class="btn-action btn-green">
           <span id="timer-icon" aria-hidden="true">⏱️</span>
           <span id="timer-btn-text">15 मिनट चक्र शुरू करें</span>
         </button>
@@ -592,15 +1006,15 @@
             <span class="card-tag">भाषा अंतर • Dialect Bridge</span>
             <span class="video-tag">ध्वनि अनुवाद</span>
           </div>
-          <h2 id="heading-bhasha" class="card-title">भाषा सेतु (Bhasha Setu)</h2>
+          <h3 id="heading-bhasha" class="card-title">भाषा सेतु (Bhasha Setu)</h3>
           <p class="card-desc">कठिन किताबी शब्दों को बच्चों की घरेलू बोली और ग्रामीण उदाहरणों में समझें।</p>
 
-          <div class="animated-banner" style="background: linear-gradient(-45deg, #06233B, #103B5E, #0A2E46);">
+          <div class="animated-banner" style="background: linear-gradient(-45deg, #071D49, #00824B, #003388, #00BE6D);">
             <span class="chalkboard-text">🗣️ "अवरोही क्रम = छत की सीढ़ी से उतरना"</span>
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
-            <label for="concept-dropdown" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-amber);">अवधारणा चुनें:</label>
+            <label for="concept-dropdown" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emeritus-navy);">अवधारणा चुनें:</label>
             <select id="concept-dropdown" class="select-input">
               <option value="subtraction">घटाव (Subtraction) - शेष बचना</option>
               <option value="descending">अवरोही क्रम (Descending Order) - बड़े से छोटा</option>
@@ -608,7 +1022,7 @@
             </select>
           </div>
         </div>
-        <button id="btn-explain-concept" class="btn-action btn-blue">
+        <button id="btn-explain-concept" class="btn-action btn-navy">
           <span aria-hidden="true">🗣️</span>
           <span>घरेलू संदर्भ में समझाएं</span>
         </button>
@@ -621,7 +1035,7 @@
             <span class="card-tag">उपचारात्मक शिक्षण • Catch-Up</span>
             <span id="remediation-roster-count" class="video-tag">0 लंबित</span>
           </div>
-          <h2 id="heading-absentee" class="card-title">छुट्टी के बाद वापसी जांच</h2>
+          <h3 id="heading-absentee" class="card-title">छुट्टी के बाद वापसी जांच</h3>
           <p class="card-desc">छुट्टी के बाद लौटे बच्चे की 2 मिनट में जांच करें और सहपाठी साथी जोड़ें।</p>
 
           <div class="info-pane" style="margin-bottom: 0.75rem;">
@@ -629,7 +1043,7 @@
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-            <label for="student-name-input" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-amber);">लौटे हुए बच्चे का नाम:</label>
+            <label for="student-name-input" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-emeritus-navy);">लौटे हुए बच्चे का नाम:</label>
             <input type="text" id="student-name-input" class="text-input" placeholder="उदा. रोहन कुमार (कक्षा 2)" maxlength="32" />
           </div>
         </div>
@@ -646,17 +1060,17 @@
             <span class="card-tag">शून्य लागत सामग्री • No-Prep TLM</span>
             <span class="video-tag">कंकड़ / चॉक</span>
           </div>
-          <h2 id="heading-tlm" class="card-title">श्यामपट्ट खेल गतिविधि</h2>
+          <h3 id="heading-tlm" class="card-title">श्यामपट्ट खेल गतिविधि</h3>
           <p class="card-desc">बिना किसी कागज या प्रिंट के, श्यामपट्ट और कंकड़ से 20 बच्चों को सक्रिय रखें।</p>
 
           <div class="info-pane">
-            <strong style="color: var(--accent-amber);">आज का खेल: "संख्या रेलगाड़ी"</strong>
-            <p style="margin: 0.35rem 0 0; font-size: 0.9rem;">
+            <strong style="color: var(--accent-emeritus-navy-dark);">आज का खेल: "संख्या रेलगाड़ी"</strong>
+            <p style="margin: 0.35rem 0 0; font-size: 0.9rem; color: var(--text-secondary);">
               बोर्ड पर रेलगाड़ी के 5 डिब्बे बनाएं, बीच के डिब्बे खाली छोड़ें। बच्चे कंकड़ गिनकर छूटे अंक भरेंगे।
             </p>
           </div>
         </div>
-        <button id="btn-view-tlm" class="btn-action" style="background-color: var(--bg-surface-elevated); color: #FFF; border: 2px solid var(--border-subtle);">
+        <button id="btn-view-tlm" class="btn-action" style="background-color: var(--bg-surface-elevated); color: var(--text-primary); border: 1.5px solid var(--border-subtle);">
           <span aria-hidden="true">🎯</span>
           <span>खेल नियम और चरण देखें</span>
         </button>
@@ -664,28 +1078,65 @@
 
     </main>
 
-    <!-- Persistent Bottom Bar -->
-    <footer role="contentinfo">
+    <!-- Persistent Bottom Bar (Emeritus Dark Navy with Cyan Accent) -->
+    <aside role="complementary" aria-label="ध्वनि सहायक">
       <button id="btn-persistent-voice" class="voice-bar-btn" aria-label="आवाज सहायक से पूछें">
-        <span aria-hidden="true">🎤</span>
+        <span aria-hidden="true" style="font-size: 1.6rem;">🎤</span>
         <span id="voice-bar-label">बोलकर पूछें: "कक्षा 2 के लिए 10 मिनट खेल बताएं"</span>
       </button>
-    </footer>
+    </aside>
   </div>
 
-  <!-- Reusable Accessible Modal -->
+  <!-- Reusable Accessible Modal (Emeritus Light Theme) -->
   <div id="modal-wrapper" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
     <div class="modal-sheet">
       <div class="modal-header">
-        <h3 id="modal-heading" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-amber); margin: 0;">शीर्षक</h3>
+        <h3 id="modal-heading" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-emeritus-navy-dark); margin: 0;">शीर्षक</h3>
         <button id="btn-modal-close" class="modal-close-btn" aria-label="डायलॉग बंद करें">✕</button>
       </div>
       <div id="modal-content-area" style="display: flex; flex-direction: column; gap: 1rem;"></div>
-      <button id="btn-modal-action-close" class="btn-action btn-amber" style="min-height: 54px;">
+      <button id="btn-modal-action-close" class="btn-action btn-green" style="min-height: 54px;">
         कक्षा में लागू करें (Dismiss)
       </button>
     </div>
   </div>
+
+  <!-- Emeritus Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-content">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+          <div class="brand-logo-badge" style="width: 36px; height: 36px; font-size: 1.1rem;">🎓</div>
+          <strong style="font-size: 1.25rem;">VidyaSetu (विद्यासेतु)</strong>
+        </div>
+        <p style="font-size: 0.88rem; color: #CBD5E1; line-height: 1.6; max-width: 420px;">
+          भारतीय प्राथमिक शालाओं में निपुण भारत FLN लक्ष्यों की प्राप्ति हेतु शिक्षकों का समर्पित साथी। बहु-कक्षा शिक्षण, बोली अंतर समाधान और उपचारात्मक अभ्यास के लिए निर्मित।
+        </p>
+      </div>
+      <div>
+        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--accent-emeritus-green);">प्रमुख मॉड्यूल</h4>
+        <ul style="list-style: none; font-size: 0.85rem; color: #CBD5E1; display: flex; flex-direction: column; gap: 0.4rem;">
+          <li>• 15-मिनट MGML चक्र टाइमर</li>
+          <li>• भाषा सेतु (घरेलू बोली अनुवाद)</li>
+          <li>• 2-मिनट मौखिक वापसी जांच</li>
+          <li>• शून्य-लागत श्यामपट्ट खेल</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--accent-emeritus-green);">तकनीकी विशिष्टताएं</h4>
+        <ul style="list-style: none; font-size: 0.85rem; color: #CBD5E1; display: flex; flex-direction: column; gap: 0.4rem;">
+          <li>• 100% ऑफ़लाइन PWA आर्किटेक्चर</li>
+          <li>• WCAG AAA 64px टच ज्योमेट्री</li>
+          <li>• शून्य innerHTML (DOM Safe)</li>
+          <li>• Web Speech API हिन्दी समर्थन</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 VidyaSetu • Inspired by Emeritus UI/UX Excellence • NIPUN Bharat Companion</span>
+      <span>Made for Indian Primary Teachers</span>
+    </div>
+  </footer>
 
   <!-- JavaScript Engine -->
   <script>
@@ -740,7 +1191,9 @@
         btnPill1: document.getElementById('btn-pill-step-1'),
         btnPill2: document.getElementById('btn-pill-step-2'),
         btnPill3: document.getElementById('btn-pill-step-3'),
-        btnPillAll: document.getElementById('btn-pill-step-all')
+        btnPillAll: document.getElementById('btn-pill-step-all'),
+        heroSelect: document.getElementById('hero-category-select'),
+        btnHeroExplore: document.getElementById('btn-hero-explore')
       };
 
       const tourSteps = [
@@ -937,25 +1390,25 @@
 
         openSafeModal(`भाषा सेतु: ${data.title}`, (container) => {
           const card1 = document.createElement('div');
-          card1.style.cssText = 'background: var(--bg-base); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
+          card1.style.cssText = 'background: var(--bg-surface-elevated); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
           const label1 = document.createElement('span');
-          label1.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-amber); text-transform: uppercase;';
+          label1.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-emeritus-navy); text-transform: uppercase;';
           label1.textContent = 'किताबी परिभाषा (Textbook):';
           const text1 = document.createElement('p');
-          text1.style.cssText = 'margin: 0.25rem 0 0; color: #FFF; font-weight: 600;';
+          text1.style.cssText = 'margin: 0.25rem 0 0; color: var(--text-primary); font-weight: 600;';
           text1.textContent = data.formal;
           card1.append(label1, text1);
 
           const card2 = document.createElement('div');
-          card2.style.cssText = 'background: #022616; padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--accent-green);';
+          card2.style.cssText = 'background: var(--accent-emeritus-green-light); padding: 1rem; border-radius: 0.75rem; border: 1px solid #A7F3D0;';
           const label2 = document.createElement('span');
-          label2.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-green); text-transform: uppercase;';
+          label2.style.cssText = 'font-size: 0.75rem; font-weight: 800; color: var(--accent-emeritus-green-dark); text-transform: uppercase;';
           label2.textContent = 'घरेलू बोली का उदाहरण (Rural Analogy):';
           const text2 = document.createElement('p');
-          text2.style.cssText = 'margin: 0.25rem 0 0; color: #FFF; font-weight: 700; font-size: 1.1rem;';
+          text2.style.cssText = 'margin: 0.25rem 0 0; color: var(--accent-emeritus-navy-dark); font-weight: 700; font-size: 1.1rem;';
           text2.textContent = data.vernacular;
           const guide = document.createElement('p');
-          guide.style.cssText = 'margin: 0.5rem 0 0; font-size: 0.9rem; color: #94A3B8;';
+          guide.style.cssText = 'margin: 0.5rem 0 0; font-size: 0.9rem; color: var(--text-secondary);';
           guide.textContent = data.instruction;
           card2.append(label2, text2, guide);
 
@@ -971,10 +1424,10 @@
         openSafeModal(`2-मिनट मौखिक जांच: ${rawName}`, (container) => {
           const promptIntro = document.createElement('p');
           promptIntro.textContent = 'बच्चे से अकेले में ये 3 त्वरित प्रश्न पूछें:';
-          promptIntro.style.color = '#FFF';
+          promptIntro.style.color = 'var(--text-primary)';
 
           const questionsBox = document.createElement('div');
-          questionsBox.style.cssText = 'background: var(--bg-base); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 0.5rem;';
+          questionsBox.style.cssText = 'background: var(--bg-surface-elevated); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 0.5rem;';
           const q1 = document.createElement('div');
           q1.textContent = "1. स्लेट पर 'म' और 'र' पहचान कर गोला बनाएं।";
           const q2 = document.createElement('div');
@@ -997,7 +1450,7 @@
 
           const btnFail = document.createElement('button');
           btnFail.className = 'btn-action';
-          btnFail.style.cssText = 'min-height: 52px; font-size: 0.95rem; background-color: var(--accent-red); color: #000;';
+          btnFail.style.cssText = 'min-height: 52px; font-size: 0.95rem; background-color: var(--accent-red-light); color: var(--accent-red); border: 1px solid var(--accent-red);';
           btnFail.textContent = 'अटक रहा है (सहपाठी दें)';
           btnFail.onclick = () => {
             state.remediationQueue.push(rawName);
@@ -1016,13 +1469,13 @@
       function openTlmModal() {
         openSafeModal('शून्य-लागत श्यामपट्ट खेल', (container) => {
           const wrapper = document.createElement('div');
-          wrapper.style.cssText = 'background: var(--bg-base); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
+          wrapper.style.cssText = 'background: var(--bg-surface-elevated); padding: 1rem; border-radius: 0.75rem; border: 1px solid var(--border-subtle);';
           const title = document.createElement('h4');
-          title.style.cssText = 'color: var(--accent-amber); font-size: 1.1rem; margin-bottom: 0.5rem;';
+          title.style.cssText = 'color: var(--accent-emeritus-navy-dark); font-size: 1.1rem; margin-bottom: 0.5rem;';
           title.textContent = 'खेल: "संख्या रेलगाड़ी" (Number Train)';
 
           const list = document.createElement('ol');
-          list.style.cssText = 'padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem; color: #FFF;';
+          list.style.cssText = 'padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem; color: var(--text-primary);';
           const li1 = document.createElement('li');
           li1.textContent = 'बोर्ड पर 5 डिब्बों वाली रेलगाड़ी का चित्र बनाएं।';
           const li2 = document.createElement('li');
@@ -1063,20 +1516,20 @@
           }
         ];
 
-        openSafeModal('सिस्टम डायग्नोस्टिक जांच', (container) => {
+        openSafeModal('सिस्टम डायग्नोस्टिक जांच (System Diagnostics)', (container) => {
           const list = document.createElement('div');
           list.style.cssText = 'display: flex; flex-direction: column; gap: 0.75rem;';
 
           tests.forEach(t => {
             const row = document.createElement('div');
-            row.style.cssText = `display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-radius: 0.5rem; background: ${t.passed ? '#022616' : '#2A0808'}; border: 1px solid ${t.passed ? 'var(--accent-green)' : 'var(--accent-red)'};`;
+            row.style.cssText = `display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-radius: 0.5rem; background: ${t.passed ? 'var(--accent-emeritus-green-light)' : 'var(--accent-red-light)'}; border: 1px solid ${t.passed ? '#A7F3D0' : '#FECACA'};`;
 
             const name = document.createElement('span');
-            name.style.cssText = 'font-weight: 600; color: #FFF; font-size: 0.9rem;';
+            name.style.cssText = 'font-weight: 600; color: var(--text-primary); font-size: 0.9rem;';
             name.textContent = t.name;
 
             const badge = document.createElement('span');
-            badge.style.cssText = `font-weight: 800; font-size: 0.85rem; color: ${t.passed ? 'var(--accent-green)' : 'var(--accent-red)'};`;
+            badge.style.cssText = `font-weight: 800; font-size: 0.85rem; color: ${t.passed ? 'var(--accent-emeritus-green-dark)' : 'var(--accent-red)'};`;
             badge.textContent = t.passed ? 'PASSED' : 'FAILED';
 
             row.append(name, badge);
@@ -1095,6 +1548,14 @@
         setTimeout(() => {
           elements.voiceBarLabel.textContent = 'बोलकर पूछें: "कक्षा 2 के लिए 10 मिनट खेल बताएं"';
         }, 4000);
+      }
+
+      function handleHeroExplore() {
+        const val = elements.heroSelect.value;
+        if (val === 'mgml') showTourStep(0);
+        else if (val === 'bhasha') showTourStep(1);
+        else if (val === 'absentee') showTourStep(2);
+        else startTour();
       }
 
       function init() {
@@ -1126,6 +1587,8 @@
         if (elements.btnPill2) elements.btnPill2.addEventListener('click', () => showTourStep(1));
         if (elements.btnPill3) elements.btnPill3.addEventListener('click', () => showTourStep(2));
         if (elements.btnPillAll) elements.btnPillAll.addEventListener('click', () => showTourStep(0));
+
+        if (elements.btnHeroExplore) elements.btnHeroExplore.addEventListener('click', handleHeroExplore);
 
         // Auto-launch demo if ?demo is present in URL
         if (new URLSearchParams(window.location.search).has('demo')) {
