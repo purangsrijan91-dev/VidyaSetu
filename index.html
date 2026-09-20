@@ -174,6 +174,63 @@
       border: none;
     }
 
+    /* Guided Tour Banner & Highlights */
+    .tour-highlight {
+      outline: 4px solid var(--accent-amber) !important;
+      outline-offset: 6px !important;
+      box-shadow: 0 0 35px rgba(245, 158, 11, 0.5) !important;
+      transform: translateY(-4px) scale(1.01) !important;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+      z-index: 20;
+    }
+
+    .tour-banner {
+      position: sticky;
+      top: 1rem;
+      z-index: 90;
+      background: linear-gradient(135deg, #102341 0%, #0F172A 100%);
+      border: 2px solid var(--accent-amber);
+      border-radius: 1.25rem;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 20px 45px -10px rgba(0,0,0,0.85);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      animation: tourSlideDown 0.35s ease;
+    }
+
+    @keyframes tourSlideDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tour-step-pill {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: #FFF;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      min-height: 48px;
+    }
+    .tour-step-pill:hover {
+      border-color: var(--accent-amber);
+      transform: translateY(-1px);
+    }
+    .tour-step-pill.active {
+      background: var(--accent-amber);
+      color: #000;
+      border-color: var(--accent-amber);
+      font-weight: 900;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+    }
+
     /* Dashboard Grid */
     .dashboard-grid {
       display: grid;
@@ -342,7 +399,7 @@
       padding: 1rem;
       z-index: 100;
     }
-    .modal-backdrop.hidden { display: none; }
+    .modal-backdrop.hidden, .hidden { display: none !important; }
 
     .modal-sheet {
       background-color: var(--bg-surface);
@@ -401,8 +458,11 @@
           <p class="app-subtitle">NIPUN Bharat Primary Teacher Copilot</p>
         </div>
       </div>
-      <div>
-        <button id="btn-self-test" class="btn-action btn-amber" style="min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+        <button id="btn-start-tour" class="btn-action btn-amber" style="min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1.15rem; width: auto;">
+          🎬 सजीव डेमो (Live Tour)
+        </button>
+        <button id="btn-self-test" class="btn-action" style="background: var(--bg-surface-elevated); color: #FFF; border: 1px solid var(--border-subtle); min-height: 48px; font-size: 0.9rem; padding: 0.5rem 1rem; width: auto;">
           जांचें (Self-Test)
         </button>
       </div>
@@ -414,7 +474,7 @@
         <div>
           <span class="video-tag">ग्राउंड रियलिटी • Classroom Complexity</span>
           <h2 id="video-title" style="font-size: 1.25rem; font-weight: 800; margin-top: 0.25rem; color: #FFF;">
-            ग्रामीण कक्षाओं की चुनौतियाँ और विद्यासेतु समाधान
+            ग्रामीण व अल्प-संसाधन कक्षाओं की चुनौतियाँ और विद्यासेतु समाधान
           </h2>
         </div>
         <span style="font-size: 0.85rem; color: var(--accent-amber);">90-Sec Overview</span>
@@ -426,7 +486,70 @@
           title="Classroom Complexity in Indian Primary Schools">
         </iframe>
       </div>
+
+      <!-- Quick Interactive Solution Walkthrough Launcher -->
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 1rem; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+          <strong style="color: var(--accent-amber); font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span>🧭</span>
+            <span>कक्षा जटिलता समाधान नेविगेशन (Classroom Complexity Walkthrough):</span>
+          </strong>
+          <span style="font-size: 0.8rem; color: var(--text-secondary);">3 मुख्य समस्याओं का लाइव समाधान देखें</span>
+        </div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button id="btn-pill-step-1" class="tour-step-pill">
+            1️⃣ 2-3 कक्षाएं संयुक्त (MGML Split)
+          </button>
+          <button id="btn-pill-step-2" class="tour-step-pill">
+            2️⃣ घरेलू बोली अंतर (Bhasha Setu)
+          </button>
+          <button id="btn-pill-step-3" class="tour-step-pill">
+            3️⃣ अनुपस्थिति रिकवरी (2-Min Catch-Up)
+          </button>
+          <button id="btn-pill-step-all" class="tour-step-pill active">
+            ▶️ पूरा सजीव डेमो शुरू करें (Full Tour)
+          </button>
+        </div>
+      </div>
     </section>
+
+    <!-- Guided Tour Active Banner (Visible during demo walkthrough) -->
+    <div id="demo-tour-banner" class="tour-banner hidden" role="region" aria-label="सजीव समाधान डेमो">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+        <div style="flex: 1;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+            <span id="tour-step-badge" style="background: var(--accent-amber); color: #000; font-size: 0.75rem; font-weight: 900; padding: 0.2rem 0.6rem; border-radius: 9999px;">
+              चुनौती 1 / 3
+            </span>
+            <h3 id="tour-step-title" style="font-size: 1.15rem; font-weight: 900; color: #FFF; margin: 0;">
+              2-3 कक्षाएं एक साथ (Multi-Grade MGML)
+            </h3>
+          </div>
+          <p id="tour-problem-text" style="font-size: 0.88rem; color: #CBD5E1; margin: 0.25rem 0; font-style: italic;"></p>
+          <p id="tour-solution-text" style="font-size: 0.95rem; color: #FACC15; font-weight: 700; margin: 0.25rem 0 0;"></p>
+        </div>
+        <button id="btn-close-tour" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); color: #FFF; width: 48px; height: 48px; border-radius: 0.5rem; font-size: 1.25rem; font-weight: bold; cursor: pointer;" aria-label="डेमो बंद करें">✕</button>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 0.5rem; margin-top: 0.5rem;">
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <button id="btn-tour-action" class="btn-action btn-amber" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+            ⚡ लाइव चलाएं (Execute)
+          </button>
+          <button id="btn-tour-read-aloud" class="btn-action btn-blue" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+            🔊 बोलकर समझें
+          </button>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button id="btn-tour-prev" class="btn-action" style="background: var(--bg-surface-elevated); color: #FFF; border: 1px solid var(--border-subtle); min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+            ◀ पिछला
+          </button>
+          <button id="btn-tour-next" class="btn-action btn-green" style="min-height: 48px; font-size: 0.9rem; padding: 0.4rem 1rem; width: auto;">
+            अगला कदम ▶
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Main Workspace Tiles -->
     <main class="dashboard-grid" role="main">
@@ -578,6 +701,8 @@
         remediationQueue: []
       };
 
+      let currentTourIndex = 0;
+
       const elements = {
         srAnnouncer: document.getElementById('sr-live-region'),
         timerDisplay: document.getElementById('timer-display'),
@@ -599,8 +724,114 @@
         btnViewTlm: document.getElementById('btn-view-tlm'),
         btnSelfTest: document.getElementById('btn-self-test'),
         btnPersistentVoice: document.getElementById('btn-persistent-voice'),
-        voiceBarLabel: document.getElementById('voice-bar-label')
+        voiceBarLabel: document.getElementById('voice-bar-label'),
+        // Tour Elements
+        btnStartTour: document.getElementById('btn-start-tour'),
+        tourBanner: document.getElementById('demo-tour-banner'),
+        tourStepBadge: document.getElementById('tour-step-badge'),
+        tourStepTitle: document.getElementById('tour-step-title'),
+        tourProblemText: document.getElementById('tour-problem-text'),
+        tourSolutionText: document.getElementById('tour-solution-text'),
+        btnTourAction: document.getElementById('btn-tour-action'),
+        btnTourReadAloud: document.getElementById('btn-tour-read-aloud'),
+        btnTourPrev: document.getElementById('btn-tour-prev'),
+        btnTourNext: document.getElementById('btn-tour-next'),
+        btnCloseTour: document.getElementById('btn-close-tour'),
+        btnPill1: document.getElementById('btn-pill-step-1'),
+        btnPill2: document.getElementById('btn-pill-step-2'),
+        btnPill3: document.getElementById('btn-pill-step-3'),
+        btnPillAll: document.getElementById('btn-pill-step-all')
       };
+
+      const tourSteps = [
+        {
+          headingId: 'heading-mgml',
+          cardSelector: '[aria-labelledby="heading-mgml"]',
+          stepBadge: 'चुनौती 1 / 3 • 2-3 कक्षाएं संयुक्त (MGML)',
+          title: '2-3 कक्षाएं एक साथ (Multi-Grade Split-Teaching)',
+          problemText: '🛑 समस्या: "Teachers often need to teach 2-3 grades simultaneously meaning time spent with one group is time the other learns without guidance."',
+          solutionText: '💡 विद्यासेतु समाधान: 15-मिनट चक्रीय टाइमर (MGML Split)। शिक्षक कक्षा 1 को प्रत्यक्ष सिखाते हैं, जबकि कक्षा 2 और 3 कंकड़ों से स्लेट पर स्व-अध्ययन खेल में व्यस्त रहते हैं। 15 मिनट पूरे होते ही स्वचालित ध्वनि सूचना बजती है और भूमिकाएं बदल जाती हैं।',
+          speechSummary: 'चुनौती 1: 2-3 कक्षाएं एक साथ। विद्यासेतु का 15 मिनट टाइमर शिक्षक को कक्षा 1 को प्रत्यक्ष पढ़ाने और कक्षा 2-3 को कंकड़ खेल में व्यस्त रखने की समय-सारणी देता है।',
+          actionLabel: '⏱️ 15 मिनट चक्र शुरू करें',
+          action: () => {
+            if (!state.timerRunning) toggleTimer();
+          }
+        },
+        {
+          headingId: 'heading-bhasha',
+          cardSelector: '[aria-labelledby="heading-bhasha"]',
+          stepBadge: 'चुनौती 2 / 3 • घरेलू बोली का अंतर (Language Gap)',
+          title: 'घर की बोली बनाम किताबी भाषा (Bhasha Setu)',
+          problemText: '🛑 समस्या: "Often the child\'s language at home is different from the language used in the classroom creating a gap between instruction and understanding."',
+          solutionText: '💡 विद्यासेतु समाधान: भाषा सेतु (Bhasha Setu)। कठिन किताबी शब्दों (जैसे घटाव, अवरोही क्रम, स्थानीय मान) को बच्चों के घरेलू परिवेश के उदाहरणों (पेड़ से बेर गिरना, छत की सीढ़ी उतरना, माचिस की तीलियाँ) में बदलकर तुरंत अर्थ स्पष्ट करता है।',
+          speechSummary: 'चुनौती 2: घर की बोली और किताबी भाषा का अंतर। भाषा सेतु कठिन किताबी शब्दों को बच्चों के घरेलू परिवेश के उदाहरणों में समझाता है।',
+          actionLabel: '🗣️ घटाव को घरेलू संदर्भ में समझें',
+          action: () => {
+            if (elements.conceptDropdown) elements.conceptDropdown.value = 'subtraction';
+            triggerConceptExplanation();
+          }
+        },
+        {
+          headingId: 'heading-absentee',
+          cardSelector: '[aria-labelledby="heading-absentee"]',
+          stepBadge: 'चुनौती 3 / 3 • अनुपस्थिति व लर्निंग गैप (Catch-Up)',
+          title: 'अनुपस्थिति व दोबारा सिखाने की कमी (2-Min Catch-Up)',
+          problemText: '🛑 समस्या: "Frequent student absenteeism creates learning gaps for the child with teachers having no time to reteach it individually, and no mechanism to help the child catch up."',
+          solutionText: '💡 विद्यासेतु समाधान: 2-मिनट मौखिक वापसी जांच। फसल कटाई या बीमारी के बाद लौटे बच्चे की 3 त्वरित मौखिक प्रश्नों से जांच करें। अटकने पर बच्चे को सहपाठी साथी (Peer Buddy) के साथ अक्षर/संख्या कार्ड में लगाएं ताकि शिक्षक को अकेले दोबारा न पढ़ाना पड़े।',
+          speechSummary: 'चुनौती 3: बार-बार अनुपस्थिति। 2 मिनट की मौखिक जांच से बच्चे का स्तर तुरंत पता चलता है और सहपाठी साथी के साथ उपचारात्मक कार्य शुरू होता है।',
+          actionLabel: '⚡ 2-मिनट मौखिक जांच शुरू करें',
+          action: () => {
+            if (elements.studentInput) elements.studentInput.value = 'सोनू (कक्षा 2)';
+            openCatchUpDiagnostic();
+          }
+        }
+      ];
+
+      function showTourStep(index) {
+        if (index < 0) index = 0;
+        if (index >= tourSteps.length) {
+          closeTour();
+          return;
+        }
+        currentTourIndex = index;
+        const step = tourSteps[index];
+
+        if (elements.tourBanner) {
+          elements.tourBanner.classList.remove('hidden');
+          elements.tourStepBadge.textContent = step.stepBadge;
+          elements.tourStepTitle.textContent = step.title;
+          elements.tourProblemText.textContent = step.problemText;
+          elements.tourSolutionText.textContent = step.solutionText;
+          elements.btnTourAction.textContent = step.actionLabel;
+        }
+
+        const pills = [elements.btnPill1, elements.btnPill2, elements.btnPill3];
+        pills.forEach((p, idx) => {
+          if (p) {
+            if (idx === index) p.classList.add('active');
+            else p.classList.remove('active');
+          }
+        });
+
+        document.querySelectorAll('.feature-card').forEach(c => c.classList.remove('tour-highlight'));
+        const targetCard = document.querySelector(step.cardSelector);
+        if (targetCard) {
+          targetCard.classList.add('tour-highlight');
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        speakVernacular(step.speechSummary);
+      }
+
+      function startTour() {
+        showTourStep(0);
+      }
+
+      function closeTour() {
+        if (elements.tourBanner) elements.tourBanner.classList.add('hidden');
+        document.querySelectorAll('.feature-card').forEach(c => c.classList.remove('tour-highlight'));
+        [elements.btnPill1, elements.btnPill2, elements.btnPill3].forEach(p => p && p.classList.remove('active'));
+      }
 
       function openSafeModal(titleText, contentNodeBuilder) {
         elements.modalHeading.textContent = titleText;
@@ -615,7 +846,7 @@
       }
 
       function speakVernacular(text) {
-        elements.srAnnouncer.textContent = text;
+        if (elements.srAnnouncer) elements.srAnnouncer.textContent = text;
         if ('speechSynthesis' in window) {
           window.speechSynthesis.cancel();
           const utterance = new SpeechSynthesisUtterance(text);
@@ -878,9 +1109,31 @@
         elements.btnPersistentVoice.addEventListener('click', triggerVoiceAssistant);
         elements.modalCloseBtn.addEventListener('click', closeSafeModal);
         elements.modalDismissBtn.addEventListener('click', closeSafeModal);
+
+        // Tour event bindings
+        if (elements.btnStartTour) elements.btnStartTour.addEventListener('click', startTour);
+        if (elements.btnCloseTour) elements.btnCloseTour.addEventListener('click', closeTour);
+        if (elements.btnTourNext) elements.btnTourNext.addEventListener('click', () => showTourStep(currentTourIndex + 1));
+        if (elements.btnTourPrev) elements.btnTourPrev.addEventListener('click', () => showTourStep(currentTourIndex - 1));
+        if (elements.btnTourAction) elements.btnTourAction.addEventListener('click', () => {
+          if (tourSteps[currentTourIndex]) tourSteps[currentTourIndex].action();
+        });
+        if (elements.btnTourReadAloud) elements.btnTourReadAloud.addEventListener('click', () => {
+          if (tourSteps[currentTourIndex]) speakVernacular(tourSteps[currentTourIndex].speechSummary);
+        });
+
+        if (elements.btnPill1) elements.btnPill1.addEventListener('click', () => showTourStep(0));
+        if (elements.btnPill2) elements.btnPill2.addEventListener('click', () => showTourStep(1));
+        if (elements.btnPill3) elements.btnPill3.addEventListener('click', () => showTourStep(2));
+        if (elements.btnPillAll) elements.btnPillAll.addEventListener('click', () => showTourStep(0));
+
+        // Auto-launch demo if ?demo is present in URL
+        if (new URLSearchParams(window.location.search).has('demo')) {
+          setTimeout(startTour, 600);
+        }
       }
 
-      return { init };
+      return { init, startTour, showTourStep, closeTour };
     })();
 
     document.addEventListener('DOMContentLoaded', VidyaCore.init);
