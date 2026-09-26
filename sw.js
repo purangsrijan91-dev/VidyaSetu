@@ -1,6 +1,6 @@
 // KakshaSahay Service Worker - Zero-Connectivity Offline Engine (sw.js)
 // Updated for instant access on normal refresh with Network-First navigation & Stale-While-Revalidate
-const CACHE_NAME = 'kakshasahay-v14-rebrand';
+const CACHE_NAME = 'kakshasahay-v15-credibility';
 const CORE_ASSETS = [
   './',
   './index.html',

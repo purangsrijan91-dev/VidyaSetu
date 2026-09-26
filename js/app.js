@@ -731,14 +731,19 @@ const AppController = (() => {
 
     const info = document.createElement('p');
     info.className = 'text-sm text-slate-300';
-    info.textContent = 'कक्षासहाय बिना इंटरनेट के 100% कार्य करता है (ऑन-डिवाइस जेनेरेटिव AI)। यदि आप वैकल्पिक रूप से सर्वरलेस Edge LLM (Gemini 2.5 Flash API) जोड़ना चाहते हैं, तो नीचे अपनी API Key दर्ज करें:';
+    info.textContent = 'वैकल्पिक डेवलपर/डेमो कॉन्फ़िगरेशन (Optional Developer/Demo Configuration): कक्षासहाय के सभी मुख्य शिक्षण कार्यप्रवाह ऑन-डिवाइस व ऑफलाइन संचालित होते हैं। यदि आप वैकल्पिक रूप से Google Gemini API का मूल्यांकन करना चाहते हैं, तो नीचे अपनी API Key दर्ज करें:';
     container.appendChild(info);
+
+    const warnBox = document.createElement('div');
+    warnBox.className = 'p-3 bg-amber-950/40 border border-amber-500/50 rounded-lg text-xs text-amber-300 leading-relaxed';
+    warnBox.textContent = '⚠️ सुरक्षा सूचना: ब्राउज़र में दर्ज की गई कुंजियाँ क्लाइंट-साइड LocalStorage में रहती हैं। यह केवल डेमो/मूल्यांकन के लिए है। उत्पादन में Browser → Serverless Proxy → LLM आर्किटेक्चर अनिवार्य है।';
+    container.appendChild(warnBox);
 
     const inputGroup = document.createElement('div');
     inputGroup.className = 'space-y-1.5';
     const label = document.createElement('label');
     label.className = 'text-xs text-amber-400 font-bold uppercase block';
-    label.textContent = 'Gemini / Edge LLM API Key (वैकल्पिक):';
+    label.textContent = 'Gemini / Edge LLM API Key (वैकल्पिक / Demo Only):';
     const input = document.createElement('input');
     input.type = 'password';
     input.id = 'edge-api-key-input';

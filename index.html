@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src https://drive.google.com; media-src 'self' blob:; img-src 'self' data:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://generativelanguage.googleapis.com; frame-src https://drive.google.com; media-src 'self' blob:; img-src 'self' data:;" />
   <meta name="theme-color" content="#0F172A" />
   <meta name="description" content="KakshaSahay (कक्षासहाय): Offline-first FLN Classroom Copilot for Indian Primary Teachers managing multigrade classrooms." />
   <title>KakshaSahay (कक्षासहाय) • FLN Classroom Copilot</title>
@@ -785,7 +785,7 @@
   <!-- Top Trust Ribbon -->
   <div class="top-trust-bar" role="complementary" aria-label="Alignment Information">
     <span class="pill">NIPUN Bharat Aligned</span>
-    <span data-i18n="marquee_text">FLN Mission • Multigrade &amp; Multilingual Classroom Architecture • 100% Offline Functional</span>
+    <span data-i18n="marquee_text">FLN Mission • Multigrade &amp; Multilingual Classroom Architecture • Offline-Capable Core Workflows</span>
   </div>
 
   <!-- Header -->
@@ -844,10 +844,10 @@
         Engineered specifically for single-teacher rural primary schools facing multigrade combinations, dialect barriers, and post-absence learning loss. High-contrast, zero external CDNs, and fully offline-functional.
       </p>
       <div class="hero-pills">
-        <span class="hero-pill-tag" data-i18n="hero_offline">✓ 100% Offline Resilience</span>
+        <span class="hero-pill-tag" data-i18n="hero_offline">✓ Offline-Capable Core</span>
         <span class="hero-pill-tag" data-i18n="hero_clock">✓ Hardware Clock Delta Sync</span>
         <span class="hero-pill-tag" data-i18n="hero_safe">✓ Safe DOM Architecture</span>
-        <span class="hero-pill-tag" data-i18n="hero_wcag">✓ WCAG 2.2 AAA Compliant</span>
+        <span class="hero-pill-tag" data-i18n="hero_wcag">✓ WCAG 2.2 AA Targeted</span>
       </div>
     </section>
 
@@ -1164,9 +1164,57 @@
         <div id="video-offline-notice" class="video-offline-msg">
           <p style="font-size: 1.1rem; font-weight: 800;">📶 External Video Resource Offline</p>
           <p style="font-size: 0.88rem; color: #CBD5E1; max-width: 500px;">
-            Field documentation video requires an internet connection. All core pedagogical tools (MGML Timer, Bhasha Setu, Absentee Triage, Chalkboard TLM) remain 100% operational offline.
+            Field documentation video requires an internet connection. All core pedagogical tools (MGML Timer, Bhasha Setu, Absentee Triage, Chalkboard TLM) remain fully operational offline without connectivity.
           </p>
         </div>
+      </div>
+    </section>
+
+    <!-- Engineering Transparency & System Capabilities Disclosure Section -->
+    <section class="feature-card" style="margin-top: 1.5rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 1rem; padding: 1.25rem;" aria-labelledby="transparency-title">
+      <div class="card-meta">
+        <span class="card-solver-tag" style="background: rgba(14, 165, 233, 0.1); color: #0284C7; border: 1px solid rgba(14, 165, 233, 0.25);">System Transparency &amp; Evidence</span>
+        <span class="header-badge badge-neutral">Audited Architecture</span>
+      </div>
+      <h2 id="transparency-title" style="font-size: 1.15rem; font-weight: 800; color: var(--accent-navy-dark); margin: 0.4rem 0 0.75rem 0;">
+        Engineering Rigor &amp; Operational Capabilities Disclosure
+      </h2>
+      <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem;">
+        To ensure complete credibility for frontline educational deployments, KakshaSahay strictly scopes its offline guarantees, security boundaries, and field validation status.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+        <!-- Offline Capabilities -->
+        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem;">
+          <h3 style="font-size: 0.92rem; font-weight: 800; color: #166534; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem;">
+            <span aria-hidden="true">🟢</span> <span>Verified Offline (Zero-Connectivity)</span>
+          </h3>
+          <ul style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.6; padding-left: 1.2rem; margin: 0;">
+            <li><strong>15-Min MGML Timer:</strong> Hardware delta clock &amp; Web Audio acoustic bell</li>
+            <li><strong>Bhasha Setu:</strong> On-device syllabus knowledge base &amp; local dialect templates</li>
+            <li><strong>Absentee Triage:</strong> 2-min oral diagnostics &amp; localStorage peer buddy rosters</li>
+            <li><strong>Zero-Cost TLM:</strong> Dynamic number trains &amp; tactile slate problem generators</li>
+            <li><strong>Bilingual UI:</strong> Instant English ⟷ Hindi toggle without network requests</li>
+          </ul>
+        </div>
+
+        <!-- Online Only Requirements -->
+        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: 0.75rem; padding: 1rem;">
+          <h3 style="font-size: 0.92rem; font-weight: 800; color: #9A3412; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem;">
+            <span aria-hidden="true">🌐</span> <span>Requires Internet Connectivity</span>
+          </h3>
+          <ul style="font-size: 0.82rem; color: var(--text-primary); line-height: 1.6; padding-left: 1.2rem; margin: 0;">
+            <li><strong>Classroom Complexity Video:</strong> Embedded 90-sec field demonstration (Google Drive stream)</li>
+            <li><strong>Cloud Edge LLM (Optional):</strong> External Gemini Flash API calls when developer key is configured</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Governance & Standards Disclosures -->
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.82rem; color: var(--text-secondary); background: #F1F5F9; border-radius: 0.5rem; padding: 0.85rem; border-left: 4px solid var(--primary-teal);">
+        <div><strong>Field Validation Status:</strong> <em>KakshaSahay does not claim measured classroom impact until a structured multi-school field pilot is completed.</em> A structured 4-week pilot protocol is documented in engineering specifications.</div>
+        <div><strong>Accessibility Standard:</strong> Targeted for WCAG 2.2 Level AA compliance with automated axe-core regression checks. Screen-reader behavior requires human on-device QA.</div>
+        <div><strong>Security Architecture:</strong> All core classroom workflows execute 100% locally in browser memory. Browser-side API credentials (if configured for experimental features) are strictly for developer/demo evaluation; production deployments require an authenticated backend proxy.</div>
       </div>
     </section>
 
@@ -1242,7 +1290,7 @@
         </div>
       </div>
       <div style="font-size: 0.8rem; font-weight: 600;">
-        <span>Offline Cache: Active</span> • <span>WCAG 2.2 AAA</span>
+        <span data-i18n="footer_cache">Offline Cache: Active</span> • <span data-i18n="footer_wcag">WCAG 2.2 AA Targeted</span>
       </div>
     </div>
   </footer>
@@ -1659,12 +1707,12 @@
           interactive_tour_btn: "🎬 Interactive Walkthrough",
           lang_toggle_label: "हिन्दी / English",
           lang_toggle_aria: "Switch language to Hindi",
-          marquee_text: "FLN Mission • Multigrade & Multilingual Classroom Architecture • 100% Offline Functional",
+          marquee_text: "FLN Mission • Multigrade & Multilingual Classroom Architecture • Offline-Capable Core Workflows",
           hero_title: "Teaching Multigrade Classrooms with Practical Ease",
-          hero_offline: "✓ 100% Offline Resilience",
+          hero_offline: "✓ Offline-Capable Core",
           hero_clock: "✓ Hardware Clock Delta Sync",
           hero_safe: "✓ Safe DOM Architecture",
-          hero_wcag: "✓ WCAG 2.2 AAA Compliant",
+          hero_wcag: "✓ WCAG 2.2 AA Targeted",
           copilot_heading: "Classroom Copilot (Deterministic & Offline):",
           copilot_status: "Type or click suggested prompts for immediate classroom micro-scripts",
           copilot_placeholder: "Ask teaching copilot (e.g., quiet room game, place value)...",
@@ -1710,7 +1758,7 @@
           play_voice_explanation: "Play Voice Explanation",
           stop_voice_explanation: "Stop Voice Explanation",
           footer_cache: "Offline Cache: Active",
-          footer_wcag: "WCAG 2.2 AAA"
+          footer_wcag: "WCAG 2.2 AA Targeted"
         },
         hi: {
           app_title: "कक्षासहाय (KakshaSahay) • एफ़एलएन कक्षा कोपायलट",
@@ -1721,12 +1769,12 @@
           interactive_tour_btn: "🎬 इंटरएक्टिव वॉकथ्रू",
           lang_toggle_label: "English / हिन्दी",
           lang_toggle_aria: "भाषा अंग्रेजी में बदलें",
-          marquee_text: "निपुण भारत मिशन • बहु-कक्षा एवं बहुभाषी शिक्षण मंच • 100% ऑफलाइन कार्यात्मक",
+          marquee_text: "निपुण भारत मिशन • बहु-कक्षा एवं बहुभाषी शिक्षण मंच • ऑफलाइन-सक्षम मुख्य कार्यप्रवाह",
           hero_title: "बहु-कक्षा शिक्षण को बनाएं सरल और व्यावहारिक",
-          hero_offline: "✓ 100% ऑफलाइन मजबूती",
+          hero_offline: "✓ ऑफलाइन-सक्षम मुख्य प्रणाली",
           hero_clock: "✓ हार्डवेयर घड़ी डेल्टा सिंक",
           hero_safe: "✓ सुरक्षित डीओएम आर्किटेक्चर",
-          hero_wcag: "✓ डब्ल्यूसीएजी 2.2 एएए",
+          hero_wcag: "✓ डब्ल्यूसीएजी 2.2 एए लक्षित",
           copilot_heading: "कक्षा कोपायलट (ऑफलाइन एवं सटीक):",
           copilot_status: "त्वरित कक्षा माइक्रो-स्क्रिप्ट के लिए सुझाए गए प्रॉम्प्ट पर क्लिक करें या लिखें",
           copilot_placeholder: "शिक्षण कोपायलट से पूछें (उदा. शांत खेल, स्थानीय मान)...",
@@ -1772,7 +1820,7 @@
           play_voice_explanation: "ऑडियो व्याख्या सुनें",
           stop_voice_explanation: "ऑडियो व्याख्या रोकें",
           footer_cache: "ऑफलाइन कैश: सक्रिय",
-          footer_wcag: "डब्ल्यूसीएजी 2.2 एएए"
+          footer_wcag: "डब्ल्यूसीएजी 2.2 एए लक्षित"
         }
       };
 
@@ -3727,6 +3775,17 @@
       if (fieldVideoFrame) {
         fieldVideoFrame.addEventListener('error', () => {
           if (videoOfflineNotice) videoOfflineNotice.style.display = 'flex';
+        });
+      }
+
+      // Service Worker Defensive Registration for Offline Resilience
+      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then((reg) => {
+            console.log('[KakshaSahay] Service worker registered with scope:', reg.scope);
+          }).catch((err) => {
+            console.warn('[KakshaSahay] Service worker registration failed:', err);
+          });
         });
       }
 
