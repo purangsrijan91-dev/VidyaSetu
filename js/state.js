@@ -33,13 +33,15 @@ const StateStore = (() => {
     speechNotice: '',
     selectedDialect: 'awadhi_bhojpuri',
     remediationPendingCount: 0,
-    diagnosticQueue: []
+    diagnosticQueue: [],
+    rotationLevel: 'beginner'
   };
 
   // Safe localStorage read on boot
   try {
     if (typeof localStorage !== 'undefined') {
       state.edgeApiKey = localStorage.getItem('kakshasahay_edge_api_key') || localStorage.getItem('vidyasetu_edge_api_key') || '';
+      state.rotationLevel = localStorage.getItem('kakshasahay_rotation_level') || 'beginner';
     }
   } catch (e) {
     console.warn('[StateStore] LocalStorage disabled or blocked:', e);

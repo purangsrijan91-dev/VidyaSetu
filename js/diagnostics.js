@@ -31,7 +31,7 @@ const DiagnosticsEngine = (() => {
       }
 
       results.push({
-        name: `बटन टच टारगेट माप (WCAG AAA >= 64px)`,
+        name: `बटन टच टारगेट माप (WCAG 2.2 AA >= 48px)`,
         pass: touchPass,
         detail: `वास्तविक मापित: ${minMeasuredHeight}px (#${sampleButtonId})`
       });

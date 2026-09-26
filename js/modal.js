@@ -96,7 +96,7 @@ const ModalManager = (() => {
     if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
       try {
         previouslyFocusedElement.focus();
-      } catch (e) {}
+      } catch (_e) {}
     }
   }
 

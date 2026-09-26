@@ -55,7 +55,7 @@ const StorageVault = (() => {
         res[i] = bytes[i] ^ keyBytes[i % keyBytes.length];
       }
       return dec.decode(res);
-    } catch (e) {
+    } catch (_e) {
       return '';
     }
   }

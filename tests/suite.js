@@ -25,7 +25,7 @@ global.document = {
   activeElement: null,
   addEventListener: () => {},
   removeEventListener: () => {},
-  getElementById: (id) => ({
+  getElementById: (_id) => ({
     textContent: '',
     value: '',
     replaceChildren: () => {},
@@ -51,7 +51,7 @@ try {
     configurable: true,
     writable: true
   });
-} catch (e) {}
+} catch (_e) {}
 
 global.btoa = (str) => Buffer.from(str, 'binary').toString('base64');
 global.atob = (b64) => Buffer.from(b64, 'base64').toString('binary');

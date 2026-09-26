@@ -7,7 +7,6 @@
 const AudioEngine = (() => {
   let audioCtx = null;
   let hindiVoice = null;
-  let voicesChecked = false;
 
   function initVoices() {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
@@ -19,7 +18,6 @@ const AudioEngine = (() => {
       try {
         const voices = window.speechSynthesis.getVoices();
         if (voices && voices.length > 0) {
-          voicesChecked = true;
           hindiVoice = voices.find(v => v.lang === 'hi-IN' || v.lang === 'hi' || v.lang.startsWith('hi') || v.name.toLowerCase().includes('hindi')) || null;
           
           if (hindiVoice) {
@@ -92,16 +90,16 @@ const AudioEngine = (() => {
       speechChannel.onmessage = (e) => {
         if (e && e.data && e.data.type === 'CANCEL_SPEECH' && e.data.senderId !== instanceId) {
           if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-            try { window.speechSynthesis.cancel(); } catch (err) {}
+            try { window.speechSynthesis.cancel(); } catch (_err) {}
           }
         }
       };
-    } catch (e) {}
+    } catch (_e) {}
 
     if (typeof document !== 'undefined') {
       document.addEventListener('visibilitychange', () => {
         if (document.hidden && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-          try { window.speechSynthesis.cancel(); } catch (err) {}
+          try { window.speechSynthesis.cancel(); } catch (_err) {}
         }
       });
     }
@@ -109,12 +107,12 @@ const AudioEngine = (() => {
 
   function cancelSpeech() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      try { window.speechSynthesis.cancel(); } catch (e) {}
+      try { window.speechSynthesis.cancel(); } catch (_e) {}
     }
     if (speechChannel) {
       try {
         speechChannel.postMessage({ type: 'CANCEL_SPEECH', senderId: instanceId, timestamp: Date.now() });
-      } catch (e) {}
+      } catch (_e) {}
     }
   }
 
@@ -124,7 +122,7 @@ const AudioEngine = (() => {
     try {
       const announcer = document.getElementById('sr-announcer');
       if (announcer) announcer.textContent = text;
-    } catch (e) {}
+    } catch (_e) {}
 
     // 2. Hardware Speech synthesis guard
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {

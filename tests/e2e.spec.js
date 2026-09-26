@@ -231,4 +231,59 @@ test.describe('KakshaSahay End-to-End Workflow Verification', () => {
     await expect(page.locator('#btn-start-tour')).toBeVisible();
     await expect(page.locator('#field-video-frame')).toBeVisible();
   });
+
+  test('9. TaRL Micro-Grouping Level Selector switches prompts and persists level', async ({ page }) => {
+    await page.goto('http://localhost:3001');
+
+    const btnDeveloping = page.locator('#btn-level-developing');
+    const btnProficient = page.locator('#btn-level-proficient');
+    const g23Prompt = page.locator('#g23-prompt-english');
+
+    // Default beginner prompt check
+    await expect(g23Prompt).toContainText('Concrete 1-to-1 Manipulative Counting');
+
+    // Click Developing level
+    await btnDeveloping.click();
+    await expect(btnDeveloping).toHaveAttribute('aria-checked', 'true');
+    await expect(g23Prompt).toContainText('Base-10 Pebble Bundles & 2-Digit Numeral Writing');
+
+    // Click Proficient level
+    await btnProficient.click();
+    await expect(btnProficient).toHaveAttribute('aria-checked', 'true');
+    await expect(g23Prompt).toContainText('Peer Daily-Life Word Problem Creation');
+
+    // Reload and verify persistence in localStorage
+    await page.reload();
+    await expect(page.locator('#btn-level-proficient')).toHaveAttribute('aria-checked', 'true');
+    await expect(page.locator('#g23-prompt-english')).toContainText('Peer Daily-Life Word Problem Creation');
+  });
+
+  test('10. Session Summary & Weekly Local Dashboard displays metrics and copies summary', async ({ page, context }) => {
+    // Grant clipboard permissions
+    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+    await page.goto('http://localhost:3001');
+
+    const btnPrintSummary = page.locator('#btn-print-summary');
+    const btnWeeklySummary = page.locator('#btn-view-weekly-summary');
+    const summaryContainer = page.locator('#summary-view-container');
+
+    // Open Session Summary
+    await btnPrintSummary.click();
+    await expect(summaryContainer).toBeVisible();
+    await expect(summaryContainer).toContainText('Multigrade Classroom Daily Handoff Report');
+    await expect(summaryContainer).toContainText('Post-Absence Diagnostic Screening');
+
+    // Test Copy text button
+    const btnCopySummary = page.locator('#btn-copy-summary');
+    await expect(btnCopySummary).toBeVisible();
+    await btnCopySummary.click();
+    await expect(btnCopySummary).toContainText('Copied');
+
+    // Open Weekly Summary
+    await btnWeeklySummary.click();
+    await expect(summaryContainer).toContainText('What Happened This Week');
+    await expect(summaryContainer).toContainText('Teacher Local Summary');
+    await expect(summaryContainer).toContainText('Offline Local Data');
+  });
 });
+
