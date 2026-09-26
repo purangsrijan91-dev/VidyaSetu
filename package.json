@@ -1,7 +1,7 @@
 {
-  "name": "vidyasetu",
-  "version": "1.1.0",
-  "description": "VidyaSetu: Dynamic Multigrade & Bilingual Classroom Companion for Indian Primary Schools under NIPUN Bharat FLN Mission.",
+  "name": "kakshasahay",
+  "version": "1.2.0",
+  "description": "KakshaSahay: Dynamic Multigrade & Bilingual Classroom Companion for Indian Primary Schools under NIPUN Bharat FLN Mission.",
   "main": "serve.js",
   "scripts": {
     "start": "node serve.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/purangsrijan91-dev/VidyaSetu.git"
+    "url": "git+https://github.com/purangsrijan91-dev/KakshaSahay.git"
   },
   "keywords": [
     "fln",

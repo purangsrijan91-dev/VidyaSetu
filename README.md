@@ -1,20 +1,20 @@
-# VidyaSetu (विद्यासेतु) - प्राथमिक शिक्षक साथी
+# KakshaSahay (कक्षासहाय) - प्राथमिक शिक्षक साथी
 ### Dynamic Multigrade & Bilingual Classroom Companion for Indian Primary Schools
 
 [![NIPUN Bharat FLN](https://img.shields.io/badge/Mission-NIPUN%20Bharat%20FLN-amber.svg)](https://www.education.gov.in/shikshak-parv/nipun-bharat.html)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-emerald.svg)](https://purangsrijan91-dev.github.io/VidyaSetu/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-emerald.svg)](https://purangsrijan91-dev.github.io/KakshaSahay/)
 [![PWA / Offline First](https://img.shields.io/badge/PWA-Service%20Worker%20Active-emerald.svg)](#offline-first-pwa-architecture)
 [![AOT Compiled CSS](https://img.shields.io/badge/CSS-AOT%20Compiled%20(28KB)-blue.svg)](#compiled-ahead-of-time-css)
 [![XSS Secure](https://img.shields.io/badge/Security-DOM%20XSS%20Protected-green.svg)](#security--dom-xss-prevention)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
-**VidyaSetu (विद्यासेतु)** is an offline-ready, mobile-first classroom orchestrator engineered specifically for frontline educators in India's **1.2 million+ rural government primary schools** and **urban municipal/slum schools**.
+**KakshaSahay (कक्षासहाय)** is an offline-ready, mobile-first classroom orchestrator engineered specifically for frontline educators in India's **1.2 million+ rural government primary schools** and **urban municipal/slum schools**.
 
 ---
 
-## 🎯 The Core Problems VidyaSetu Solves
+## 🎯 The Core Problems KakshaSahay Solves
 
-| # | Classroom Reality | The Problem | VidyaSetu Solution |
+| # | Classroom Reality | The Problem | KakshaSahay Solution |
 |---|:---|:---|:---|
 | **1** | **Multigrade Classrooms (MGML)** | 1 teacher managing Grades 1, 2, and 3 concurrently in a single room; teaching one grade causes chaos in the others. | **15-Minute Split-Teaching Orchestrator**: Synchronized cycling timer alternating direct instruction with structured, low-noise peer/pebble activities. |
 | **2** | **Dialect-to-Textbook Gap** | Children speak regional home dialects (Awadhi, Bhojpuri, Bundeli) and struggle with formal, Sanskritized textbook Hindi. | **Bhasha Setu (भाषा सेतु)**: Real-time Neural RAG & Edge LLM pipeline converting any syllabus concept into localized domestic analogies (rotis, counting berries, village haat, stairs) with native Hindi speech. |
@@ -25,7 +25,7 @@
 
 ## 🏫 Relevance to Indian Rural & Urban Primary Schools
 
-VidyaSetu features a 1-click **Interactive Context Switcher** (`🌾 ग्रामीण शाला` ⟷ `🏙️ शहरी शाला`):
+KakshaSahay features a 1-click **Interactive Context Switcher** (`🌾 ग्रामीण शाला` ⟷ `🏙️ शहरी शाला`):
 
 ### 🌾 Rural Primary School (ग्राम पाठशाला)
 * **Structure:** Single teacher for Grades 1–3 combined in one room.
@@ -49,7 +49,7 @@ VidyaSetu features a 1-click **Interactive Context Switcher** (`🌾 ग्र�
 
 ### 2. Offline-First PWA Architecture (Service Worker)
 * **`sw.js` Cache-First Engine:** Pre-caches `index.html`, `css/styles.css`, and `manifest.json` on install.
-* **Zero-Connectivity Guarantee:** Teachers in remote villages with zero cellular reception can launch and use VidyaSetu reliably.
+* **Zero-Connectivity Guarantee:** Teachers in remote villages with zero cellular reception can launch and use KakshaSahay reliably.
 
 ### 3. Compiled Ahead-of-Time (AOT) CSS
 * **Eliminated Tailwind CDN JIT:** Replaced the heavy client-side JIT script (300KB+ runtime) with an ahead-of-time compiled, minified `css/styles.css` (28KB).
@@ -64,12 +64,12 @@ VidyaSetu features a 1-click **Interactive Context Switcher** (`🌾 ग्र�
 
 ## 🛠️ Local Development & Quick Start
 
-VidyaSetu runs with zero build configuration:
+KakshaSahay runs with zero build configuration:
 
 ```bash
 # Clone the repository
-git clone https://github.com/purangsrijan91-dev/VidyaSetu.git
-cd VidyaSetu
+git clone https://github.com/purangsrijan91-dev/KakshaSahay.git
+cd KakshaSahay
 
 # Run local preview server (Node.js)
 node serve.js

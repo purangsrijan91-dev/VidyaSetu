@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - True Delta-Time Multigrade Clock Engine
+ * KakshaSahay - True Delta-Time Multigrade Clock Engine
  * Eliminates timer drift on budget Android Go devices during screen lock or background throttling.
  */
 'use strict';

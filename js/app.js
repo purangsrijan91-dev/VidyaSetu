@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Main Application Orchestrator
+ * KakshaSahay - Main Application Orchestrator
  * Links StateStore, TimerEngine, GenerativeRAG, StorageVault, and ModalManager to UI.
  */
 'use strict';
@@ -23,7 +23,7 @@ const AppController = (() => {
       }
     });
 
-    console.log('[VidyaSetu] Application orchestrator initialized successfully');
+    console.log('[KakshaSahay] Application orchestrator initialized successfully');
   }
 
   // Reactive State-to-DOM Renderer (Avoids direct imperative DOM reads)
@@ -613,7 +613,7 @@ const AppController = (() => {
 
     const intro = document.createElement('p');
     intro.className = 'text-sm text-slate-300 m-0';
-    intro.textContent = 'देखें कि कैसे 1 शिक्षक विद्यासेतु के साथ 2 कक्षाओं को एक साथ बिना तनाव के संचालित करता है:';
+    intro.textContent = 'देखें कि कैसे 1 शिक्षक कक्षासहाय के साथ 2 कक्षाओं को एक साथ बिना तनाव के संचालित करता है:';
     container.appendChild(intro);
 
     const simBox = document.createElement('div');
@@ -695,7 +695,7 @@ const AppController = (() => {
   }
 
   function askQuickVoice(query) {
-    AudioEngine.speakHindi(`आपने पूछा: ${query}। इसके लिए विद्यासेतु का सुझाव है: कक्षा को दो समूहों में बांटें और 15 मिनट का चक्रीय अभ्यास शुरू करें।`);
+    AudioEngine.speakHindi(`आपने पूछा: ${query}। इसके लिए कक्षासहाय का सुझाव है: कक्षा को दो समूहों में बांटें और 15 मिनट का चक्रीय अभ्यास शुरू करें।`);
     if (typeof alert !== 'undefined') {
       alert(`सहायक उत्तर:\n"${query}"\n\nसुझाव: 15-मिनट का विभाजन चक्र लागू करें या 2-मिनट मौखिक जांच शुरू करें।`);
     }
@@ -731,7 +731,7 @@ const AppController = (() => {
 
     const info = document.createElement('p');
     info.className = 'text-sm text-slate-300';
-    info.textContent = 'विद्यासेतु बिना इंटरनेट के 100% कार्य करता है (ऑन-डिवाइस जेनेरेटिव AI)। यदि आप वैकल्पिक रूप से सर्वरलेस Edge LLM (Gemini 2.5 Flash API) जोड़ना चाहते हैं, तो नीचे अपनी API Key दर्ज करें:';
+    info.textContent = 'कक्षासहाय बिना इंटरनेट के 100% कार्य करता है (ऑन-डिवाइस जेनेरेटिव AI)। यदि आप वैकल्पिक रूप से सर्वरलेस Edge LLM (Gemini 2.5 Flash API) जोड़ना चाहते हैं, तो नीचे अपनी API Key दर्ज करें:';
     container.appendChild(info);
 
     const inputGroup = document.createElement('div');
@@ -756,7 +756,7 @@ const AppController = (() => {
       const val = document.getElementById('edge-api-key-input').value.trim();
       StateStore.setState({ edgeApiKey: val });
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem('vidyasetu_edge_api_key', val);
+        localStorage.setItem('kakshasahay_edge_api_key', val);
       }
       ModalManager.close();
       alert('सेटिंग्स सहेजी गईं! ' + (val ? 'क्लाउड Edge LLM पाइपलाइन सक्रिय।' : 'ऑन-डिवाइस जेनेरेटिव AI सक्रिय।'));

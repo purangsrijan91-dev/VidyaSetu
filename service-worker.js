@@ -1,6 +1,6 @@
-// VidyaSetu Service Worker - Zero-Connectivity Offline Engine (service-worker.js)
+// KakshaSahay Service Worker - Zero-Connectivity Offline Engine (service-worker.js)
 // Updated for instant access on normal refresh with Network-First navigation & Stale-While-Revalidate
-const CACHE_NAME = 'vidyasetu-v13-triad-enhancements';
+const CACHE_NAME = 'kakshasahay-v14-rebrand';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -26,9 +26,9 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[VidyaSetu SW] Pre-caching core assets for zero-connectivity classrooms');
+      console.log('[KakshaSahay SW] Pre-caching core assets for zero-connectivity classrooms');
       return cache.addAll(CORE_ASSETS).catch((err) => {
-        console.warn('[VidyaSetu SW] Cache addAll partial failure:', err);
+        console.warn('[KakshaSahay SW] Cache addAll partial failure:', err);
       });
     })
   );
@@ -41,7 +41,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
-            console.log('[VidyaSetu SW] Deleting outdated cache:', cache);
+            console.log('[KakshaSahay SW] Deleting outdated cache:', cache);
             return caches.delete(cache);
           }
         })

@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Audio & Speech Engine with Defensive Error Boundaries
+ * KakshaSahay - Audio & Speech Engine with Defensive Error Boundaries
  * Hardware Web Audio synthesizers and Web Speech API with Hindi voice pack detection & visual fallbacks.
  */
 'use strict';

@@ -1,6 +1,6 @@
 {
-  "name": "VidyaSetu (विद्यासेतु) - प्राथमिक शिक्षक साथी",
-  "short_name": "VidyaSetu",
+  "name": "KakshaSahay (कक्षासहाय) - प्राथमिक शिक्षक साथी",
+  "short_name": "KakshaSahay",
   "description": "Offline-first Multigrade & Bilingual Classroom Companion for Indian Primary Teachers under NIPUN Bharat FLN Mission.",
   "start_url": "./index.html",
   "scope": "./",

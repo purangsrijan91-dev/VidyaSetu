@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; frame-src https://drive.google.com; media-src 'self' blob:; img-src 'self' data:;" />
   <meta name="theme-color" content="#0F172A" />
-  <meta name="description" content="VidyaSetu: Offline-first FLN Classroom Copilot for Indian Primary Teachers managing multigrade classrooms." />
-  <title>VidyaSetu (विद्यासेतु) • FLN Classroom Copilot</title>
+  <meta name="description" content="KakshaSahay (कक्षासहाय): Offline-first FLN Classroom Copilot for Indian Primary Teachers managing multigrade classrooms." />
+  <title>KakshaSahay (कक्षासहाय) • FLN Classroom Copilot</title>
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg" />
 
@@ -793,9 +793,9 @@
     <div class="brand-group">
       <div class="brand-logo-badge" aria-hidden="true">🎓</div>
       <div class="brand-text">
-        <h1>VidyaSetu (विद्यासेतु) • FLN Classroom Copilot</h1>
+        <h1>KakshaSahay (कक्षासहाय)</h1>
         <div class="header-badges">
-          <span class="header-badge badge-teal" data-i18n="badge_nipun">NIPUN Bharat Aligned</span>
+          <span class="header-badge badge-teal" data-i18n="badge_nipun">NIPUN Bharat Primary Teacher Copilot</span>
           <span class="header-badge badge-navy" data-i18n="badge_mgml">15-Min MGML Cycle</span>
           <span class="header-badge badge-neutral" data-i18n="badge_ncert">NCERT/NIPUN Aligned</span>
         </div>
@@ -1187,7 +1187,7 @@
         <div style="display: flex; align-items: center; gap: 0.5rem;">
           <span style="font-size: 1.3rem;" aria-hidden="true">🎬</span>
           <h2 id="walkthrough-dialog-title" data-i18n="walkthrough_title" style="font-size: 1.15rem; font-weight: 800; color: var(--accent-navy-dark); margin: 0;">
-            VidyaSetu • How it Works Walkthrough
+            KakshaSahay • How it Works Walkthrough
           </h2>
         </div>
         <button
@@ -1204,7 +1204,7 @@
             id="walkthrough-video-frame"
             class="video-iframe"
             src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview"
-            title="VidyaSetu Classroom Field Demonstration Video"
+            title="KakshaSahay Classroom Field Demonstration Video"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
             loading="lazy"
@@ -1216,7 +1216,7 @@
             id="btn-audio-explain"
             class="btn-primary"
             style="min-height: 48px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1rem; font-weight: 700;"
-            aria-label="Play voice explanation of four VidyaSetu capabilities"
+            aria-label="Play voice explanation of four KakshaSahay capabilities"
           >
             <span id="audio-explain-icon" aria-hidden="true">🔊</span>
             <span id="audio-explain-text" data-i18n="play_voice_explanation">Play Voice Explanation</span>
@@ -1236,7 +1236,7 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <div>
-        <strong>VidyaSetu (विद्यासेतु) • FLN Classroom Copilot</strong>
+        <strong>KakshaSahay (कक्षासहाय) • FLN Classroom Copilot</strong>
         <div style="font-size: 0.78rem; margin-top: 0.2rem;">
           Production-grade offline-first architecture for Indian primary education. Zero cloud dependency.
         </div>
@@ -1612,11 +1612,27 @@
       // =========================================================================
       // 2. CENTRALIZED LOCALIZATION DICTIONARY & PERSISTENCE (PROMPT 10 SECTION 4 & 5)
       // =========================================================================
+      const LANG_KEY = 'kakshasahay_lang';
+      const LEGACY_LANG_KEY = 'vidyasetu_lang';
+
       function getInitialLanguage() {
         try {
-          const saved = localStorage.getItem('vidyasetu_lang');
+          // 1. Attempt to read kakshasahay_lang
+          const saved = localStorage.getItem(LANG_KEY);
           if (saved === 'hi' || saved === 'en') {
             return saved;
+          }
+
+          // 2. If unavailable, fall back to legacy storage key
+          const legacySaved = localStorage.getItem(LEGACY_LANG_KEY);
+          if (legacySaved === 'hi' || legacySaved === 'en') {
+            // 3. If old value exists: migrate it to kakshasahay_lang
+            try {
+              localStorage.setItem(LANG_KEY, legacySaved);
+            } catch (migErr) {
+              console.warn('[KakshaSahay] Failed to migrate language to new key:', migErr);
+            }
+            return legacySaved;
           }
         } catch (e) {
           console.warn('localStorage not accessible for language persistence:', e);
@@ -1626,7 +1642,8 @@
 
       function saveLanguage(lang) {
         try {
-          localStorage.setItem('vidyasetu_lang', lang);
+          // 4. Continue using only the new key for future writes
+          localStorage.setItem(LANG_KEY, lang);
         } catch (e) {
           console.warn('Failed to persist language in localStorage:', e);
         }
@@ -1634,8 +1651,8 @@
 
       const TRANSLATIONS = {
         en: {
-          app_title: "VidyaSetu (विद्यासेतु) • FLN Classroom Copilot",
-          badge_nipun: "NIPUN Bharat Aligned",
+          app_title: "KakshaSahay (कक्षासहाय) • FLN Classroom Copilot",
+          badge_nipun: "NIPUN Bharat Primary Teacher Copilot",
           badge_mgml: "15-Min MGML Cycle",
           badge_ncert: "NCERT/NIPUN Aligned",
           how_it_works_btn: "▶ How it Works",
@@ -1688,7 +1705,7 @@
           heading_practice: "Dynamic Practice Generator (मूर्त अभ्यास)",
           solver_video_tag: "Field Documentation • 90 Seconds",
           heading_video: "Classroom Complexity in Indian Primary Schools",
-          walkthrough_title: "VidyaSetu • How it Works Walkthrough",
+          walkthrough_title: "KakshaSahay • How it Works Walkthrough",
           btn_close_walkthrough_aria: "Close walkthrough dialog",
           play_voice_explanation: "Play Voice Explanation",
           stop_voice_explanation: "Stop Voice Explanation",
@@ -1696,8 +1713,8 @@
           footer_wcag: "WCAG 2.2 AAA"
         },
         hi: {
-          app_title: "विद्यासेतु (VidyaSetu) • एफ़एलएन कक्षा कोपायलट",
-          badge_nipun: "निपुण भारत संरेखित",
+          app_title: "कक्षासहाय (KakshaSahay) • एफ़एलएन कक्षा कोपायलट",
+          badge_nipun: "निपुण भारत प्राथमिक शिक्षक साथी",
           badge_mgml: "15-मिनट चक्र",
           badge_ncert: "एनसीईआरटी/निपुण संरेखित",
           how_it_works_btn: "▶ यह कैसे काम करता है",
@@ -1750,7 +1767,7 @@
           heading_practice: "गतिशील अभ्यास जनरेटर (मूर्त अभ्यास)",
           solver_video_tag: "फील्ड दस्तावेजीकरण • 90 सेकंड",
           heading_video: "भारतीय प्राथमिक विद्यालयों में कक्षा की जटिलता",
-          walkthrough_title: "विद्यासेतु • यह कैसे काम करता है वॉकथ्रू",
+          walkthrough_title: "कक्षासहाय • यह कैसे काम करता है वॉकथ्रू",
           btn_close_walkthrough_aria: "वॉकथ्रू संवाद बंद करें",
           play_voice_explanation: "ऑडियो व्याख्या सुनें",
           stop_voice_explanation: "ऑडियो व्याख्या रोकें",
@@ -1885,6 +1902,25 @@
         } catch (e) {
           console.warn('Speech synthesis unavailable or failed:', e);
         }
+      }
+
+      // Spoken Brand & Welcome Announcements per Rebrand Specification
+      const SPOKEN_BRAND = {
+        en: {
+          brand: "KakshaSahay",
+          welcome: "Welcome to KakshaSahay."
+        },
+        hi: {
+          brand: "कक्षासहाय",
+          welcome: "कक्षासहाय में आपका स्वागत है।"
+        }
+      };
+
+      function speakWelcome() {
+        const welcomeText = (appState && appState.lang === 'hi')
+          ? "कक्षासहाय में आपका स्वागत है।"
+          : "Welcome to KakshaSahay.";
+        announceSpeech(welcomeText);
       }
 
       
@@ -2497,7 +2533,8 @@
       // =========================================================================
       // 6. CARD 3: PERSISTENT ABSENTEEISM TRIAGE
       // =========================================================================
-      const ROSTER_KEY = 'vidyasetu_roster';
+      const ROSTER_KEY = 'kakshasahay_roster';
+      const LEGACY_ROSTER_KEY = 'vidyasetu_roster';
       const absenteeNameInput = document.getElementById('absentee-name-input');
       const absenteeDaysSelect = document.getElementById('absentee-days-select');
       const btnStartDiagnostic = document.getElementById('btn-start-diagnostic');
@@ -2506,17 +2543,39 @@
       const activeRosterCountBadge = document.getElementById('active-roster-count-badge');
 
       function getStoredRoster() {
+        // 1. Attempt to read kakshasahay_roster
         try {
           const raw = localStorage.getItem(ROSTER_KEY);
-          if (raw) {
+          if (raw !== null) {
             const parsed = JSON.parse(raw);
             if (Array.isArray(parsed)) {
               return parsed.filter(item => item && typeof item === 'object' && item.name);
             }
           }
         } catch (e) {
-          console.warn('[VidyaSetu] Corrupt roster data in localStorage, recovering gracefully.', e);
+          console.warn('[KakshaSahay] Corrupt roster data in localStorage, recovering gracefully.', e);
         }
+
+        // 2. If it does not exist, fall back to legacy storage key
+        try {
+          const legacyRaw = localStorage.getItem(LEGACY_ROSTER_KEY);
+          if (legacyRaw !== null) {
+            const legacyParsed = JSON.parse(legacyRaw);
+            if (Array.isArray(legacyParsed)) {
+              const validLegacy = legacyParsed.filter(item => item && typeof item === 'object' && item.name);
+              // 3. If old key exists: migrate/copy it to kakshasahay_roster
+              try {
+                localStorage.setItem(ROSTER_KEY, JSON.stringify(validLegacy));
+              } catch (saveErr) {
+                console.warn('[KakshaSahay] Failed to migrate roster to new key:', saveErr);
+              }
+              return validLegacy;
+            }
+          }
+        } catch (e) {
+          console.warn('[KakshaSahay] Corrupt legacy roster data in localStorage, recovering gracefully.', e);
+        }
+
         return [
           { id: Date.now() - 3600000, name: "Rohan Kumar", gap: "Identified FLN Gap", buddy: "Auto-Assigned Peer", time: "10:15 AM" }
         ];
@@ -2524,9 +2583,10 @@
 
       function saveStoredRoster(roster) {
         try {
+          // Future writes use only the new key
           localStorage.setItem(ROSTER_KEY, JSON.stringify(roster));
         } catch (e) {
-          console.warn('[VidyaSetu] Failed to save roster to localStorage.', e);
+          console.warn('[KakshaSahay] Failed to save roster to localStorage.', e);
         }
       }
 

@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Accessible Modal Engine with Strict Keyboard Focus Trap
+ * KakshaSahay - Accessible Modal Engine with Strict Keyboard Focus Trap
  * Pure DOM node mounting with zero innerHTML, WCAG 2.2 focus trapping, and Escape key handling.
  */
 'use strict';

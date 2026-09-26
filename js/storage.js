@@ -1,12 +1,13 @@
 /**
- * VidyaSetu - Protected Student Data Vault
+ * KakshaSahay - Protected Student Data Vault
  * Encrypts identifying student and remediation records in localStorage using Web Crypto API.
  */
 'use strict';
 
 const StorageVault = (() => {
-  const VAULT_KEY_PREFIX = 'vidyasetu_enc_vault_v1';
-  const VAULT_SALT = 'VidyaSetuNIPUN2026FLN';
+  const VAULT_KEY_PREFIX = 'kakshasahay_enc_vault_v1';
+  const LEGACY_VAULT_KEY_PREFIX = 'vidyasetu_enc_vault_v1';
+  const VAULT_SALT = 'KakshaSahayNIPUN2026FLN';
 
   function getCrypto() {
     if (typeof window !== 'undefined' && window.crypto && window.crypto.subtle) return window.crypto;
@@ -161,7 +162,7 @@ const StorageVault = (() => {
   async function getStudentRecords() {
     try {
       if (typeof localStorage === 'undefined') return [];
-      const raw = localStorage.getItem(VAULT_KEY_PREFIX);
+      const raw = localStorage.getItem(VAULT_KEY_PREFIX) || localStorage.getItem(LEGACY_VAULT_KEY_PREFIX);
       if (!raw) return [];
       const decrypted = await decryptData(raw);
       return decrypted ? JSON.parse(decrypted) : [];
@@ -176,7 +177,7 @@ const StorageVault = (() => {
     const start = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
     try {
       if (typeof localStorage === 'undefined') return { pass: false, latencyMs: 0, reason: 'No localStorage' };
-      const testKey = 'vidyasetu_benchmark_test';
+      const testKey = 'kakshasahay_benchmark_test';
       const testVal = 'benchmark_payload_' + Date.now();
       localStorage.setItem(testKey, testVal);
       const readVal = localStorage.getItem(testKey);

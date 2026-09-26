@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Automated Test Suite
+ * KakshaSahay - Automated Test Suite
  * Validates StateStore, True Delta-Time Clock, Encrypted Storage, Generative RAG, and Security.
  */
 'use strict';
@@ -97,7 +97,7 @@ async function runAsyncTest(testName, testFn) {
 
 async function runSuite() {
   console.log('\n=============================================================');
-  console.log('🧪 VidyaSetu Comprehensive Automated Test Suite');
+  console.log('🧪 KakshaSahay Comprehensive Automated Test Suite');
   console.log('=============================================================\n');
 
   // --- 1. StateStore Tests ---
@@ -188,7 +188,7 @@ async function runSuite() {
   });
 
   await runAsyncTest('Raw localStorage contains no unencrypted student names', async () => {
-    const rawVal = global.localStorage.getItem('vidyasetu_enc_vault_v1');
+    const rawVal = global.localStorage.getItem('kakshasahay_enc_vault_v1') || global.localStorage.getItem('vidyasetu_enc_vault_v1');
     assert.ok(rawVal);
     // Student name must NOT be present as cleartext
     assert.strictEqual(rawVal.includes('सोनू (कक्षा 2)'), false);

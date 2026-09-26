@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Generative Pedagogical Analogy Engine (Bhasha Setu)
+ * KakshaSahay - Generative Pedagogical Analogy Engine (Bhasha Setu)
  * Combines on-device quantized semantic synthesis with optional serverless edge LLMs.
  */
 'use strict';
@@ -134,7 +134,7 @@ const GenerativeRAG = (() => {
     // 1. Try Serverless Edge LLM API if key is provided and online
     if (edgeApiKey && typeof navigator !== 'undefined' && navigator.onLine) {
       try {
-        const prompt = `You are VidyaSetu generative engine for Indian primary teachers (NIPUN Bharat).
+        const prompt = `You are KakshaSahay generative engine for Indian primary teachers (NIPUN Bharat).
 Generate a localized primary school pedagogy card for syllabus concept: "${cleanConcept}" in dialect context: "${arch.name}".
 Return ONLY a valid JSON object:
 {

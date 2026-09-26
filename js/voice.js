@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Active Speech-to-Text (STT) Voice Assistant & Intent Router
+ * KakshaSahay - Active Speech-to-Text (STT) Voice Assistant & Intent Router
  * Replaces simulated dialogue with native Web Speech Recognition and semantic intent routing.
  */
 'use strict';

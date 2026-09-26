@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Real Runtime Diagnostic Suite (Non-Placebo Assertions)
+ * KakshaSahay - Real Runtime Diagnostic Suite (Non-Placebo Assertions)
  * Replaces hardcoded boolean literals with dynamic DOM bounding-box measurements,
  * storage latency benchmarks, and voice-pack integrity assertions.
  */

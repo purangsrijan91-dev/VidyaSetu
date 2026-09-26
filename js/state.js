@@ -1,5 +1,5 @@
 /**
- * VidyaSetu - Decoupled Reactive Pedagogy State Store & FSM
+ * KakshaSahay - Decoupled Reactive Pedagogy State Store & FSM
  * Implements 15-Minute Multi-Grade Finite State Machine, Diagnostic Queue, and Input Sanitizer.
  */
 'use strict';
@@ -39,7 +39,7 @@ const StateStore = (() => {
   // Safe localStorage read on boot
   try {
     if (typeof localStorage !== 'undefined') {
-      state.edgeApiKey = localStorage.getItem('vidyasetu_edge_api_key') || '';
+      state.edgeApiKey = localStorage.getItem('kakshasahay_edge_api_key') || localStorage.getItem('vidyasetu_edge_api_key') || '';
     }
   } catch (e) {
     console.warn('[StateStore] LocalStorage disabled or blocked:', e);
