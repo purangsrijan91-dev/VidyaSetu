@@ -135,19 +135,100 @@ test.describe('KakshaSahay End-to-End Workflow Verification', () => {
     await langToggleBtn.click();
   });
 
-  test('7. Walkthrough dialog opens with accessible focus and closes cleanly', async ({ page }) => {
+  test('7. Audio Concurrency & Cross-Tab Coordination: Prevents overlapping speech, cancels on hidden tab, coordinates cross-tab', async ({ context }) => {
+    const page1 = await context.newPage();
+    await page1.goto('http://localhost:3001');
+
+    // 1. Same-Tab Concurrency: Rapid triggers cancel previous speech
+    const speechStatus = await page1.evaluate(async () => {
+      let speakCount = 0;
+      let cancelCount = 0;
+      const originalSpeak = window.speechSynthesis.speak;
+      const originalCancel = window.speechSynthesis.cancel;
+
+      window.speechSynthesis.speak = function(u) {
+        speakCount++;
+        return originalSpeak.call(window.speechSynthesis, u);
+      };
+      window.speechSynthesis.cancel = function() {
+        cancelCount++;
+        return originalCancel.call(window.speechSynthesis);
+      };
+
+      // Trigger first speech
+      window.speak('First message test');
+      // Trigger second speech immediately
+      window.speak('Second message test');
+
+      return { speakCount, cancelCount };
+    });
+
+    // Cancel should have been called before second speech
+    expect(speechStatus.cancelCount).toBeGreaterThanOrEqual(1);
+    expect(speechStatus.speakCount).toBe(2);
+
+    // 2. Visibility change: speech cancelled when document becomes hidden
+    const visibilityCanceled = await page1.evaluate(async () => {
+      let canceledOnHidden = false;
+      const originalCancel = window.speechSynthesis.cancel;
+      window.speechSynthesis.cancel = function() {
+        canceledOnHidden = true;
+        return originalCancel.call(window.speechSynthesis);
+      };
+
+      // Speak something
+      window.speak('Testing visibility hidden behavior');
+      canceledOnHidden = false; // Reset to check event handler
+
+      // Simulate visibility change to hidden
+      Object.defineProperty(document, 'hidden', { value: true, writable: true, configurable: true });
+      document.dispatchEvent(new Event('visibilitychange'));
+
+      return canceledOnHidden;
+    });
+
+    expect(visibilityCanceled).toBe(true);
+
+    // 3. Cross-Tab Coordination: Speech in Tab 2 cancels speech in Tab 1
+    const page2 = await context.newPage();
+    await page2.goto('http://localhost:3001');
+
+    // Set up spy in Tab 1
+    await page1.evaluate(() => {
+      window._tab1CancelCalled = false;
+      const originalCancel = window.speechSynthesis.cancel;
+      window.speechSynthesis.cancel = function() {
+        window._tab1CancelCalled = true;
+        return originalCancel.call(window.speechSynthesis);
+      };
+      window.speak('Tab 1 long announcement');
+    });
+
+    // Speak in Tab 2
+    await page2.evaluate(() => {
+      window.speak('Tab 2 announcement taking priority');
+    });
+
+    // Wait briefly for BroadcastChannel message transmission
+    await page1.waitForTimeout(300);
+
+    const tab1Canceled = await page1.evaluate(() => window._tab1CancelCalled);
+    expect(tab1Canceled).toBe(true);
+
+    await page1.close();
+    await page2.close();
+  });
+
+  test('8. How It Works button, dialog, and iframe are completely removed from DOM', async ({ page }) => {
     await page.goto('http://localhost:3001');
 
-    const howItWorksBtn = page.locator('#btn-how-it-works');
-    await howItWorksBtn.click();
+    await expect(page.locator('#btn-how-it-works')).toHaveCount(0);
+    await expect(page.locator('#walkthrough-dialog')).toHaveCount(0);
+    await expect(page.locator('#walkthrough-modal-backdrop')).toHaveCount(0);
+    await expect(page.locator('#walkthrough-video-frame')).toHaveCount(0);
 
-    const dialog = page.locator('#walkthrough-dialog');
-    await expect(dialog).toBeVisible();
-    await expect(dialog).toHaveAttribute('role', 'dialog');
-    await expect(dialog).toHaveAttribute('aria-modal', 'true');
-
-    const closeBtn = page.locator('#btn-close-walkthrough');
-    await closeBtn.click();
-    await expect(dialog).not.toBeVisible();
+    // Verify preserved elements still exist
+    await expect(page.locator('#btn-start-tour')).toBeVisible();
+    await expect(page.locator('#field-video-frame')).toBeVisible();
   });
 });

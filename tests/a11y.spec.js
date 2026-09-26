@@ -22,24 +22,6 @@ test.describe('KakshaSahay Accessibility Audit (WCAG 2.2 AA)', () => {
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test('Walkthrough modal dialog maintains accessible dialog semantics', async ({ page }) => {
-    await page.goto('http://localhost:3001');
-    await page.locator('#btn-how-it-works').click();
-    await page.locator('#walkthrough-dialog').waitFor({ state: 'visible' });
-
-    // Exclude third-party embedded Google Drive iframe inside modal from first-party audit
-    const accessibilityScanResults = await new AxeBuilder({ page })
-      .include('#walkthrough-dialog')
-      .exclude('#walkthrough-video-frame')
-      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-      .analyze();
-
-    if (accessibilityScanResults.violations.length > 0) {
-      console.log('Modal Violations:', JSON.stringify(accessibilityScanResults.violations, null, 2));
-    }
-
-    expect(accessibilityScanResults.violations).toEqual([]);
-  });
 
   test('Interactive controls have sufficient target sizes and accessible names', async ({ page }) => {
     await page.goto('http://localhost:3001');

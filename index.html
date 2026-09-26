@@ -670,78 +670,6 @@
       }
     }
 
-    /* Accessible Walkthrough Modal Styles */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(4px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      overflow-y: auto;
-    }
-    .modal-dialog {
-      background: var(--bg-surface);
-      border-radius: 1.25rem;
-      border: 1.5px solid var(--border-subtle);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.15);
-      width: 100%;
-      max-width: 780px;
-      max-height: 90vh;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      outline: none;
-    }
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 1.5rem;
-      border-bottom: 1.5px solid var(--border-subtle);
-      background: var(--bg-canvas);
-      border-top-left-radius: 1.25rem;
-      border-top-right-radius: 1.25rem;
-    }
-    .modal-close-btn {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
-      min-height: 48px;
-      border-radius: 50%;
-      border: 1.5px solid var(--border-subtle);
-      background: var(--bg-surface);
-      color: var(--text-main);
-      font-size: 1.25rem;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.15s ease, border-color 0.15s ease;
-    }
-    .modal-close-btn:hover {
-      background: #FEE2E2;
-      border-color: #EF4444;
-      color: #B91C1C;
-    }
-    .modal-close-btn:focus-visible {
-      outline: 3px solid var(--accent-saffron);
-      outline-offset: 2px;
-    }
-    .modal-body {
-      padding: 1.5rem;
-    }
-    .walkthrough-audio-box {
-      background: var(--bg-canvas);
-      border: 1.5px solid var(--border-subtle);
-      border-radius: 0.75rem;
-      padding: 1rem;
-    }
-
     /* Header Actions and Language Toggle */
     .header-actions {
       display: flex;
@@ -803,17 +731,6 @@
     </div>
 
     <div class="header-actions">
-      <button
-        id="btn-how-it-works"
-        class="btn-primary"
-        aria-haspopup="dialog"
-        aria-expanded="false"
-        style="min-height: 48px; min-width: 48px; padding: 0.5rem 1.15rem; font-weight: 700;"
-        data-i18n="how_it_works_btn"
-      >
-        ▶ How it Works
-      </button>
-
       <button
         id="btn-start-tour"
         class="btn-secondary"
@@ -1218,66 +1135,6 @@
       </div>
     </section>
 
-  </div>
-
-
-  <!-- Accessible Walkthrough Modal Dialog -->
-  <div id="walkthrough-modal-backdrop" class="modal-backdrop" style="display: none;" role="presentation">
-    <div
-      id="walkthrough-dialog"
-      class="modal-dialog walkthrough-modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="walkthrough-dialog-title"
-      tabindex="-1"
-    >
-      <div class="modal-header">
-        <div style="display: flex; align-items: center; gap: 0.5rem;">
-          <span style="font-size: 1.3rem;" aria-hidden="true">🎬</span>
-          <h2 id="walkthrough-dialog-title" data-i18n="walkthrough_title" style="font-size: 1.15rem; font-weight: 800; color: var(--accent-navy-dark); margin: 0;">
-            KakshaSahay • How it Works Walkthrough
-          </h2>
-        </div>
-        <button
-          id="btn-close-walkthrough"
-          class="modal-close-btn"
-          aria-label="Close walkthrough dialog"
-          data-i18n-aria="btn_close_walkthrough_aria"
-        >✕</button>
-      </div>
-
-      <div class="modal-body">
-        <div class="video-container" style="margin-bottom: 1rem; border-radius: 0.75rem; overflow: hidden; background: #0F172A;">
-          <iframe
-            id="walkthrough-video-frame"
-            class="video-iframe"
-            src="https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview"
-            title="KakshaSahay Classroom Field Demonstration Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            loading="lazy"
-          ></iframe>
-        </div>
-
-        <div class="walkthrough-audio-box">
-          <button
-            id="btn-audio-explain"
-            class="btn-primary"
-            style="min-height: 48px; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 1rem; font-weight: 700;"
-            aria-label="Play voice explanation of four KakshaSahay capabilities"
-          >
-            <span id="audio-explain-icon" aria-hidden="true">🔊</span>
-            <span id="audio-explain-text" data-i18n="play_voice_explanation">Play Voice Explanation</span>
-          </button>
-          <div
-            id="audio-explain-status"
-            class="audio-explain-status"
-            aria-live="polite"
-            style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted); text-align: center; min-height: 1.25rem;"
-          ></div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Site Footer -->
@@ -1703,7 +1560,6 @@
           badge_nipun: "NIPUN Bharat Primary Teacher Copilot",
           badge_mgml: "15-Min MGML Cycle",
           badge_ncert: "NCERT/NIPUN Aligned",
-          how_it_works_btn: "▶ How it Works",
           interactive_tour_btn: "🎬 Interactive Walkthrough",
           lang_toggle_label: "हिन्दी / English",
           lang_toggle_aria: "Switch language to Hindi",
@@ -1753,10 +1609,6 @@
           heading_practice: "Dynamic Practice Generator (मूर्त अभ्यास)",
           solver_video_tag: "Field Documentation • 90 Seconds",
           heading_video: "Classroom Complexity in Indian Primary Schools",
-          walkthrough_title: "KakshaSahay • How it Works Walkthrough",
-          btn_close_walkthrough_aria: "Close walkthrough dialog",
-          play_voice_explanation: "Play Voice Explanation",
-          stop_voice_explanation: "Stop Voice Explanation",
           footer_cache: "Offline Cache: Active",
           footer_wcag: "WCAG 2.2 AA Targeted"
         },
@@ -1765,7 +1617,6 @@
           badge_nipun: "निपुण भारत प्राथमिक शिक्षक साथी",
           badge_mgml: "15-मिनट चक्र",
           badge_ncert: "एनसीईआरटी/निपुण संरेखित",
-          how_it_works_btn: "▶ यह कैसे काम करता है",
           interactive_tour_btn: "🎬 इंटरएक्टिव वॉकथ्रू",
           lang_toggle_label: "English / हिन्दी",
           lang_toggle_aria: "भाषा अंग्रेजी में बदलें",
@@ -1815,17 +1666,13 @@
           heading_practice: "गतिशील अभ्यास जनरेटर (मूर्त अभ्यास)",
           solver_video_tag: "फील्ड दस्तावेजीकरण • 90 सेकंड",
           heading_video: "भारतीय प्राथमिक विद्यालयों में कक्षा की जटिलता",
-          walkthrough_title: "कक्षासहाय • यह कैसे काम करता है वॉकथ्रू",
-          btn_close_walkthrough_aria: "वॉकथ्रू संवाद बंद करें",
-          play_voice_explanation: "ऑडियो व्याख्या सुनें",
-          stop_voice_explanation: "ऑडियो व्याख्या रोकें",
           footer_cache: "ऑफलाइन कैश: सक्रिय",
           footer_wcag: "डब्ल्यूसीएजी 2.2 एए लक्षित"
         }
       };
 
       // =========================================================================
-      // 3. OPTIMIZED SPEECH SYNTHESIS ENGINE (PROMPT 10 SECTION 2 SPECIFICATION)
+      // 3. CENTRALIZED SPEECH SYNTHESIS & CROSS-TAB AUDIO COORDINATION
       // =========================================================================
       let cachedVoices = [];
 
@@ -1846,7 +1693,7 @@
         }
       }
 
-      // Voice Preferences per Prompt 10 Section 2
+      // Voice Preferences per Specification
       const PREFERRED_INDIAN_VOICE_NAMES = [
         'Google हिन्दी',
         'Google Hindi',
@@ -1909,32 +1756,74 @@
         return defaultVoice || cachedVoices[0] || null;
       }
 
-      const srAnnouncer = document.getElementById('sr-live-region');
+      // Cross-Tab Speech Coordination Channel
+      const SPEECH_CHANNEL_NAME = 'kakshasahay_speech_channel';
+      const TAB_INSTANCE_ID = 'tab_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now();
+      let speechBroadcastChannel = null;
+      let activeUtterance = null;
+      let isSpeaking = false;
 
-      function announceSpeech(text, lang = null) {
-        // Queue protection: Stop any ongoing walkthrough audio explanation before speaking
-        stopAudioExplanation();
-
-        if (srAnnouncer) {
-          srAnnouncer.textContent = text;
+      if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+        try {
+          speechBroadcastChannel = new BroadcastChannel(SPEECH_CHANNEL_NAME);
+          speechBroadcastChannel.onmessage = (event) => {
+            if (event && event.data && event.data.type === 'CANCEL_SPEECH') {
+              if (event.data.senderId !== TAB_INSTANCE_ID) {
+                // Another tab requested speech or silence - cancel local speech immediately
+                cancelSpeech(false);
+              }
+            }
+          };
+        } catch (e) {
+          console.warn('[KakshaSahay] BroadcastChannel initialization note:', e);
         }
+      }
+
+      function cancelSpeech(broadcast = true) {
+        if ('speechSynthesis' in window) {
+          try {
+            window.speechSynthesis.cancel();
+          } catch (e) {}
+        }
+        activeUtterance = null;
+        isSpeaking = false;
+
+        if (broadcast && speechBroadcastChannel) {
+          try {
+            speechBroadcastChannel.postMessage({
+              type: 'CANCEL_SPEECH',
+              senderId: TAB_INSTANCE_ID,
+              timestamp: Date.now()
+            });
+          } catch (e) {}
+        }
+      }
+
+      // Visibility API Hook: Stop speech immediately when user switches or hides tab
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          cancelSpeech(false);
+        }
+      });
+
+      function speak(text, opts = {}) {
+        if (!text || typeof text !== 'string') return;
+
+        // Cancel active/queued speech locally and coordinate across open tabs
+        cancelSpeech(true);
 
         if (!('speechSynthesis' in window)) return;
 
         try {
-          // Cancel previous speech to prevent overlapping queues
-          window.speechSynthesis.cancel();
-
-          const targetLang = lang || (appState.lang === 'hi' ? 'hi-IN' : 'en-IN');
+          const targetLang = opts.lang || (appState.lang === 'hi' ? 'hi-IN' : 'en-IN');
           const cleanText = text.replace(/(\d+)\s*[-–—]\s*(\d+)/g, '$1 to $2');
           const utterance = new SpeechSynthesisUtterance(cleanText);
 
-          // Conservative, natural parameters (Prompt 10: pitch 1.0, rate 0.92, volume 1.0; legacy ref: utterance.pitch = 1.18, utterance.rate = 0.88, utterance.volume = 0.95)
-          utterance.pitch = 1.0;
-          utterance.rate = 0.92;
-          utterance.volume = 1.0;
+          utterance.pitch = typeof opts.pitch === 'number' ? opts.pitch : 1.0;
+          utterance.rate = typeof opts.rate === 'number' ? opts.rate : 0.92;
+          utterance.volume = typeof opts.volume === 'number' ? opts.volume : 1.0;
 
-          const voice = selectBestVoice(targetLang);
+          const voice = opts.voice || selectBestVoice(targetLang);
           if (voice) {
             utterance.voice = voice;
             utterance.lang = voice.lang || targetLang;
@@ -1942,14 +1831,44 @@
             utterance.lang = targetLang;
           }
 
-          utterance.onerror = (e) => {
-            console.warn('Speech synthesis playback error:', e);
+          utterance.onstart = () => {
+            isSpeaking = true;
+            if (typeof opts.onstart === 'function') opts.onstart();
           };
 
+          utterance.onend = () => {
+            isSpeaking = false;
+            if (activeUtterance === utterance) activeUtterance = null;
+            if (typeof opts.onend === 'function') opts.onend();
+          };
+
+          utterance.onerror = (e) => {
+            console.warn('[KakshaSahay] Speech synthesis playback error:', e);
+            isSpeaking = false;
+            if (activeUtterance === utterance) activeUtterance = null;
+            if (typeof opts.onerror === 'function') opts.onerror(e);
+          };
+
+          activeUtterance = utterance;
           window.speechSynthesis.speak(utterance);
         } catch (e) {
-          console.warn('Speech synthesis unavailable or failed:', e);
+          console.warn('[KakshaSahay] Speech synthesis invocation failed:', e);
+          isSpeaking = false;
+          activeUtterance = null;
         }
+      }
+
+      // Expose helpers globally for accessibility, debugging, and testing
+      window.speak = speak;
+      window.cancelSpeech = cancelSpeech;
+
+      const srAnnouncer = document.getElementById('sr-live-region');
+
+      function announceSpeech(text, lang = null) {
+        if (srAnnouncer) {
+          srAnnouncer.textContent = text;
+        }
+        speak(text, { lang });
       }
 
       // Spoken Brand & Welcome Announcements per Rebrand Specification
@@ -1969,162 +1888,6 @@
           ? "कक्षासहाय में आपका स्वागत है।"
           : "Welcome to KakshaSahay.";
         announceSpeech(welcomeText);
-      }
-
-      
-      // =========================================================================
-      // 3B. HOW IT WORKS WALKTHROUGH & 4-PART AUDIO EXPLANATION (PROMPT 10 SECTION 3)
-      // =========================================================================
-      const AUDIO_WALKTHROUGH = {
-        en: [
-          "The 15-minute multi-grade cycle rotates direct teacher instruction between Grade 1 and Grades 2 and 3, ensuring every learner stays actively engaged.",
-          "Bhasha Setu bridges formal textbook concepts with rural vernacular metaphors and practical classroom micro-scripts.",
-          "The 2-minute oral diagnostic screens returning absent students and pairs them with peer buddies for immediate foundational catch-up.",
-          "Zero-cost chalkboard games and dynamic practice use slates, chalk, and local pebbles to solidify core numeracy and literacy."
-        ],
-        hi: [
-          "15 मिनट का मल्टी-ग्रेड चक्र कक्षा 1 और कक्षा 2-3 के बीच प्रत्यक्ष शिक्षण को संतुलित करता है, जिससे सभी बच्चे सक्रिय रहते हैं।",
-          "भाषा सेतु किताबी परिभाषाओं को ग्रामीण सादृश्यों और व्यावहारिक गतिविधियों से जोड़ता है।",
-          "2 मिनट का ओरल डायग्नोस्टिक अनुपस्थित रहे छात्रों की जांच कर सहपाठी मित्र जोड़ता है।",
-          "शून्य लागत श्यामपट्ट खेल और अभ्यास स्लेट, चाक और कंकड़ का उपयोग करके बुनियादी समझ पक्की करते हैं।"
-        ]
-      };
-
-      let isAudioExplaining = false;
-      let audioExplanationUtteranceIndex = 0;
-      let lastFocusedElement = null;
-
-      function stopAudioExplanation() {
-        if (!isAudioExplaining && !('speechSynthesis' in window && window.speechSynthesis.speaking)) return;
-        isAudioExplaining = false;
-        audioExplanationUtteranceIndex = 0;
-        if ('speechSynthesis' in window) {
-          try { window.speechSynthesis.cancel(); } catch (e) {}
-        }
-        updateAudioExplainButtonState();
-      }
-
-      function updateAudioExplainButtonState() {
-        const btn = document.getElementById('btn-audio-explain');
-        const icon = document.getElementById('audio-explain-icon');
-        const text = document.getElementById('audio-explain-text');
-        const status = document.getElementById('audio-explain-status');
-        const lang = appState.lang || 'en';
-
-        if (!btn) return;
-        if (isAudioExplaining) {
-          if (icon) icon.textContent = '⏹';
-          if (text) text.textContent = lang === 'hi' ? 'ऑडियो व्याख्या रोकें' : 'Stop Voice Explanation';
-          btn.setAttribute('aria-label', lang === 'hi' ? 'ऑडियो व्याख्या रोकें' : 'Stop Voice Explanation');
-          if (status) {
-            status.textContent = lang === 'hi'
-              ? ('भाग ' + (audioExplanationUtteranceIndex + 1) + ' / 4 बोल रहे हैं...')
-              : ('Playing part ' + (audioExplanationUtteranceIndex + 1) + ' of 4...');
-          }
-        } else {
-          if (icon) icon.textContent = '🔊';
-          if (text) text.textContent = lang === 'hi' ? 'ऑडियो व्याख्या सुनें' : 'Play Voice Explanation';
-          btn.setAttribute('aria-label', lang === 'hi' ? 'ऑडियो व्याख्या सुनें' : 'Play Voice Explanation');
-          if (status) status.textContent = '';
-        }
-      }
-
-      function playNextWalkthroughUtterance() {
-        if (!isAudioExplaining) return;
-        const lang = appState.lang || 'en';
-        const utterances = AUDIO_WALKTHROUGH[lang] || AUDIO_WALKTHROUGH.en;
-
-        if (audioExplanationUtteranceIndex >= utterances.length) {
-          isAudioExplaining = false;
-          audioExplanationUtteranceIndex = 0;
-          updateAudioExplainButtonState();
-          return;
-        }
-
-        const textToSpeak = utterances[audioExplanationUtteranceIndex];
-        updateAudioExplainButtonState();
-
-        if (!('speechSynthesis' in window)) {
-          isAudioExplaining = false;
-          updateAudioExplainButtonState();
-          const status = document.getElementById('audio-explain-status');
-          if (status) status.textContent = lang === 'hi' ? 'स्पीच सिंथेसिस उपलब्ध नहीं है।' : 'Speech synthesis not available.';
-          return;
-        }
-
-        try {
-          window.speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(textToSpeak);
-          const speechLang = lang === 'hi' ? 'hi-IN' : 'en-IN';
-          utterance.lang = speechLang;
-          const voice = selectBestVoice(speechLang);
-          if (voice) utterance.voice = voice;
-          utterance.pitch = 1.0;
-          utterance.rate = 0.92;
-          utterance.volume = 1.0;
-
-          utterance.onend = () => {
-            if (isAudioExplaining) {
-              audioExplanationUtteranceIndex++;
-              setTimeout(() => {
-                if (isAudioExplaining) playNextWalkthroughUtterance();
-              }, 250);
-            }
-          };
-
-          utterance.onerror = (err) => {
-            console.warn('Walkthrough speech error:', err);
-            isAudioExplaining = false;
-            audioExplanationUtteranceIndex = 0;
-            updateAudioExplainButtonState();
-          };
-
-          window.speechSynthesis.speak(utterance);
-        } catch (err) {
-          console.error('Error in walkthrough speech:', err);
-          isAudioExplaining = false;
-          audioExplanationUtteranceIndex = 0;
-          updateAudioExplainButtonState();
-        }
-      }
-
-      function toggleAudioExplanation() {
-        if (isAudioExplaining) {
-          stopAudioExplanation();
-        } else {
-          isAudioExplaining = true;
-          audioExplanationUtteranceIndex = 0;
-          playNextWalkthroughUtterance();
-        }
-      }
-
-      function openWalkthrough() {
-        lastFocusedElement = document.activeElement;
-        const backdrop = document.getElementById('walkthrough-modal-backdrop');
-        const dialog = document.getElementById('walkthrough-dialog');
-        const btn = document.getElementById('btn-how-it-works');
-        if (backdrop && dialog) {
-          backdrop.style.display = 'flex';
-          if (btn) btn.setAttribute('aria-expanded', 'true');
-          document.body.style.overflow = 'hidden';
-          const closeBtn = document.getElementById('btn-close-walkthrough');
-          if (closeBtn) closeBtn.focus();
-          else dialog.focus();
-        }
-      }
-
-      function closeWalkthrough() {
-        stopAudioExplanation();
-        const backdrop = document.getElementById('walkthrough-modal-backdrop');
-        const btn = document.getElementById('btn-how-it-works');
-        if (backdrop) {
-          backdrop.style.display = 'none';
-          if (btn) btn.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        }
-        if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
-          lastFocusedElement.focus();
-        }
       }
 
       // =========================================================================
@@ -2180,7 +1943,6 @@
         updatePhaseUI();
         updateTimerDisplay();
         updateMasteryDisplay();
-        updateAudioExplainButtonState();
         renderActiveRoster();
       }
 
@@ -2385,7 +2147,7 @@
           btnToggleTimer.className = 'btn-warning';
 
           // Speech announcement prior to start
-          window.speechSynthesis.cancel();
+          cancelSpeech();
           announceSpeech("15-minute multi-grade cycle started. Teacher direct instruction with Grade 1; Grades 2 and 3 on collaborative peer tasks.");
           state.intervalId = setInterval(tickTimer, 250);
         } else {
@@ -3708,66 +3470,10 @@
       checkVideoConnectivity();
 
 
-      // Bind Triad Enhancements Event Listeners
-      const btnHowItWorks = document.getElementById('btn-how-it-works');
-      if (btnHowItWorks) {
-        btnHowItWorks.addEventListener('click', openWalkthrough);
-      }
-
-      const btnCloseWalkthrough = document.getElementById('btn-close-walkthrough');
-      if (btnCloseWalkthrough) {
-        btnCloseWalkthrough.addEventListener('click', closeWalkthrough);
-      }
-
-      const walkthroughBackdrop = document.getElementById('walkthrough-modal-backdrop');
-      if (walkthroughBackdrop) {
-        walkthroughBackdrop.addEventListener('click', (e) => {
-          if (e.target === walkthroughBackdrop) closeWalkthrough();
-        });
-      }
-
-      const btnAudioExplain = document.getElementById('btn-audio-explain');
-      if (btnAudioExplain) {
-        btnAudioExplain.addEventListener('click', toggleAudioExplanation);
-      }
-
       const btnLangToggle = document.getElementById('btn-lang-toggle');
       if (btnLangToggle) {
         btnLangToggle.addEventListener('click', toggleLanguage);
       }
-
-      // Accessible keyboard trap and Escape handler
-      document.addEventListener('keydown', (e) => {
-        const backdrop = document.getElementById('walkthrough-modal-backdrop');
-        if (!backdrop || backdrop.style.display === 'none') return;
-
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          closeWalkthrough();
-          return;
-        }
-
-        if (e.key === 'Tab') {
-          const dialog = document.getElementById('walkthrough-dialog');
-          if (!dialog) return;
-          const focusables = dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), iframe');
-          if (focusables.length === 0) return;
-          const first = focusables[0];
-          const last = focusables[focusables.length - 1];
-
-          if (e.shiftKey) {
-            if (document.activeElement === first) {
-              e.preventDefault();
-              last.focus();
-            }
-          } else {
-            if (document.activeElement === last) {
-              e.preventDefault();
-              first.focus();
-            }
-          }
-        }
-      });
 
       // Initialize UI with preferred or stored language
       applyTranslations(appState.lang);

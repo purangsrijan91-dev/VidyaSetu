@@ -25,8 +25,7 @@
 3. **Bhasha Setu (Language Bridge):** Cascading selects, analogy display card, audio trigger button.
 4. **Absenteeism Catch-Up Triage:** Input fields, duration selector, screening checklist, peer buddy roster.
 5. **Zero-Cost Chalkboard TLM:** Interactive number train, carriage inputs, math manipulative switcher.
-6. **Walkthrough Modal Dialog:** Trigger button, focus trap, Escape key dismiss, backdrop management.
-7. **System Transparency Disclosure:** Grid cards, informational disclosures.
+6. **System Transparency Disclosure:** Grid cards, informational disclosures.
 
 ---
 
@@ -35,7 +34,6 @@
 | Test Case | Scope | Rules Checked | Automated Status | Violations Detected |
 |:---|:---|:---|:---:|:---:|
 | **Main Classroom View** | Entire first-party DOM (`index.html`) | WCAG 2.0 / 2.1 / 2.2 AA | ✅ **PASS** | 0 |
-| **Walkthrough Modal Dialog** | `#walkthrough-dialog` | Dialog semantics, modal isolation | ✅ **PASS** | 0 |
 | **Interactive Controls** | All `<button>`, `<input>`, `<select>` | `button-name`, `link-name`, `aria-roles`, target geometry | ✅ **PASS** | 0 |
 
 ---
@@ -46,12 +44,9 @@
 * **Finding:** Previous versions claimed `WCAG 2.2 AAA Compliant` in the UI and README without an audit trail. Full Level AAA across bilingual, multigrade, and embedded video components is unachievable without comprehensive cognitive disability testing and custom text-spacing overrides.
 * **Remediation:** Removed all references to `WCAG 2.2 AAA` across HTML markup, translations (`TRANSLATIONS.en` and `TRANSLATIONS.hi`), and documentation. Replaced with verified `WCAG 2.2 AA Targeted and Audited`.
 
-### 2. Dialog Modal Semantics & Focus Management
-* **Finding:** Modal dialogs in single-file architectures frequently suffer from keyboard focus leaks and missing ARIA boundaries.
-* **Remediation:**
-  * Added `role="dialog"`, `aria-modal="true"`, and `aria-labelledby="walkthrough-dialog-title"` to `#walkthrough-dialog`.
-  * Implemented strict bidirectional `Tab` / `Shift+Tab` focus wrapping within the modal.
-  * Added `Escape` key dismissal with focus restoration to `#btn-how-it-works`.
+### 2. Elimination of Modal Overlays & Audio Overlap
+* **Finding:** Extraneous modal walkthroughs with third-party iframes created unnecessary DOM weight, potential focus trapping issues, and overlapping audio synthesis bugs.
+* **Remediation:** Completely removed the "How It Works" modal overlay and embedded Google Drive iframe. Centralized speech synthesis with local cancellation, Page Visibility API integration (`visibilitychange`), and cross-tab mutual exclusion via `BroadcastChannel('kakshasahay_speech_channel')`.
 
 ### 3. Touch Target Geometry
 * **Finding:** Primary school teachers use budget smartphones with varied digit dexterity and cracked screens.

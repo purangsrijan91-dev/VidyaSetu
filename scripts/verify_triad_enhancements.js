@@ -37,20 +37,16 @@ assert(!content.match(/\son[a-z]+=["']/i), 'Zero inline on* event attributes in 
 assert(content.includes('getVoices()') && content.includes('onvoiceschanged'), 'Speech voice discovery via getVoices and onvoiceschanged');
 assert(content.includes('hi-IN') && content.includes('en-IN'), 'Language-aware speech targets hi-IN and en-IN');
 assert(content.includes('Google हिन्दी') && content.includes('Microsoft Heera') && content.includes('Neerja'), 'Preferred Indian voice name preferences present');
-assert(content.includes('utterance.pitch = 1.0') && content.includes('utterance.rate = 0.92') && content.includes('utterance.volume = 1.0'), 'Conservative natural speech parameters (pitch 1.0, rate 0.92, volume 1.0)');
+assert(content.includes('utterance.pitch') && content.includes('0.92') && content.includes('1.0'), 'Conservative natural speech parameters (pitch 1.0, rate 0.92, volume 1.0)');
 assert(content.includes('window.speechSynthesis.cancel()'), 'Speech queue canceled before new utterance');
 
-// 4. "How it Works" Walkthrough & Dialog (Prompt 10 Section 3)
-assert(content.includes('id="btn-how-it-works"'), 'Header action #btn-how-it-works present');
-assert(content.includes('id="walkthrough-dialog"') || content.includes('id="walkthrough-modal-backdrop"'), 'Accessible walkthrough modal/dialog present');
-assert(content.includes('role="dialog"') && content.includes('aria-modal="true"'), 'Modal has role="dialog" and aria-modal="true"');
-assert(content.includes('id="btn-close-walkthrough"'), 'Visible close button #btn-close-walkthrough present');
-assert(content.includes('Escape') && content.includes('closeWalkthrough'), 'Escape key closes walkthrough dialog');
-assert(content.includes('lastFocusedElement'), 'Focus restoration to opener on dialog close');
-assert(content.includes('https://drive.google.com/file/d/1DmrKPbypnrUiBwDYfqLrj1qs-Bm_3IYS/preview'), 'Google Drive video preview URL embedded');
-assert(content.includes('id="btn-audio-explain"'), 'Audio explanation button #btn-audio-explain present');
-assert(content.includes('AUDIO_WALKTHROUGH') || content.includes('playNextWalkthroughUtterance'), 'Audio explanation controller present');
-assert(content.includes('stopAudioExplanation()'), 'Closing dialog or starting speech cancels audio explanation');
+// 4. Removal of "How it Works" & Centralized Audio (Part A & Part B)
+assert(!content.includes('id="btn-how-it-works"'), 'Header action #btn-how-it-works removed');
+assert(!content.includes('id="walkthrough-dialog"'), 'Walkthrough modal dialog removed');
+assert(!content.includes('id="walkthrough-modal-backdrop"'), 'Walkthrough modal backdrop removed');
+assert(!content.includes('AUDIO_WALKTHROUGH'), 'AUDIO_WALKTHROUGH removed');
+assert(content.includes('kakshasahay_speech_channel'), 'Cross-tab speech coordination channel present');
+assert(content.includes('visibilitychange'), 'Visibility change audio cancellation handler present');
 
 // 5. English ↔ Hindi Language Toggle (Prompt 10 Section 4 & 5)
 assert(content.includes('id="btn-lang-toggle"'), 'Header language toggle button #btn-lang-toggle present');

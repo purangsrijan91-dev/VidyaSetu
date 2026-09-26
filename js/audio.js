@@ -82,6 +82,42 @@ const AudioEngine = (() => {
     }
   }
 
+  const SPEECH_CHANNEL_NAME = 'kakshasahay_speech_channel';
+  let speechChannel = null;
+  const instanceId = 'audio_' + Math.random().toString(36).substring(2, 9);
+
+  if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+    try {
+      speechChannel = new BroadcastChannel(SPEECH_CHANNEL_NAME);
+      speechChannel.onmessage = (e) => {
+        if (e && e.data && e.data.type === 'CANCEL_SPEECH' && e.data.senderId !== instanceId) {
+          if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+            try { window.speechSynthesis.cancel(); } catch (err) {}
+          }
+        }
+      };
+    } catch (e) {}
+
+    if (typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+          try { window.speechSynthesis.cancel(); } catch (err) {}
+        }
+      });
+    }
+  }
+
+  function cancelSpeech() {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+    if (speechChannel) {
+      try {
+        speechChannel.postMessage({ type: 'CANCEL_SPEECH', senderId: instanceId, timestamp: Date.now() });
+      } catch (e) {}
+    }
+  }
+
   // Defensive Speech Synthesis with Voice-Pack Fallback
   function speakHindi(text) {
     // 1. Accessibility announcer for screen readers
@@ -97,7 +133,7 @@ const AudioEngine = (() => {
     }
 
     try {
-      window.speechSynthesis.cancel(); // Cancel any overlapping queue
+      cancelSpeech(); // Cancel any overlapping queue locally and broadcast to peer tabs
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'hi-IN';
       utterance.rate = 0.88;
@@ -128,6 +164,7 @@ const AudioEngine = (() => {
   return {
     initVoices,
     playTone,
+    cancelSpeech,
     speakHindi
   };
 })();
