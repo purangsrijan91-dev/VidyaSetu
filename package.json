@@ -5,7 +5,16 @@
   "main": "serve.js",
   "scripts": {
     "start": "node serve.js",
-    "build:css": "tailwindcss -i ./src/input.css -o ./css/styles.css --minify"
+    "build:css": "tailwindcss -i ./src/input.css -o ./css/styles.css --minify",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --coverage --runInBand",
+    "test:e2e": "playwright test",
+    "test:a11y": "playwright test tests/a11y.spec.js"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
   },
   "repository": {
     "type": "git",
@@ -22,6 +31,10 @@
   "author": "Srijan Purang",
   "license": "MIT",
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
     "tailwindcss": "^3.4.17"
   }
 }
